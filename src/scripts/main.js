@@ -1,7 +1,5 @@
-const { BrowserWindow, app } = require('electron');
+const { BrowserWindow, app, Tray, Menu } = require('electron');
 const path = require('path');
-//const Tray = electron.Tray
-//const iconPath = path.join(__dirname,'C&P-Final-03.jpg')
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -15,9 +13,39 @@ const createWindow = () => {
     win.loadFile("src/views/index.html")
 }
 
+const createTrayAndMenu = () => {
+    tray = new Tray('assets/audiebant-tray-icon.jpg')
+   
+    let template = [
+        {
+            label:'Connection Settings',
+            click: function () {
+                createWindow()
+            }
+        },
+        {
+            label:'Set Zones'
+        },
+        {
+            label:'Test Popup'
+        },
+        {
+            label:'About'
+        },
+        {
+            label:'Exit',
+            click: function () {
+                app.quit()
+            }
+        }
+    ]
+    let contextMenu = Menu.buildFromTemplate(template)
+    tray.setToolTip('Audiebant Lockdown System')
+    tray.setContextMenu(contextMenu)
+}
+
 app.whenReady().then(() => {
-    createWindow();
-    //new Try(iconPath)
+    createTrayAndMenu();
 })
 
 app.on('window-all-close', () => {

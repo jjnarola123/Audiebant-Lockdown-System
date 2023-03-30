@@ -6,9 +6,69 @@
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0" />
     <title>Audiebant Lockdown System</title>
     <!-- <link rel="stylesheet" href="index.css" /> -->
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" />
   </head>
   <body>
-    <p>Welcome to your Electron application.</p>
+    <div class="container">
+      <br/>
+      <h5>Please enter the database connection details below:</h5>
+      <br/>
+      <form class="form-horizontal" action="/"></form>
+      <div class="form-group mb-3">
+         <div class="row">
+            <label class="control-label col-sm-3" for="databaseAddress">Database Address:</label>
+            <div class="col-sm-9">
+               <input type="text" class="form-control" id="databaseAddress" name="databaseAddress">
+            </div>
+         </div>
+      </div>
+      <div class="form-group mb-3">
+         <div class="row">
+            <label class="control-label col-sm-3" for="databaseUsername">Database Username:</label>
+            <div class="col-sm-9">          
+               <input type="text" class="form-control" id="databaseUsername" name="databaseUsername">
+            </div>
+         </div>
+      </div>
+      <div class="form-group mb-3">
+         <div class="row">
+            <label class="control-label col-sm-3" for="databasePassword">Database Password:</label>
+            <div class="col-sm-9">          
+               <input type="password" class="form-control" id="databasePassword" name="databasePassword">
+            </div>
+         </div>
+      </div>
+      <div class="form-group mb-3">
+         <div class="row">
+            <label class="control-label col-sm-3" for="siteKey">Site Key:</label>
+            <div class="col-sm-9">          
+               <input type="text" class="form-control" id="siteKey" name="siteKey">
+            </div>
+         </div>
+      </div>
+      <div class="form-group mb-3">
+         <div class="row">
+            <label class="control-label col-sm-3" for="siteName">Site Name:</label>
+            <div class="col-sm-9">          
+               <input type="text" class="form-control" id="siteName" name="siteName">
+            </div>
+         </div>
+      </div>
+      <div class="form-group mb-3">
+         <div class="row ">
+            <div class="col-sm-offset-3 col-sm-3">
+               <button type="button" class="btn btn-secondary">Test Connection</button>
+            </div>
+            <div class="col-sm-offset-4 col-sm-4">
+               <button type="button" class="btn btn-secondary">Save Connection Details</button>
+            </div>
+            <div class="col-sm-offset-3 col-sm-3">
+               <button type="button" class="btn btn-secondary">Cancel and Close</button>
+            </div>
+         </div>
+      </div>
+      </form>
+   </div>
     <script src="../scripts/renderer.js"></script>
   </body>
 </html>

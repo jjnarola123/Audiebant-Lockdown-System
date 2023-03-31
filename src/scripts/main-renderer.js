@@ -1,1 +1,1 @@
-console.log('145623')
+console.log('renderer')

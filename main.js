@@ -6,15 +6,15 @@ const createWindow = () => {
         width: 800,
         height: 600,
         webPreferences:{
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'src/scripts/main-preload.js')
         }
     })
 
-    win.loadFile("src/views/index.html")
+    win.loadFile("index.html")
 }
 
 const createTrayAndMenu = () => {
-    tray = new Tray('assets/audiebant-tray-icon.jpg')
+    tray = new Tray('assets/img/audiebant-tray-icon.jpg')
    
     let template = [
         {

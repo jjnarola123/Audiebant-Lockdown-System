@@ -1,0 +1,139 @@
+@font-face {
+    font-family: 'Product Sans';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Product Sans'), url('../../assets/fonts/ProductSans-Regular.woff') format('woff');
+}
+
+html {
+    /* min-height: 100%;
+    min-width: 100%; */
+    font-family: 'Product Sans';
+}
+
+body {
+    font-family: 'Product Sans';
+    /* height: 100%;
+    widows: 100%; */
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background: linear-gradient(170deg, #2a5379, #7ae4ff);
+}
+
+.result {
+    padding: 10px;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.16);
+    color: #95ff7c;
+    border-top: 2px solid;
+}
+
+.card {
+    background-color: #122b42;
+    color: whitesmoke;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.card-header {
+    background-color: rgba(0, 0, 0, 0.19);
+    border-bottom: 2px solid #36648e;
+}
+
+.card-footer {
+    background-color: rgba(0, 0, 0, 0.19);
+    border-top: 2px solid #36648e;
+}
+
+.inp {
+    background-color: #ffffff0c;
+    border-radius: 0px;
+    border: 1px solid #ffffff1e;
+    color: white;
+}
+
+.inp:hover {
+    border: 1px solid #ffffff5d;
+}
+
+.inp:focus {
+    border: 1px solid #ffffff9c;
+    background-color: #ffffff21;
+    box-shadow: 0 0 0 0.2rem #ffffff38;
+    color: white;
+}
+
+.custom-select.is-invalid,
+.form-control.is-invalid,
+.was-validated .custom-select:invalid,
+.was-validated .form-control:invalid {
+    border-color: #dc9435;
+}
+
+.invalid-feedback {
+    font-family: 'Product Sans';
+    font-size: 90%;
+    color: #dc9435;
+}
+
+.invalid-input {
+    color: #dc9435;
+}
+
+.custom-select.is-invalid:focus,
+.form-control.is-invalid:focus,
+.was-validated .custom-select:invalid:focus,
+.was-validated .form-control:invalid:focus {
+    border-color: #eea74b;
+    box-shadow: 0 0 0 0.2rem rgba(238, 167, 75, 0.397);
+}
+
+.custom-select.is-valid,
+.form-control.is-valid,
+.was-validated .custom-select:valid,
+.was-validated .form-control:valid {
+    background-color: #ffffff0c;
+    border: 1px solid #ffffff46;
+}
+
+.custom-select.is-valid:focus,
+.form-control.is-valid:focus,
+.was-validated .custom-select:valid:focus,
+.was-validated .form-control:valid:focus {
+    border: 1px solid #ffffff9c;
+    background-color: #ffffff21;
+    box-shadow: 0 0 0 0.2rem #ffffff38;
+    color: white;
+}
+
+.btn-main {
+    color: rgba(255, 255, 255, 0.637);
+    background-color: #ffffff17;
+    border-color: #ffffff52;
+}
+
+.btn-main:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.13);
+    border-color: #ffffff94;
+    color: white;
+}
+
+.btn-main:hover {
+    color: white;
+    background-color: #ffffff34;
+    border-color: #ffffff6b;
+}
+
+.btn-main:active {
+    color: white;
+    background-color: #ffffff54;
+    border-color: #ffffff7e;
+}
+
+label {
+    color: rgba(255, 255, 255, 0.842);
+}
+
+.it-would {
+    color: #95ff7c;
+}

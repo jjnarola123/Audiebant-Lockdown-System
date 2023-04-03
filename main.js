@@ -1,7 +1,8 @@
 const { BrowserWindow, app, Tray, Menu, ipcMain } = require('electron');
 const path = require('path');
 
-const createWindow = () => {
+const createWindow = (Page) => 
+{
     const win = new BrowserWindow({
         width: 800,
         height: 600,
@@ -13,7 +14,7 @@ const createWindow = () => {
         }
     })
 
-    win.loadFile("index.html")
+    win.loadFile(Page)
 }
 
 const createTrayAndMenu = () => {
@@ -23,11 +24,14 @@ const createTrayAndMenu = () => {
         {
             label:'Connection Settings',
             click: function () {
-                createWindow()
+                createWindow("index.html")
             }
         },
         {
-            label:'Set Zones'
+            label:'Set Zones',
+            click: function () {
+                createWindow("src/windows/setzones.html")
+            }
         },
         {
             label:'Test Popup'

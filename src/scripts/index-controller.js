@@ -1,10 +1,9 @@
-var app = angular.module('app', []);
+const { ipcRenderer } = window.require('electron');
 
-//const { BrowserWindow } = require('node_modules/electron');
-app.controller('IndexController', function () {
-    //var win = remote.getCurrentWindow();
+var app = angular.module('app', []);
+app.controller('IndexController', function ($scope) {
+  
     var vm = this;
-   
     vm.onTestConnection = function (f) {
         f.$submitted = true;
         if (f.$valid) {
@@ -21,7 +20,7 @@ app.controller('IndexController', function () {
         // vm.res = null;
     };
 
-    vm.onClose = function(f){
-        //win.close();
+    vm.onClose = function(){
+        ipcRenderer.send('close',[])
     }
 });

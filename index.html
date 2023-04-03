@@ -12,7 +12,7 @@
    
     <script src="src/scripts/main-renderer.js"></script>
     <script type="text/javascript" src="src/scripts/angular-1.7.8.min.js"></script>
-    <script type="text/javascript" src="src/scripts/bootstrap.min.js"></script>
+    <!-- <script type="text/javascript" src="src/scripts/bootstrap.min.js"></script> -->
     <script type="text/javascript" src="src/scripts/index-controller.js"></script>
     <base href="/">
   </head>
@@ -86,7 +86,7 @@
                           &nbsp;
                           <button class="btn btn-main" type="submit" ng-click="vm.onSaveConnectionDtls(frm);">Save Connection Details</button>
                           &nbsp;
-                          <button class="btn btn-main" type="submit" ng-click="vm.onClose(frm);">Cancel and Close</button>
+                          <button class="btn btn-main" type="button" ng-click="vm.onClose();">Cancel and Close</button>
                       </div>
                   </div>
           </ng-form>

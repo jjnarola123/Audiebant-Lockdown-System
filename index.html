@@ -89,10 +89,10 @@
                                   <label for="address">Database Address:</label>
                                   <input id="address" type="text" name="address"
                                       ng-model="vm.address" required class="form-control inp" />
-                                  <!-- <div class="invalid-feedback" ng-if="frm.speed.$invalid && frm.$submitted">
+                                  <!-- <div class="invalid-feedback" ng-if="frm.address.$invalid && frm.$submitted">
                                       <i class="zmdi zmdi-alert-polygon"
-                                          ng-if="frm.speed.$error.parse">&nbsp;Download
-                                          speed is required. </i>
+                                          ng-if="frm.address.$error.parse">&nbsp;Database
+                                          address is required. </i>
                                   </div> -->
                               </div>
                               <div class="form-group" ng-class="{'invalid-input': frm.username.$invalid && frm.$submitted }">
@@ -140,11 +140,11 @@
                   </div>
                   <div class="card-footer">
                       <div class="float-right">
-                          <button class="btn btn-main" type="button" ng-click="vm.onReset(frm);">Test Connection</button>
+                          <button class="btn btn-main" type="submit" ng-click="vm.onTestConnection(frm);">Test Connection</button>
                           &nbsp;
-                          <button class="btn btn-main" type="submit" ng-click="vm.onCalculate(frm);">Save Connection Details</button>
+                          <button class="btn btn-main" type="submit" ng-click="vm.onSaveConnectionDtls(frm);">Save Connection Details</button>
                           &nbsp;
-                          <button class="btn btn-main" type="submit" ng-click="vm.onCalculate(frm);">Cancel and Close</button>
+                          <button class="btn btn-main" type="submit" ng-click="vm.onClose(frm);">Cancel and Close</button>
                       </div>
                   </div>
           </ng-form>

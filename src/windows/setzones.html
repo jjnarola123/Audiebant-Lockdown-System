@@ -4,119 +4,46 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE-edge" />
-    <!-- <meta name="viewport" content="width=<device-width>, initial-scale=1.0" /> -->
     <title>Audiebant Lockdown System</title>
-    <!-- <link rel="stylesheet" href="index.css" /> -->
     <link rel="stylesheet" href="../styles/bootstrap.min.css" />
     <link rel="stylesheet" href="../styles/style.css" />
     <link rel="stylesheet" type="text/css" href="../styles/material-design-iconic-font.min.css" />
    
+   
     <script src="../scripts/main-renderer.js"></script>
     <script type="text/javascript" src="../scripts/angular-1.7.8.min.js"></script>
+    <script type="text/javascript" src="../scripts/jquery.min.js"></script>
     <!-- <script type="text/javascript" src="src/scripts/bootstrap.min.js"></script> -->
     <script type="text/javascript" src="../scripts/setzones-controller.js"></script>
     <base href="/">
   </head>
 
   <body ng-app="app">
-    <div class="container" ng-controller="SetZonesController as vm" ng-cloak>
+    <div class="container" ng-controller="SetZonesController as vm"  ng-init="vm.getSetZones()" ng-cloak>
       <div class="d-flex justify-content-left mt-5">
-          <ng-form novalidate name="frm" ng-class="{'was-validated': frm.$submitted }">
+            <ng-form novalidate name="frm" ng-class="{'was-validated': frm.$submitted }">
               <div class="card">
-                  <div class="card-header">
-                    <h3>Audiebant Set Zones</h3>
-                      <h5>Please tick the relevant zones from the list below. if now zones are showing, please check you have an active internet connection</h5>
-                  </div>
-                  <div class="card-body">
-                    <input id="groundfloor" type="checkbox" name="groundfloor" ng-model="vm.groundfloor" />
-                        <label for="groundfloor">Ground Floor</label>
-<br>
-<br>
-                        <input id="firstfloor" type="checkbox" name="firstfloor" ng-model="vm.firstfloor" />
-                        <label for="firstfloor">First Floor</label>
-<br>
-<br>
-                        
-                        <input id="secondfloor" type="checkbox" name="secondfloor" ng-model="vm.secondfloor" />
-                        <label for="secondfloor">Second Floor</label>
-<br>
-<br>
-                        
-                        <input id="thirdfloor" type="checkbox" name="thirdfloor" ng-model="vm.thirdfloor" />
-                        <label for="thirdfloor">Third Floor</label>
-<br>
-<br>
-                        
-                        <input id="playingfields" type="checkbox" name="playingfields" ng-model="vm.playingfields" />
-                        <label for="playingfields">Playing Fields</label>
-<br>
-<br>
-<!-- <div class="row">
-                        
-
-                        <div class="col-sm-12">
-                              <div class="form-group" ng-class="{'invalid-input': frm.groundfloor.$invalid && frm.$submitted }">
-
-                                  <div class="invalid-feedback" ng-if="frm.address.$invalid && frm.$submitted">
-                                      <i class="zmdi zmdi-alert-polygon"
-                                          ng-if="frm.address.$error.required">&nbsp;Database
-                                          address is required. </i>
-                                  </div>
-                              </div>
-                              <div class="form-group" ng-class="{'invalid-input': frm.username.$invalid && frm.$submitted }">
-                                  <label for="username">Database Username:</label>
-                                  <input id="username" type="text" name="username"
-                                      ng-model="vm.username" required class="form-control inp" />
-                                  <div class="invalid-feedback" ng-if="frm.username.$invalid && frm.$submitted">
-                                      <i class="zmdi zmdi-alert-polygon"
-                                          ng-if="frm.username.$error.required">&nbsp;Database
-                                          username is required. </i>
-                                  </div>
-                              </div>
-                              <div class="form-group" ng-class="{'invalid-input': frm.password.$invalid && frm.$submitted }">
-                                  <label for="password">Database Password:</label>
-                                  <input id="password" type="password" name="password"
-                                      ng-model="vm.password" required class="form-control inp" />
-                                  <div class="invalid-feedback" ng-if="frm.password.$invalid && frm.$submitted">
-                                      <i class="zmdi zmdi-alert-polygon"
-                                          ng-if="frm.password.$error.required">&nbsp;Database
-                                          password is required. </i>
-                                  </div>
-                              </div>
-                              <div class="form-group" ng-class="{'invalid-input': frm.sitekey.$invalid && frm.$submitted }">
-                                  <label for="sitekey">Site Key:</label>
-                                  <input id="sitekey" type="text" name="sitekey"
-                                      ng-model="vm.sitekey" required class="form-control inp" />
-                                  <div class="invalid-feedback" ng-if="frm.sitekey.$invalid && frm.$submitted">
-                                      <i class="zmdi zmdi-alert-polygon"
-                                          ng-if="frm.sitekey.$error.required">&nbsp;Site key
-                                          is required. </i>
-                                  </div>
-                              </div>
-                              <div class="form-group" ng-class="{'invalid-input': frm.sitename.$invalid && frm.$submitted }">
-                                  <label for="sitename">Site Name:</label>
-                                  <input id="sitename" type="text" name="sitename"
-                                      ng-model="vm.sitename" required class="form-control inp" />
-                                  <div class="invalid-feedback" ng-if="frm.sitename.$invalid && frm.$submitted">
-                                      <i class="zmdi zmdi-alert-polygon"
-                                          ng-if="frm.sitename.$error.required">&nbsp;Site name
-                                          is required. </i>
-                                  </div>
-                              </div>
-                          </div>
-                      </div> -->
-                  </div>
-                  <div class="card-footer">
-                      <div class="float-right">
-                          <button class="btn btn-main" type="submit" ng-click="vm.onSaveConnectionDtls(frm);">Save Zones</button>
-                          &nbsp;
-                          <button class="btn btn-main" type="button" ng-click="vm.onClose();">Cancel and Close</button>
-                      </div>
-                  </div>
-          </ng-form>
-      </div>
-    </div>
-   
-    
+                    <div class="card-header">
+                        <h3>Audiebant Set Zones</h3>
+                        <h5>Please tick the relevant zones from the list below. if now zones are showing, please check you have an active internet connection</h5>
+                    </div>  
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12" id="setGetZoneData">                             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="float-right">
+                            <button class="btn btn-main" type="submit" ng-click="vm.onSaveConnectionDtls(frm);">Save Zones</button>
+                            &nbsp;
+                            <button class="btn btn-main" type="button" ng-click="vm.onClose();">Cancel and Close</button>
+                        </div>
+                    </div>
+              </div>
+            </ng-form>           
+        </div>
+    </div>    
   </body>
 </html>
+                  

@@ -5,7 +5,7 @@ const createWindow = (Page) =>
 {
     const win = new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 800,
         webPreferences:{
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -33,12 +33,12 @@ const createTrayAndMenu = () => {
                 createWindow("src/windows/setzones.html")
             }
         },
-        {
-            label:'Test Popup'
-        },
-        {
-            label:'About'
-        },
+        // {
+        //     label:'Test Popup'
+        // },
+        // {
+        //     label:'About'
+        // },
         {
             label:'Exit',
             click: function () {

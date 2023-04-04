@@ -1,4 +1,5 @@
 const { ipcRenderer } = window.require('electron');
+const axios = require('axios');
 
 var app = angular.module('app', []);
 app.controller('IndexController', function ($scope) {
@@ -23,4 +24,9 @@ app.controller('IndexController', function ($scope) {
     vm.onClose = function(){
         ipcRenderer.send('close',[])
     }
+
+    // vm.onOpenLoginWindow = function(){
+    //     createWindow("src/windows/setzones.html")
+    // }
+
 });

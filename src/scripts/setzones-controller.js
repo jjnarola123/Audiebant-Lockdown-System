@@ -7,8 +7,8 @@ app.controller('SetZonesController', function ($scope) {
   
     var vm = this;    
     vm.onSaveConnectionDtls = function (f) {
+       
         if (f.$valid) {  
-            
         }
     }; 
 
@@ -20,37 +20,30 @@ app.controller('SetZonesController', function ($scope) {
             }
           })          
           .then(function (response) {
+
             if(response.data.data.length >= 0){
           
                 for(let i=0;i<response.data.data.length;i++)
                 {
                     for(let j=0;j<response.data.data[i].length;j++)
-                    {
-                        const setGetZoneDataById=document.getElementById("setGetZoneData");
-                
-                        const divison = document.createElement("div");
-                        divison.setAttribute("class", "form-group");
-                        divison.setAttribute("id", "frm"+response.data.data[i][j].id);
-                        setGetZoneDataById.append(divison); 
+                    {  
                         
-                        const setDataZone=document.getElementById("frm"+response.data.data[i][j].id);
-
-                        var checkBox = document.createElement("INPUT");                    
-                        checkBox.setAttribute("type", "checkbox");
-                        checkBox.setAttribute("id", response.data.data[i][j].id);
-                        checkBox.setAttribute("name",  response.data.data[i][j].zone_name);    
-                        var label = document.createElement("LABEL");
-                        label.innerHTML ='&nbsp;&nbsp;'+response.data.data[i][j].zone_name;
-                        
-                        setDataZone.appendChild(checkBox); 
-                        setDataZone.appendChild(label); 
+                        const setGetZoneDataById=$("#setGetZoneData");                
+                        const divison = $("<div class='form-group' id='frm"+response.data.data[i][j].id+"'>");                    
+                        setGetZoneDataById.append(divison);                         
+                        const setDataZone=$("#frm"+response.data.data[i][j].id);
+                        const checkBox = $("<input type='checkbox' id='"+response.data.data[i][j].id+"' name='"+response.data.data[i][j].zone_name+"'/>");             
+                        const label = $("<label for='"+response.data.data[i][j].zone_name+"'>&nbsp;&nbsp;"+response.data.data[i][j].zone_name+"</label>");
+                                       
+                        setDataZone.append(checkBox); 
+                        setDataZone.append(label); 
                         
                     }
                 }
             }
           });
     };
-
+    
     vm.onClose = function(){         
         ipcRenderer.send('close',[])
     };

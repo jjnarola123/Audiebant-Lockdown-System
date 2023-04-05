@@ -1,9 +1,7 @@
 const { ipcRenderer } = window.require('electron');
 const axios = require('axios');
 
-var app = angular.module('app', []);
-app.controller('IndexController', function ($scope) {
-  
+app.controller('DbConController', function ($scope, $location) {
     var vm = this;
     vm.onTestConnection = function (f) {
         f.$submitted = true;
@@ -25,8 +23,9 @@ app.controller('IndexController', function ($scope) {
         ipcRenderer.send('close',[])
     }
 
-    // vm.onOpenLoginWindow = function(){
-    //     createWindow("src/windows/setzones.html")
-    // }
+    vm.login = function(){
+        $location.path('/login');
+        $scope.$applyAsync();
+    };
 
 });

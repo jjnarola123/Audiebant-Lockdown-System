@@ -138,6 +138,10 @@ label {
     color: #95ff7c;
 }
 
+.it-would-not {
+    color: #ff0000;
+}
+
 .lnk-login{
     cursor: pointer;
     color: white;

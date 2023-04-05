@@ -23,7 +23,7 @@ app.controller('DbConController', function ($scope, $location) {
         ipcRenderer.send('close',[])
     }
 
-    vm.login = function(){
+    vm.onLogin = function(){
         $location.path('/login');
         $scope.$applyAsync();
     };

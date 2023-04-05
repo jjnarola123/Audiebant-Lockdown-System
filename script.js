@@ -13,3 +13,15 @@ app.config(function($routeProvider) {
 		template: '404 Not Found'
 	});
 });
+
+app.constant('Constants', {
+    Roles: {
+        1: 'Admin',
+        2: 'User',
+        3: 'Guest'
+	},
+	ResultStatus:{
+		1: 'Success',
+		2: 'Failed'
+	}
+}); 

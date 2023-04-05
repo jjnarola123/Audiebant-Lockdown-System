@@ -1,18 +1,24 @@
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer} = window.require('electron');
 const axios = require('axios');
-window.$ = window.jQuery = require('jquery');
-
 var app = angular.module('app', []);
-app.controller('SetZonesController', function ($scope) {
-  
+app.controller('SetZonesController', function ($scope) {  
     var vm = this;    
-    vm.onSaveConnectionDtls = function (f) {
-       
-        if (f.$valid) {  
+    vm.onSaveConnectionDtls = function (f) {       
+        if (f.$valid) {              
+            count = 0;
+            $scope.zones.forEach(function(zone) {
+                if (zone.selected) {
+                   count++;
+                   $scope.result="";
+                }
+            });
+            if(count==0){
+               $scope.result = "Please select zone";
+            }
         }
     }; 
 
-    vm.getSetZones = function() {
+    vm.getZones = function() {
         axios.get('https://www.audiebant.co.uk/api/api.php?', {
             params: {
                 request: "zones",
@@ -20,25 +26,12 @@ app.controller('SetZonesController', function ($scope) {
             }
           })          
           .then(function (response) {
-
-            if(response.data.data.length >= 0){
-          
+            if(response.data.data.length >= 0){    
                 for(let i=0;i<response.data.data.length;i++)
                 {
-                    for(let j=0;j<response.data.data[i].length;j++)
-                    {  
-                        
-                        const setGetZoneDataById=$("#setGetZoneData");                
-                        const divison = $("<div class='form-group' id='frm"+response.data.data[i][j].id+"'>");                    
-                        setGetZoneDataById.append(divison);                         
-                        const setDataZone=$("#frm"+response.data.data[i][j].id);
-                        const checkBox = $("<input type='checkbox' id='"+response.data.data[i][j].id+"' name='"+response.data.data[i][j].zone_name+"'/>");             
-                        const label = $("<label for='"+response.data.data[i][j].zone_name+"'>&nbsp;&nbsp;"+response.data.data[i][j].zone_name+"</label>");
-                                       
-                        setDataZone.append(checkBox); 
-                        setDataZone.append(label); 
-                        
-                    }
+                    $scope.$apply(function () {
+                        $scope.zones =response.data.data[i];
+                    });
                 }
             }
           });

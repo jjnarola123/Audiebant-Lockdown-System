@@ -2,6 +2,7 @@ var app = angular.module('app', ['ngRoute']);
 
 app.config(function($routeProvider) {
 	$routeProvider.when('/', {
+        //title: 'Home',
 		templateUrl: `${__dirname}/src/windows/dbcon.html`,
 		controller: 'DbConController'
 	}).when('/login', {

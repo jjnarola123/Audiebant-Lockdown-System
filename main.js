@@ -9,8 +9,7 @@ const createWindow = (Page) =>
         webPreferences:{
             nodeIntegration: true,
             enableRemoteModule: true,
-            contextIsolation: false,
-            preload: path.join(__dirname, 'src/scripts/main-preload.js')
+            contextIsolation: false
         }
     })
 
@@ -33,12 +32,6 @@ const createTrayAndMenu = () => {
                 createWindow("src/windows/setzones.html")
             }
         },
-        // {
-        //     label:'Test Popup'
-        // },
-        // {
-        //     label:'About'
-        // },
         {
             label:'Exit',
             click: function () {
@@ -47,7 +40,7 @@ const createTrayAndMenu = () => {
         }
     ]
     let contextMenu = Menu.buildFromTemplate(template)
-    tray.setToolTip('Audiebant Lockdown System')
+    tray.setToolTip('Audiebant Lockdown Solution')
     tray.setContextMenu(contextMenu)
 }
 

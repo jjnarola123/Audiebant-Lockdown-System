@@ -29,7 +29,7 @@ const createTrayAndMenu = () => {
         {
             label:'Set Zones',
             click: function () {
-                createWindow("src/windows/setzones.html")
+                createWindow("zoneindex.html")
             }
         },
         {

@@ -26,6 +26,6 @@ app.controller('DbConController', function ($scope, $location) {
     vm.login = function(){
         $location.path('/login');
         $scope.$applyAsync();
-    };
-
+    };  
+ 
 });

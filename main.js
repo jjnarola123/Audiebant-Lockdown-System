@@ -5,12 +5,11 @@ const createWindow = (Page) =>
 {
     const win = new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 800,
         webPreferences:{
             nodeIntegration: true,
             enableRemoteModule: true,
-            contextIsolation: false,
-            preload: path.join(__dirname, 'src/scripts/main-preload.js')
+            contextIsolation: false
         }
     })
 
@@ -34,12 +33,6 @@ const createTrayAndMenu = () => {
             }
         },
         {
-            label:'Test Popup'
-        },
-        {
-            label:'About'
-        },
-        {
             label:'Exit',
             click: function () {
                 app.quit()
@@ -47,7 +40,7 @@ const createTrayAndMenu = () => {
         }
     ]
     let contextMenu = Menu.buildFromTemplate(template)
-    tray.setToolTip('Audiebant Lockdown System')
+    tray.setToolTip('Audiebant Lockdown Solution')
     tray.setContextMenu(contextMenu)
 }
 

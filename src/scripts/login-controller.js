@@ -18,7 +18,8 @@ app.controller('LoginController', function ($scope, $location, Constants) {
           .then(function (response) {
             if(response){
                 if(response.data.status == Constants.ResultStatus[1] && response.data.data.role == Constants.Roles[1]){
-                    console.log('sucess');
+                    $location.path('/');
+                    $scope.$applyAsync();
                 }
                 else{
                     vm.result = response.data.message;

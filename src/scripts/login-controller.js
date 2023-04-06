@@ -1,4 +1,4 @@
-app.controller('LoginController', function ($scope, $location, Constants) {
+app.controller('LoginController', function ($scope, $location, Constants, myService) {
     var vm = this;
 
     vm.onClose = function(){
@@ -18,6 +18,7 @@ app.controller('LoginController', function ($scope, $location, Constants) {
           .then(function (response) {
             if(response){
                 if(response.data.status == Constants.ResultStatus[1] && response.data.data.role == Constants.Roles[1]){
+                    myService.disabledDbDtls = false;
                     $location.path('/');
                     $scope.$applyAsync();
                 }

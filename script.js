@@ -24,3 +24,8 @@ app.constant('Constants', {
 		2: 'Failed'
 	}
 }); 
+
+app.service('myService', function() {
+	  this.disabledDbDtls = true;
+	  this.disabledLicDtls = true;
+});

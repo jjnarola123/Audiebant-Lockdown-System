@@ -1,8 +1,13 @@
 const { ipcRenderer } = window.require('electron');
 const axios = require('axios');
 
-app.controller('DbConController', function ($scope, $location) {
+app.controller('DbConController', function ($scope, $location, myService) {
     var vm = this;
+    vm.onDisabled = function (){
+        $scope.disabledDbDtls = myService.disabledDbDtls;
+        $scope.disabledLicDtls = myService.disabledLicDtls;
+    }
+
     vm.onTestConnection = function (f) {
         f.$submitted = true;
         if (f.$valid) {

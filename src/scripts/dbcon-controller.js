@@ -1,7 +1,7 @@
 const { ipcRenderer } = window.require('electron');
 const axios = require('axios');
 
-app.controller('DbConController', function ($scope, $location, myService) {
+app.controller('DbConController', function ($scope, $location, myService, Constants) {
     var vm = this;
     vm.onDisabled = function (){
         vm.disabledDbDtls = myService.disabledDbDtls;
@@ -23,29 +23,28 @@ app.controller('DbConController', function ($scope, $location, myService) {
               .then(function (response) {
                 if(response){
                     if(response.data.status == Constants.ResultStatus[1]){
+                        vm.disabledLicDtls = false;
                         myService.disabledLicDtls = false;
                         // $location.path('/');
                         // $scope.$applyAsync();
                     }
                     else{
                         vm.result = response.data.message;
-                        //$scope.$applyAsync();
+                        $scope.$applyAsync();
                     }
                 }
-              });
+            });
         }
     };
 
-    vm.onSaveConnectionDtls = function (f) {
+    vm.onSaveSettings = function (f) {
         // f.$setPristine();
-        // vm.speed = 0;
-        // vm.speedMode = vm.speedModes[0];
-        // vm.size = 0;
-        // vm.sizeMode = vm.sizeModes[0];
-        // vm.res = null;
+        f.$submitted = true;
+        if (f.$valid) {
+        }
     };
 
-    vm.onClose = function(){
+    vm.onSaveAndClose = function(){
         ipcRenderer.send('close',[])
     }
 

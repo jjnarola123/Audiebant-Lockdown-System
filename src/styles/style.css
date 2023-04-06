@@ -144,8 +144,18 @@ label {
 
 .lnk-login{
     cursor: pointer;
+    color: rgba(255, 255, 255, 0.637);
+}
+
+.lnk-login:hover{
+    cursor: pointer;
     color: white;
 }
+
+.fs-12{
+    font-size:12px;
+}
+
 
 .zone-box {
     border: 1px #ccc solid;

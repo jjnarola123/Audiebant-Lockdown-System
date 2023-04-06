@@ -5,7 +5,7 @@ const createWindow = (Page) =>
 {
     const win = new BrowserWindow({
         width: 800,
-        height: 800,
+        height: 675,
         webPreferences:{
             nodeIntegration: true,
             enableRemoteModule: true,

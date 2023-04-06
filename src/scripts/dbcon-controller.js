@@ -31,6 +31,6 @@ app.controller('DbConController', function ($scope, $location, myService) {
     vm.onLogin = function(){
         $location.path('/login');
         $scope.$applyAsync();
-    };
-
+    };  
+ 
 });

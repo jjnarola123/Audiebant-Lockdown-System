@@ -1,53 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
-    <title>Audiebant Lockdown Solution - Set Zones</title>
-    <link rel="stylesheet" href="../styles/bootstrap.min.css" />
-    <link rel="stylesheet" href="../styles/style.css" />
-    <link rel="stylesheet" type="text/css" href="../styles/material-design-iconic-font.min.css" />
-   
-   
-    <script src="../scripts/main-renderer.js"></script>
-    <script type="text/javascript" src="../scripts/angular-1.7.8.min.js"></script>
-    <!-- <script type="text/javascript" src="src/scripts/bootstrap.min.js"></script> -->
-    <script type="text/javascript" src="../scripts/setzones-controller.js"></script>
-    <base href="/">
-  </head>
-
-  <body ng-app="app">
-    <div class="container" ng-controller="SetZonesController as vm"  ng-init="vm.getZones()" ng-cloak>
-      <div class="d-flex justify-content-left mt-5">
-            <ng-form novalidate name="frm" ng-class="{'was-validated': frm.$submitted }">
-              <div class="card">
-                    <div class="card-header">
-                        <h3>Audiebant Set Zones</h3>
-                        <h5>Please tick the relevant zones from the list below. if now zones are showing, please check you have an active internet connection</h5>
-                    </div>  
-                    <div class="card-body">
-                        <div class="row">                         
-                            <div class="col-sm-12">                          
-                                <div class="form-group" ng-repeat='zone in zones' ><input type='checkbox' id='{zone.id}' value='{{ zone.zone_name }}' ng-model='zone.selected'>&nbsp;<label for='{{zone.zone_name}}'>{{zone.zone_name}}</label></div>                               
+<div class="container" ng-controller="SetZonesController as vm"  ng-init="vm.onGetZones()" ng-cloak>
+  <div class="d-flex justify-content-left mt-5">
+      <ng-form novalidate name="frm">
+        <div class="card">
+              <div class="card-header">
+                  <h3>Audiebant Set Zones</h3>
+                  <h5>Please tick the relevant zones from the list below. if now zones are showing, please check you have an active internet connection</h5>
+              </div>  
+              <div class="card-body">
+                  <div class="row">                         
+                      <div class="col-sm-12">                          
+                          <div class="form-group" ng-repeat='zone in zones' ><input type='checkbox' id='{{zone.id}}' value='{{ zone.zone_name }}' ng-model='zone.selected'>&nbsp;<label for='{{zone.zone_name}}'>{{zone.zone_name}}</label></div>                               
+                          <div class="row mt-2" ng-if="vm.result">
+                            <div class="col-sm-12">
+                                <div class="d-flex justify-content-center it-would-not">{{vm.result}}</div>
                             </div>
+                          </div>     
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="float-right">    
-                            <div class="form-group">
-                              <label style="color: red;">{{result}}</label>
-                            </div>                           
-                            <div class="form-group">                                
-                                <button class="btn btn-main" type="submit" ng-click="vm.onSaveConnectionDtls(frm);">Save Zones</button>
-                                <button class="btn btn-main" type="button" ng-click="vm.onClose();">Cancel and Close</button>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
               </div>
-            </ng-form>           
+              <div class="card-footer">
+                  <div class="float-right">    
+                      <div class="form-group">                                
+                          <button class="btn btn-main" type="submit" ng-click="vm.onSaveConnectionDtls(frm);">Save Zones</button>
+                          <button class="btn btn-main" type="button" ng-click="vm.onClose();">Cancel and Close</button>
+                      </div>
+                  </div>
+              </div>
         </div>
-    </div>    
-  </body>
-</html>
-                  
+      </ng-form>           
+  </div>
+</div>   

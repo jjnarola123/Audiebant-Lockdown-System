@@ -146,3 +146,21 @@ label {
     cursor: pointer;
     color: white;
 }
+
+.zone-box {
+    border: 1px #ccc solid;
+    background-color:white;
+    min-height: 100px;
+    padding: 7px; 
+
+  }
+
+  .label-color{
+    color: black;
+  }
+  
+.zone-scroll
+{
+    max-height: 300px;
+    overflow-y: scroll;
+}

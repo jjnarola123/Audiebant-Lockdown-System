@@ -7,7 +7,7 @@ app.config(function($routeProvider) {
 		controller: 'SetZonesController'
 	}).when('/login', {
 		templateUrl: `${__dirname}/src/windows/login.html`,
-		controller: 'LoginController'	
+		controller: 'LoginController'
 	}).otherwise({
 		template: '404 Not Found'
 	});
@@ -24,3 +24,7 @@ app.constant('Constants', {
 		2: 'Failed'
 	}
 }); 
+
+app.service('myService', function() {
+	this.disabledDbDtls = true;
+});

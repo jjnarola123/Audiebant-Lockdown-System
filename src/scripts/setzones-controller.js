@@ -1,7 +1,7 @@
 const { ipcRenderer } = window.require('electron');
 const axios = require('axios');
 
-app.controller('SetZonesController', function ($scope,Constants) {  
+app.controller('SetZonesController', function ($scope,$location,Constants,myService) {  
     var vm = this;    
     vm.onSaveConnectionDtls = function (f) {       
         if (f.$valid) {              
@@ -13,13 +13,14 @@ app.controller('SetZonesController', function ($scope,Constants) {
                 }
             });
             if(count==0){
-               vm.result = "Please select zone";
+               vm.result = "Please select at least one zone";
             }
         }
     }; 
 
     vm.onGetZones = function() {
-       
+     
+        vm.disabledDbDtls = myService.disabledDbDtls;     
         axios.get('https://www.audiebant.co.uk/api/api.php?', {
             params: {
                 request: "zones",
@@ -55,5 +56,10 @@ app.controller('SetZonesController', function ($scope,Constants) {
     vm.onClose = function(){         
         ipcRenderer.send('close',[])
     };
-    
+
+    vm.onLogin = function(){
+       
+        $location.path('/login');
+        $scope.$applyAsync();
+    };  
 });

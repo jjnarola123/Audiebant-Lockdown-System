@@ -41,6 +41,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         // f.$setPristine();
         f.$submitted = true;
         if (f.$valid) {
+            
         }
     };
 

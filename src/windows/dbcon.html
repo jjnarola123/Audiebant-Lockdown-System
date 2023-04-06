@@ -1,8 +1,8 @@
 <div class="container" ng-controller="DbConController as vm"  ng-init="vm.onDisabled()" ng-cloak>
         <div class="d-flex justify-content-center mt-4">
            <ng-form novalidate name="frm" ng-class="{'was-validated': frm.$submitted }">
-              <p ng-if="disabledDbDtls">For change database connection details please Login to administrator account <a class="lnk-login" ng-click="vm.onLogin()">Login</a></p>
-              <h5 ng-if="!disabledDbDtls">Please enter the database connection details below:</h5>
+              <p ng-if="vm.disabledDbDtls">For change database connection details please Login to administrator account <a class="lnk-login" ng-click="vm.onLogin()">Login</a></p>
+              <h5 ng-if="!vm.disabledDbDtls">Please enter the database connection details below:</h5>
               <div class="card">
                  <div class="card-header">
                     <h6>Database Connection Details</h6>
@@ -10,19 +10,19 @@
                  <div class="card-body">
                     <div class="row">
                        <div class="col-sm-12">
-                          <div class="form-group" ng-class="{'invalid-input': frm.address.$invalid && frm.$submitted }">
-                             <label for="address">Database Address:</label>
-                             <input id="address" type="text" name="address" ng-disabled="disabledDbDtls"
-                                ng-model="vm.address" required class="form-control inp" />
-                             <div class="invalid-feedback" ng-if="frm.address.$invalid && frm.$submitted">
+                          <div class="form-group" ng-class="{'invalid-input': frm.database.$invalid && frm.$submitted }">
+                             <label for="database">Database Address:</label>
+                             <input id="database" type="text" name="database" ng-disabled="vm.disabledDbDtls"
+                                ng-model="vm.database" required class="form-control inp" />
+                             <div class="invalid-feedback" ng-if="frm.database.$invalid && frm.$submitted">
                                 <i class="zmdi zmdi-alert-polygon"
-                                   ng-if="frm.address.$error.required">&nbsp;Database
+                                   ng-if="frm.database.$error.required">&nbsp;Database
                                 address is required. </i>
                              </div>
                           </div>
                           <div class="form-group" ng-class="{'invalid-input': frm.username.$invalid && frm.$submitted }">
                              <label for="username">Database Username:</label>
-                             <input id="username" type="text" name="username" ng-disabled="disabledDbDtls"
+                             <input id="username" type="text" name="username" ng-disabled="vm.disabledDbDtls"
                                 ng-model="vm.username" required class="form-control inp" />
                              <div class="invalid-feedback" ng-if="frm.username.$invalid && frm.$submitted">
                                 <i class="zmdi zmdi-alert-polygon"
@@ -32,7 +32,7 @@
                           </div>
                           <div class="form-group" ng-class="{'invalid-input': frm.password.$invalid && frm.$submitted }">
                              <label for="password">Database Password:</label>
-                             <input id="password" type="password" name="password" ng-disabled="disabledDbDtls"
+                             <input id="password" type="password" name="password" ng-disabled="vm.disabledDbDtls"
                                 ng-model="vm.password" required class="form-control inp" />
                              <div class="invalid-feedback" ng-if="frm.password.$invalid && frm.$submitted">
                                 <i class="zmdi zmdi-alert-polygon"
@@ -40,12 +40,17 @@
                                 password is required. </i>
                              </div>
                           </div>
+                          <div class="row mt-2" ng-if="vm.result">
+                                <div class="col-sm-12">
+                                    <div class="d-flex justify-content-center it-would-not">{{vm.result}}</div>
+                                </div>
+                          </div>
                        </div>
                     </div>
                  </div>
                  <div class="card-footer">
                     <div class="float-right">
-                       <button class="btn btn-main" type="submit" ng-disabled="disabledDbDtls" ng-click="vm.onTestConnection(frm);">Test Connection</button>
+                       <button class="btn btn-main" type="submit" ng-disabled="vm.disabledDbDtls" ng-click="vm.onTestConnection(frm);">Test Connection</button>
                     </div>
                  </div>
               </div>
@@ -59,7 +64,7 @@
                        <div class="col-sm-12">
                           <div class="form-group" ng-class="{'invalid-input': frm.sitekey.$invalid && frm.$submitted }">
                              <label for="sitekey">Site Key:</label>
-                             <input id="sitekey" type="text" name="sitekey" ng-disabled="disabledLicDtls"
+                             <input id="sitekey" type="text" name="sitekey" ng-disabled="vm.disabledLicDtls"
                                 ng-model="vm.sitekey" required class="form-control inp" />
                              <div class="invalid-feedback" ng-if="frm.sitekey.$invalid && frm.$submitted">
                                 <i class="zmdi zmdi-alert-polygon"
@@ -69,7 +74,7 @@
                           </div>
                           <div class="form-group" ng-class="{'invalid-input': frm.sitename.$invalid && frm.$submitted }">
                              <label for="sitename">Site Name:</label>
-                             <input id="sitename" type="text" name="sitename" ng-disabled="disabledLicDtls"
+                             <input id="sitename" type="text" name="sitename" ng-disabled="vm.disabledLicDtls"
                                 ng-model="vm.sitename" required class="form-control inp" />
                              <div class="invalid-feedback" ng-if="frm.sitename.$invalid && frm.$submitted">
                                 <i class="zmdi zmdi-alert-polygon"
@@ -82,9 +87,9 @@
                  </div>
                  <div class="card-footer">
                     <div class="float-right">
-                       <button class="btn btn-main" type="submit" ng-disabled="disabledLicDtls" ng-click="vm.onSaveConnectionDtls(frm);">Check License and Save Settings</button>
+                       <button class="btn btn-main" type="submit" ng-disabled="vm.disabledLicDtls" ng-click="vm.onSaveConnectionDtls(frm);">Check License and Save Settings</button>
                        &nbsp;
-                       <button class="btn btn-main" type="button" ng-disabled="disabledLicDtls" ng-click="vm.onClose();">Save and Close</button>
+                       <button class="btn btn-main" type="button" ng-disabled="vm.disabledLicDtls" ng-click="vm.onClose();">Save and Close</button>
                     </div>
                  </div>
               </div>

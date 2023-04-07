@@ -1,7 +1,6 @@
 var app = angular.module('app', ['ngRoute']);
 
 app.config(function($routeProvider) {
-	debugger
 	$routeProvider.when('/', {
 		templateUrl: `${__dirname}/src/windows/setzones.html`,
 		controller: 'SetZonesController'

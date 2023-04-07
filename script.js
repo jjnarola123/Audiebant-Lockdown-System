@@ -1,7 +1,6 @@
 var app = angular.module('app', ['ngRoute']);
 
 app.config(function($routeProvider) {
-	debugger
 	$routeProvider.when('/', {
         //title: 'Home',
 		templateUrl: `${__dirname}/src/windows/dbcon.html`,

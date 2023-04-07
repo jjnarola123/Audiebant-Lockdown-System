@@ -6,20 +6,28 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
     vm.onSaveConnectionDtls = function (f) {       
         if (f.$valid) {              
             count = 0;
+            selectedZones=[];
             $scope.zones.forEach(function(zone) {
-                if (zone.selected) {
+                if (zone.selected) {   
+                   selectedZones.push({"id":zone.id,"zone_name":zone.zone_name})
                    count++;
-                   vm.result="";
                 }
+                vm.result="";
             });
             if(count==0){
                vm.result = "Please select at least one zone";
+            }else{
+                // axios.post('https://www.audiebant.co.uk/api/api.php?', {
+                //     params: {
+                //         selectedZones;
+                //     }
+                // }).then(function (response) {   });     
+                ipcRenderer.send('close',[])
             }
         }
     }; 
 
-    vm.onGetZones = function() {
-     
+    vm.onGetZones = function() {     
         vm.disabledDbDtls = myService.disabledDbDtls;     
         axios.get('https://www.audiebant.co.uk/api/api.php?', {
             params: {
@@ -53,12 +61,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         });
     };
     
-    vm.onClose = function(){         
-        ipcRenderer.send('close',[])
-    };
-
-    vm.onLogin = function(){
-       
+    vm.onLogin = function(){       
         $location.path('/login');
         $scope.$applyAsync();
     };  

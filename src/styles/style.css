@@ -159,18 +159,52 @@ label {
 
 .zone-box {
     border: 1px #ccc solid;
-    background-color:white;
     min-height: 100px;
+    background-color:white;
     padding: 7px; 
 
   }
 
-  .label-color{
+ .label-color{
     color: black;
-  }
+ }
   
 .zone-scroll
+{ 
+    max-height: 260px;
+    overflow-y: scroll;   
+}
+
+.scroll-style::-webkit-scrollbar-track
 {
-    max-height: 300px;
-    overflow-y: scroll;
+	-webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.6);
+	background-color: #CCCCCC;
+    border-radius: 100px;
+}
+
+.scroll-style::-webkit-scrollbar
+{
+	width: 9px;
+	background-color: #F5F5F5;
+}
+
+
+.scroll-style::-webkit-scrollbar-thumb
+{ 
+    border: 5px;
+    border-radius: 50px;
+	background-color: #FFF;
+	background-image: -webkit-linear-gradient(90deg,
+	                                          rgba(5, 22, 73) 0%,
+											  rgba(5, 22, 73) 25%,
+											  transparent 100%,
+											  rgba(5, 22, 73) 75%,
+											  transparent)
+} 
+
+.containerstyle-mt{
+    max-width: auto;
+    margin-top: 3rem!important;
+    margin-left:  2rem  !important;
+    margin-right:  2rem  !important;
 }

@@ -1,10 +1,9 @@
-<div class="container" ng-controller="SetZonesController as vm"  ng-init="vm.onGetZones()" ng-cloak>
-  <div class="justify-content-left mt-4">
+<div class="containerstyle-mt" ng-controller="SetZonesController as vm"  ng-init="vm.onGetZones()" ng-cloak>
+  <div class="justify-content-center ">
       <ng-form novalidate name="frm">
-        <div class="card">
-            
-                <div class="card-header">
-                    <div class="row">
+        <div class="card">            
+              <div class="card-header">
+                   <div class="row">
                        <div class="col-sm-4">
                           <h6>Audiebant Set Zones</h6>
                        </div>
@@ -13,7 +12,7 @@
                        </div>
                        <div class="fs-12">* Please tick the relevant zones from the list below. if no zones are showing, please check you have an active internet connection.</div>
                     </div>
-                 </div>
+              </div>
               <div class="card-body">
                   <div class="row">            
                         <div class="col-sm-6"></div>
@@ -25,11 +24,13 @@
                                 <h6>Replace by ticking new zones on left...</h6>
                             </div>
                         </div>
-                        <div class="col-sm-6 zone-scroll">                          
-                            <div class="form-group" ng-repeat='zone in zones' ><input type='checkbox' id='{{zone.id}}' ng-disabled="vm.disabledDbDtls" value='{{ zone.zone_name }}' ng-model='zone.selected'>&nbsp;<label for='{{zone.zone_name}}'>{{zone.zone_name}}</label></div>                               
-                        </div>  
-                        <div class="col-sm-6">   
-                            <div class="zone-box zone-scroll">
+                        <div class="col-sm-6">
+                            <div class="zone-scroll scroll-style">                          
+                                <div class="form-group" ng-repeat='zone in zones' ><input type='checkbox' id='{{zone.id}}' ng-disabled="vm.disabledDbDtls" value='{{ zone.zone_name }}' ng-model='zone.selected'>&nbsp;<label for='{{zone.zone_name}}'>{{zone.zone_name}}</label></div>                               
+                           </div>  
+                        </div>
+                        <div class="col-sm-6"  >   
+                            <div class="zone-box zone-scroll scroll-style">
                                 <div class="form-group" ng-repeat='zone in zones' >
                                     <label class="label-color">{{zone.zone_name}}</label>
                                 </div>

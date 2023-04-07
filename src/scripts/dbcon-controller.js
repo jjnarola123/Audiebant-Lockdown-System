@@ -1,4 +1,4 @@
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer } = require('electron');
 const axios = require('axios');
 
 app.controller('DbConController', function ($scope, $location, myService, Constants) {

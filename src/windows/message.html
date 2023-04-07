@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="appMessage">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+      <title>Audiebant Lockdown Solution</title>
+      <link rel="stylesheet" href="../../src/styles/bootstrap.min.css" />
+      <link rel="stylesheet" href="../../src/styles/style.css" />
+      <link rel="stylesheet" type="text/css" href="../../src/styles/material-design-iconic-font.min.css" />
+
+      <script type="text/javascript" src="../../src/scripts/angular-1.7.8.min.js"></script>
+      <script type="text/javascript" src="../../src/scripts/message-controller.js"></script>  
+      <base href="/">
+   </head>
+   <body>
+        <div class="containerstyle-mt" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak>
+         <div class="justify-content-center ">
+             <ng-form novalidate name="frm">
+               <div class="card">            
+                     <div class="card-header">
+                          <div class="row">
+                              <div class="col-sm-4">
+                                 <h6>Audiebant Set Zones</h6>
+                              </div>
+                              <div class="col-sm-8 text-end">                        
+                                 <a class="lnk-login" >Login</a>                                   
+                              </div>
+                              <div class="fs-12">* Please tick the relevant zones from the list below. if no zones are showing, please check you have an active internet connection.</div>
+                           </div>
+                     </div>
+                     <div class="card-body">
+                         <div class="row">            
+                               <div class="col-sm-6"></div>
+                               <div class="col-sm-6">
+                                   <div class="form-group">
+                                       <h6>Current selected zones :</6>
+                                   </div>
+                                   <div class="form-group">
+                                       <h6>Replace by ticking new zones on left...</h6>
+                                   </div>
+                               </div>
+                         </div>
+                     </div>
+                     <div class="card-footer">
+                         <div class="float-right">    
+                             <div class="form-group">                                
+                                 <button class="btn btn-main" type="submit">Update Zones and Close</button>
+                             </div>
+                         </div>
+                     </div>
+               </div>      
+             </ng-form>           
+         </div>
+       </div>   
+   </body>
+</html>

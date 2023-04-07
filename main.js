@@ -1,6 +1,5 @@
 const { BrowserWindow, app, Tray, Menu, ipcMain } = require('electron');
 const path = require('path');
-
 const createWindow = (Page) => 
 {
     const win = new BrowserWindow({
@@ -44,8 +43,24 @@ const createTrayAndMenu = () => {
     tray.setContextMenu(contextMenu)
 }
 
-app.whenReady().then(() => {
-    createTrayAndMenu();
+let winMessage = null
+const checkMessage =(Page)=> {
+    winMessage= new BrowserWindow({
+        show: false,
+        webPreferences:{
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false
+        }
+      });
+    winMessage.loadFile(Page);
+}
+
+app.whenReady().then(() => { 
+    createTrayAndMenu(); 
+    setInterval(function(){
+        checkMessage( __dirname + '/src/windows/message.html')
+    }, 15000);  
 })
 
 app.on('window-all-close', () => {
@@ -53,3 +68,5 @@ app.on('window-all-close', () => {
 })
 
 ipcMain.on('close',()=> app.quit())
+ipcMain.on('ShowMessage',()=> winMessage.show())
+

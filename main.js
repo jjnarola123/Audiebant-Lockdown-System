@@ -1,10 +1,14 @@
 const { BrowserWindow, app, Tray, Menu, ipcMain } = require('electron');
 const path = require('path');
-const createWindow = (Page) => 
+const createWindow = (Page, route) => 
 {
     const win = new BrowserWindow({
         width: 800,
         height: 675,
+        // closable:false,
+        // minimizable:false,
+        // maximizable:false,       
+        //autoHideMenuBar:"hedden",
         webPreferences:{
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -12,7 +16,10 @@ const createWindow = (Page) =>
         }
     })
 
-    win.loadFile(Page)
+    
+    const data = {"route": route}
+    win.loadFile(Page, {query: {"data": JSON.stringify(data)}})
+    //win.loadFile(Page)
 }
 
 const createTrayAndMenu = () => {
@@ -22,13 +29,13 @@ const createTrayAndMenu = () => {
         {
             label:'Connection Settings',
             click: function () {
-                createWindow("index.html")
+                createWindow("index.html", "dbcon")
             }
         },
         {
             label:'Set Zones',
             click: function () {
-                createWindow("zoneindex.html")
+                createWindow("index.html", "zones")
             }
         },
         {
@@ -44,7 +51,7 @@ const createTrayAndMenu = () => {
 }
 
 let winMessage = null
-const checkMessage =(Page)=> {
+const checkMessage =(Page, route)=> {
     winMessage= new BrowserWindow({
         show: false,
         webPreferences:{
@@ -53,13 +60,16 @@ const checkMessage =(Page)=> {
             contextIsolation: false
         }
       });
-    winMessage.loadFile(Page);
+    //winMessage.loadFile(Page);
+    const data = {"route": route}
+    winMessage.loadFile(Page, {query: {"data": JSON.stringify(data)}})
 }
 
 app.whenReady().then(() => { 
     createTrayAndMenu(); 
     setInterval(function(){
-        checkMessage( __dirname + '/src/windows/message.html')
+        checkMessage("index.html", "message")
+        //checkMessage( __dirname + '/src/windows/message.html')
     }, 15000);  
 })
 
@@ -68,5 +78,5 @@ app.on('window-all-close', () => {
 })
 
 ipcMain.on('close',()=> app.quit())
-ipcMain.on('ShowMessage',()=> winMessage.show())
+ipcMain.once('ShowMessage',()=> winMessage.show())
 

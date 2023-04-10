@@ -1,16 +1,4 @@
-const { ipcRenderer } = window.require('electron');
-const axios = require('axios');
-
-var appMessage = angular.module('appMessage', []);
-
-appMessage.constant('Constants', {
-	ResultStatus:{
-		1: 'Success',
-		2: 'Failed'
-	}
-}); 
-
-appMessage.controller('MessageController', function ($scope, Constants) {  
+app.controller('MessageController', function ($scope,$location,Constants,myService) {  
     var vm = this;  
     vm.onCheckMessage = function() {    
         axios.get('https://www.communicateandprotect.com/api/api.php?request=login&user_name=admin&password=admin')
@@ -18,10 +6,15 @@ appMessage.controller('MessageController', function ($scope, Constants) {
             if(response){
                 if(response.data.status ==Constants.ResultStatus[1]){
                     $scope.$apply(function () {
-                        ipcRenderer.send('ShowMessage');
+                        vm.message="Test message";       
+                        vm.frmDate=new Date();   
+                        ipcRenderer.send('ShowMessage'); 
                     });                
                 }              
             }
         });     
     };     
+    vm.onSaveConnectionDtls=function(){
+        ipcRenderer.send('close',[]);
+    } 
 });

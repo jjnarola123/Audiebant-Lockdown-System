@@ -1,37 +1,36 @@
-<div class="containerstyle-mt" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak>
+<div class="custom-container" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak>
         <div class="justify-content-center ">
             <ng-form novalidate name="frm">
               <div class="card">            
                     <div class="card-header">
                          <div class="row">
                              <div class="col-sm-4">
-                                <h6>Audiebant Message</h6>
+                                <h6>Audiebant Set Zones</h6>
                              </div>
                              <div class="col-sm-8 text-end">                        
-                                <a class="lnk-login" >Login</a>                                   
+                               <img href="../../assets/img/warning.png" width="150px" height="100px" />                            
                              </div>
-                             <div class="fs-12">* Please tick the relevant zones from the list below. if no zones are showing, please check you have an active internet connection.</div>
                           </div>
                     </div>
                     <div class="card-body">
                         <div class="row">            
-                              <div class="col-sm-6"></div>
                               <div class="col-sm-6">
-                                  <div class="form-group">
-                                      <h6>Current selected zones :</h6>
-                                  </div>
-                                  <div class="form-group">
-                                      <h6>Replace by ticking new zones on left...</h6>
-                                  </div>
+                                   <img src="../../assets/img/warning.png" width="300px" height="250px" >                                
+                               </div>
+                              <div class="col-sm-6">                                
+                                {{vm.message}}
                               </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="float-right">    
-                            <div class="form-group">                                
-                                <button class="btn btn-main" type="submit">Update Zones and Close</button>
-                            </div>
-                        </div>
+                       <div class="row">
+                           <div class="col-sm-9">
+                               <h6>This alert message has been broadcast by deanhigh @ {{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
+                           </div>
+                           <div class="col-sm-3 text-end">                        
+                               <button class="btn btn-danger text-end"  ng-click="vm.onSaveConnectionDtls();" type="submit">Close and confirm message &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>                                 
+                           </div>                          
+                       </div>                       
                     </div>
               </div>      
             </ng-form>           

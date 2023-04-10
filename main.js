@@ -5,6 +5,10 @@ const createWindow = (Page, route) =>
     const win = new BrowserWindow({
         width: 800,
         height: 675,
+        // closable:false,
+        // minimizable:false,
+        // maximizable:false,       
+        //autoHideMenuBar:"hedden",
         webPreferences:{
             nodeIntegration: true,
             enableRemoteModule: true,

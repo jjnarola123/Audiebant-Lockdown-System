@@ -6,10 +6,15 @@ app.controller('MessageController', function ($scope,$location,Constants,myServi
             if(response){
                 if(response.data.status ==Constants.ResultStatus[1]){
                     $scope.$apply(function () {
-                        ipcRenderer.send('ShowMessage');
+                        vm.message="Test message";       
+                        vm.frmDate=new Date();   
+                        ipcRenderer.send('ShowMessage'); 
                     });                
                 }              
             }
         });     
     };     
+    vm.onSaveConnectionDtls=function(){
+        ipcRenderer.send('close',[]);
+    } 
 });

@@ -1,6 +1,3 @@
-const { ipcRenderer } = window.require('electron');
-const axios = require('axios');
-
 app.controller('SetZonesController', function ($scope,$location,Constants,myService) {  
     var vm = this;    
     vm.onSaveConnectionDtls = function (f) {       

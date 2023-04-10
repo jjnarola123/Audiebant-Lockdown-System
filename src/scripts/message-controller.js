@@ -1,16 +1,4 @@
-const { ipcRenderer } = window.require('electron');
-const axios = require('axios');
-
-var appMessage = angular.module('appMessage', []);
-
-appMessage.constant('Constants', {
-	ResultStatus:{
-		1: 'Success',
-		2: 'Failed'
-	}
-}); 
-
-appMessage.controller('MessageController', function ($scope, Constants) {  
+app.controller('MessageController', function ($scope,$location,Constants,myService) {  
     var vm = this;  
     vm.onCheckMessage = function() {    
         axios.get('https://www.communicateandprotect.com/api/api.php?request=login&user_name=admin&password=admin')

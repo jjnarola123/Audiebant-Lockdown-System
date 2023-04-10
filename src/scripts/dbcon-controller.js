@@ -1,6 +1,3 @@
-const { ipcRenderer } = require('electron');
-const axios = require('axios');
-
 app.controller('DbConController', function ($scope, $location, myService, Constants) {
     var vm = this;
     vm.onDisabled = function (){

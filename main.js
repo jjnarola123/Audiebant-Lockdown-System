@@ -53,6 +53,8 @@ const createTrayAndMenu = () => {
 let winMessage = null
 const checkMessage =(Page, route)=> {
     winMessage= new BrowserWindow({
+        width: 800,
+        height: 600,
         show: false,
         webPreferences:{
             nodeIntegration: true,

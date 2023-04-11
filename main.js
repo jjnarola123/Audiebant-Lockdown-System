@@ -54,8 +54,9 @@ let winMessage = null
 const checkMessage =(Page, route)=> {
     winMessage= new BrowserWindow({
         width: 800,
-        height: 600,
+        height: 520,
         show: false,
+        frame: false ,
         webPreferences:{
             nodeIntegration: true,
             enableRemoteModule: true,

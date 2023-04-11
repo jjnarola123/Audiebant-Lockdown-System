@@ -23,7 +23,7 @@ const createWindow = (Page, route) =>
 }
 
 const createTrayAndMenu = () => {
-    tray = new Tray('assets/img/audiebant-tray-icon.jpg')
+    tray = new Tray( __dirname + '/assets/img/audiebant-tray-icon.jpg')
    
     let template = [
         {

@@ -52,6 +52,7 @@ const createTrayAndMenu = () => {
 
 let winMessage = null
 const checkMessage =(Page, route)=> {
+    //if (!winMessage) {
     winMessage= new BrowserWindow({
         width: 800,
         height: 520,
@@ -63,16 +64,16 @@ const checkMessage =(Page, route)=> {
             contextIsolation: false
         }
       });
-    //winMessage.loadFile(Page);
+  
     const data = {"route": route}
     winMessage.loadFile(Page, {query: {"data": JSON.stringify(data)}})
+    //}
 }
 
 app.whenReady().then(() => { 
     createTrayAndMenu(); 
     setInterval(function(){
         checkMessage("index.html", "message")
-        //checkMessage( __dirname + '/src/windows/message.html')
     }, 15000);  
 })
 
@@ -82,4 +83,5 @@ app.on('window-all-close', () => {
 
 ipcMain.on('close',()=> app.quit())
 ipcMain.once('ShowMessage',()=> winMessage.show())
+ipcMain.on('CloseMessage',()=> winMessage.close())
 

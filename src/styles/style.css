@@ -208,3 +208,8 @@ label {
     margin-left:  2rem  !important;
     margin-right:  2rem  !important;
 }
+
+.form-control:disabled {
+    background-color: #ffffff21 !important;
+    opacity: 1 !important;
+}

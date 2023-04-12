@@ -38,7 +38,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                 //         selectedZones;
                 //     }
                 // }).then(function (response) {   });     
-                ipcRenderer.send('close',[])
+                ipcRenderer.send('CloseWin');
             }
         }
     }; 

@@ -1,13 +1,16 @@
 const { BrowserWindow, app, Tray, Menu, ipcMain } = require('electron');
 const path = require('path');
+
+let win = null
+var force_quit = false;
 const createWindow = (Page, route) => 
 {
-    const win = new BrowserWindow({
+   win = new BrowserWindow({
         width: 800,
         height: 675,
         // closable:false,
-        // minimizable:false,
-        // maximizable:false,       
+        minimizable:false,
+        maximizable:false,       
         //autoHideMenuBar:"hedden",
         webPreferences:{
             nodeIntegration: true,
@@ -16,7 +19,13 @@ const createWindow = (Page, route) =>
         }
     })
 
-    
+    win.on('close', function(e){
+        if(!force_quit){
+            e.preventDefault();
+            win.hide();
+        }
+    });
+
     const data = {"route": route}
     win.loadFile(Page, {query: {"data": JSON.stringify(data)}})
     //win.loadFile(Page)
@@ -41,7 +50,7 @@ const createTrayAndMenu = () => {
         {
             label:'Exit',
             click: function () {
-                app.quit()
+                force_quit=true; app.quit()
             }
         }
     ]
@@ -81,7 +90,8 @@ app.on('window-all-close', () => {
     if(process.platform !== 'darwin') app.quit()
 })
 
+
 ipcMain.on('close',()=> app.quit())
 ipcMain.once('ShowMessage',()=> winMessage.show())
 ipcMain.on('CloseMessage',()=> winMessage.close())
-
+ipcMain.on('CloseWin',()=> win.close())

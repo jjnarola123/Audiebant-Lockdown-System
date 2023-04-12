@@ -2,7 +2,7 @@ app.controller('LoginController', function ($scope, $location, Constants, myServ
     var vm = this;
 
     vm.onClose = function(){
-        ipcRenderer.send('close',[])
+        ipcRenderer.send('CloseWin');
     }
 
     vm.onLogin = function(f) {

@@ -1,24 +1,27 @@
 app.controller('SetZonesController', function ($scope,$location,Constants,myService) {  
     var vm = this;
 
-    vm.updateSelection = function(zoneId) {
-        debugger
-        $scope.groupzones.forEach(function(zone) {             
-            debugger
-            if(zone.id==zoneId){
-                $scope.vm.disabledCheck =true;
-            }
+    vm.updateSelection = function(position, entities) {
+        angular.forEach(entities, function(zonegroup, index) {
+          $scope.checkAll=false;
+          if (position != index)
+               zonegroup.id = false;  
         });
-       
-
-      
-        // groupzones.forEach(function(zones, index) {
-        //   if (position != index) 
-        //     zones.checked = false;
-        // });
     }
-    
 
+    vm.updateAll=function(f){
+        if(f.checkAll==false){
+            $scope.checkAll='All';
+            angular.forEach($scope.groupzones, function(zonegroup) {             
+                zonegroup.id = true;                           
+            });
+        }else{
+            $scope.checkAll=false;
+            angular.forEach($scope.groupzones, function(zonegroup) {             
+                zonegroup.id = false;                           
+            });
+        }
+    }
     vm.onSaveConnectionDtls = function (f) {       
         if (f.$valid) {              
             count = 0;
@@ -38,13 +41,14 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                 //         selectedZones;
                 //     }
                 // }).then(function (response) {   });     
-                ipcRenderer.send('close',[])
+                ipcRenderer.send('CloseWin');
             }
         }
     }; 
 
     vm.onGetZones = function() {     
-        vm.disabledCheck=false;
+        vm.disabledCheck=false;    
+        $scope.checkAll=false;
         vm.disabledDbDtls = myService.disabledDbDtls; 
         axios.get('https://www.audiebant.co.uk/api/api.php?', {
             params: {

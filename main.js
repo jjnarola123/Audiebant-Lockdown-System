@@ -1,13 +1,17 @@
 const { BrowserWindow, app, Tray, Menu, ipcMain } = require('electron');
 const path = require('path');
+const axios = require('axios');
+
+let win = null
+var force_quit = false;
 const createWindow = (Page, route) => 
 {
-    const win = new BrowserWindow({
+   win = new BrowserWindow({
         width: 800,
         height: 675,
         // closable:false,
-        // minimizable:false,
-        // maximizable:false,       
+        minimizable:false,
+        maximizable:false,       
         //autoHideMenuBar:"hedden",
         webPreferences:{
             nodeIntegration: true,
@@ -16,7 +20,13 @@ const createWindow = (Page, route) =>
         }
     })
 
-    
+    win.on('close', function(e){
+        if(!force_quit){
+            e.preventDefault();
+            win.hide();
+        }
+    });
+
     const data = {"route": route}
     win.loadFile(Page, {query: {"data": JSON.stringify(data)}})
     //win.loadFile(Page)
@@ -41,7 +51,7 @@ const createTrayAndMenu = () => {
         {
             label:'Exit',
             click: function () {
-                app.quit()
+                force_quit=true; app.quit()
             }
         }
     ]
@@ -51,12 +61,12 @@ const createTrayAndMenu = () => {
 }
 
 let winMessage = null
-const checkMessage =(Page, route)=> {
+const createMessage =(Page, route)=> {
     //if (!winMessage) {
     winMessage= new BrowserWindow({
         width: 800,
         height: 520,
-        show: false,
+        
         frame: false ,
         webPreferences:{
             nodeIntegration: true,
@@ -72,16 +82,32 @@ const checkMessage =(Page, route)=> {
 
 app.whenReady().then(() => { 
     createTrayAndMenu(); 
-    setInterval(function(){
-        checkMessage("index.html", "message")
-    }, 15000);  
+    checkMessage();
 })
 
 app.on('window-all-close', () => {
     if(process.platform !== 'darwin') app.quit()
 })
 
-ipcMain.on('close',()=> app.quit())
-ipcMain.once('ShowMessage',()=> winMessage.show())
-ipcMain.on('CloseMessage',()=> winMessage.close())
 
+ipcMain.on('close',()=> app.quit())
+
+ipcMain.on('CloseMessage',()=> winMessage.close())
+ipcMain.on('CloseWin',()=> win.close())
+
+var messageObj;
+function checkMessage(){
+    setInterval(function(){
+        axios.get('https://www.communicateandprotect.com/api/api.php?request=login&user_name=admin&password=admin')
+        .then(function (response) {
+            if(response.data.status =="Success"){
+                messageObj = response.data.status;
+                createMessage("index.html", "message");   
+            }                   
+        });    
+    }, 15000);  
+}
+
+ipcMain.on('RequestMessage', (event) => {
+    event.sender.send('MessageObject', messageObj)
+ })

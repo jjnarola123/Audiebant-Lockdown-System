@@ -43,7 +43,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     };
 
     vm.onSaveAndClose = function(){
-        ipcRenderer.send('close',[])
+        ipcRenderer.send('CloseWin');
     }
 
     vm.onLogin = function(){

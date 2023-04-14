@@ -11,6 +11,7 @@ const createWindow = (Page, route) => {
         // closable:false,
         minimizable: false,
         maximizable: false,
+        icon: __dirname + '/assets/img/cp-tray-icon.jpg',
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
@@ -55,28 +56,29 @@ const createTrayAndMenu = () => {
         }
     ]
     let contextMenu = Menu.buildFromTemplate(template)
-    tray.setToolTip('Audiebant Lockdown Solution')
+    tray.setToolTip('Communicate and Protect')
     tray.setContextMenu(contextMenu)
 }
 
 let winMessage = null
 const createMessage = (Page, route) => {
-    //if (!winMessage) {
-    winMessage = new BrowserWindow({
-        width: 800,
-        height: 520,
+    if (!winMessage) {
+        winMessage = new BrowserWindow({
+            width: 800,
+            height: 600,
+            minimizable: false,
+            maximizable: false,
+            icon: __dirname + '/assets/img/cp-tray-icon.jpg',
+            webPreferences: {
+                nodeIntegration: true,
+                enableRemoteModule: true,
+                contextIsolation: false
+            }
+        });
 
-        frame: false,
-        webPreferences: {
-            nodeIntegration: true,
-            enableRemoteModule: true,
-            contextIsolation: false
-        }
-    });
-
-    const data = { "route": route }
-    winMessage.loadFile(Page, { query: { "data": JSON.stringify(data) } })
-    //}
+        const data = { "route": route }
+        winMessage.loadFile(Page, { query: { "data": JSON.stringify(data) } })
+    }
 }
 
 app.whenReady().then(() => {
@@ -88,19 +90,13 @@ app.on('window-all-close', () => {
     if (process.platform !== 'darwin') app.quit()
 })
 
-
-ipcMain.on('close', () => app.quit())
-
-ipcMain.on('CloseMessage', () => winMessage.close())
-ipcMain.on('CloseWin', () => win.close())
-
 var messageObj;
 function checkMessage() {
     setInterval(function () {
-        axios.get('https://www.communicateandprotect.com/api/api.php?request=login&user_name=admin&password=admin')
+        axios.get('https://www.communicateandprotect.com/api/api.php?request=message&sitekey=90a02d12-d202-11ed-b741-005056ad37fa&msgtype=Lockdown')
             .then(function (response) {
                 if (response.data.status == "Success") {
-                    messageObj = response.data.status;
+                    messageObj =  JSON.stringify(response.data.data[0]);
                     createMessage("index.html", "message");
                 }
             });
@@ -110,3 +106,7 @@ function checkMessage() {
 ipcMain.on('RequestMessage', (event) => {
     event.sender.send('MessageObject', messageObj)
 })
+
+ipcMain.on('close', () => app.quit())
+ipcMain.on('CloseMessage', () => winMessage.close())
+ipcMain.on('CloseWin', () => win.close())

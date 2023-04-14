@@ -11,7 +11,7 @@ html {
     font-family: 'Product Sans';
 }
 
-body {
+.cls-body {
     font-family: 'Product Sans';
     /* height: 100%;
     widows: 100%; */
@@ -20,6 +20,7 @@ body {
     background-attachment: fixed;
     background: linear-gradient(170deg, #2a5379, #7ae4ff);
 }
+
 
 .result {
     padding: 10px;

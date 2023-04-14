@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group row mt-2" ng-if="vm.result">
                                <div class="col-sm-12">
-                                  <div class="d-flex justify-content-center it-would-not">{{vm.result}}</div>
+                                  <div class="d-flex justify-content-center invalid-input">{{vm.result}}</div>
                                </div>
                             </div>
                          </div>
@@ -88,17 +88,24 @@
                                   </div>
                                </div>
                             </div>
-                            <div class="form-group row" ng-class="{'invalid-input': frmlic.sitename.$invalid && frmlic.$submitted }">
+                            <div class="form-group row">
                                <label  class="col-sm-3 col-form-label" for="sitename">Site Name:</label>
                                <div class="col-sm-9">
-                                  <input id="sitename" type="text" name="sitename" ng-disabled="vm.disabledLicDtls"
+                                <input id="sitename" type="text" name="sitename" ng-disabled="true"
+                                    ng-model="vm.sitename" class="form-control inp" />
+                                  <!-- <input id="sitename" type="text" name="sitename" ng-disabled="vm.disabledLicDtls"
                                      ng-model="vm.sitename" required class="form-control inp" />
                                   <div class="invalid-feedback" ng-if="frmlic.sitename.$invalid && frmlic.$submitted">
                                      <i class="zmdi zmdi-alert-polygon"
                                         ng-if="frmlic.sitename.$error.required">&nbsp;Site name
                                      is required. </i>
-                                  </div>
+                                  </div> -->
                                </div>
+                            </div>
+                            <div class="form-group row mt-2" ng-if="vm.licresult">
+                                    <div class="col-sm-12">
+                                       <div class="d-flex justify-content-center invalid-input">{{vm.licresult}}</div>
+                                    </div>
                             </div>
                          </div>
                          <div class="card-footer">

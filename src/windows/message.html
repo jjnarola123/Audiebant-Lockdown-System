@@ -1,46 +1,23 @@
-<div class="custom-container" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak><br/>
-  <div>            
-        <div>
-            <div class="row">
-                <div class="col-sm-12 text-end" ng-if="vm.disabledLicDtls">      
-                  <img src="{{vm.src}}"  width="200px"  height="100px" />  
-                </div>      
-                <div class="col-sm-12 text-end" ng-if="vm.disabledDbDtls">      
-                  <img src="file:///assets/img/communicate-protect-logo.jpg" width="300px" height="70px" />          
-                </div>
-            </div>
+<div class="custom-message-container" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak><br/>
+    <div class="row">
+        <div class="col-sm-12 text-end" >      
+          <img src="{{vm.src}}"  width="200px"  height="100px" />  
+        </div> 
+    </div>
+    <div class="row top-padding" >            
+        <div class="col-sm-4" ng-if="vm.disabledLicDtls">
+          <img src="{{vm.emoji}}"  width="200px" height="200px" />   
         </div>
-        <div>
-            <div class="row">            
-                  <div class="col-sm-4" ng-if="vm.disabledLicDtls">
-                    <img src="{{vm.emoji}}"  width="200px" height="200px" />   
-                  </div>
-                  <div class="col-sm-4" ng-if="vm.disabledDbDtls">                       
-                       <img src="file:///assets/img/warning.png" width="200px" height="200px"  >    
-                  </div>
-                  <div class="col-sm-8 invalid-input" ng-style="{'color': vm.msgcolor}"  ng-if="vm.disabledLicDtls">   
-                    {{vm.message}}                
-                  </div>             
-                  <div class="col-sm-8 invalid-input" ng-style="{'color': 'red'}"  ng-if="vm.disabledDbDtls">   
-                   {{vm.message}}         
-                  </div>  
-            </div>
-        </div>
-        <div>
-            <div class="row">
-                <div class="col-sm-9" ng-if="vm.disabledLicDtls">
-                  <h6  ng-style="{'color':vm.msgcolor}">This alert message has been broadcast by dean high @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
-                </div>
-                <div class="col-sm-9" ng-if="vm.disabledDbDtls">
-                  <h6 ng-style="{'color': 'red'}">This alert message has been broadcast by dean high @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
-                </div>
-                <div class="col-sm-3 text-end" ng-if="vm.disabledLicDtls">      
-                    <button class="btn btn-primary" ng-style="{'color':vm.msgcolor}" ng-click="vm.onSaveConnectionDtls();" type="submit">Close and confirm message &nbsp;</button>                                 
-                </div>           
-                <div class="col-sm-3 text-end" ng-if="vm.disabledDbDtls">      
-                  <button class="btn btn-danger" ng-click="vm.onSaveConnectionDtls();" type="submit">Close and confirm message &nbsp;</button>                                 
-              </div>                 
-            </div>                       
-        </div>
-  </div>    
+        <div class="col-sm-8 invalid-input" ng-style="{'font-size':vm.fontsize}">   
+          <label ng-style="{'color':vm.msgcolor}">{{vm.message}}</label>               
+        </div>   
+    </div>
+    <div class="row top-padding" >
+          <div class="col-sm-9">
+            <h6 ng-style="{'color':vm.msgcolor}">This alert message has been broadcast by dean high @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
+          </div>
+          <div class="col-sm-3 text-end">      
+              <button class="btn btn-custom" ng-style="{'background-color':vm.msgcolor}" ng-click="vm.onSaveConnectionDtls();" type="submit">Close and confirm message &nbsp;</button>                                 
+          </div>                
+    </div>
 </div>   

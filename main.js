@@ -93,13 +93,19 @@ app.on('window-all-close', () => {
 var messageObj;
 function checkMessage() {
     setInterval(function () {
-        axios.get('https://www.communicateandprotect.com/api/api.php?request=message&sitekey=90a02d12-d202-11ed-b741-005056ad37fa&msgtype=Lockdown')
-            .then(function (response) {
-                if (response.data.status == "Success") {
-                    messageObj =  JSON.stringify(response.data.data[0]);
-                    createMessage("index.html", "message");
-                }
-            });
+        axios.get('https://www.communicateandprotect.com/api/api.php?',{
+            params: {
+                request:'message',
+                sitekey:window.localStorage.getItem("sitekey"),
+                msgtype:'General'
+            }      
+        })
+        .then(function (response) {
+            if (response.data.status == "Success") {
+                messageObj =  JSON.stringify(response.data.data[0]);
+                createMessage("index.html", "message");
+            }
+        });
     }, 15000);
 }
 

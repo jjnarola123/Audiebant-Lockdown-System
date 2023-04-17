@@ -3,6 +3,15 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     vm.onDisabled = function (){
         vm.disabledDbDtls = myService.disabledDbDtls;
         vm.disabledLicDtls = myService.disabledLicDtls;
+        vm.onLoadLocalInfo();
+    }
+
+    vm.onLoadLocalInfo = function () {
+        vm.database = window.localStorage.getItem("database");
+        vm.username = window.localStorage.getItem("username");
+        vm.password = window.localStorage.getItem("password");
+        vm.sitekey = window.localStorage.getItem("sitekey");
+        vm.sitename = window.localStorage.getItem("sitename");
     }
 
     vm.onTestConnection = function (f) {
@@ -61,6 +70,26 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     };
 
     vm.onSaveAndClose = function(){
+        if(vm.database)
+            window.localStorage.setItem("database", vm.database);
+        else
+            window.localStorage.setItem("database", '');
+        if(vm.username)
+            window.localStorage.setItem("username", vm.username);
+        else
+            window.localStorage.setItem("username", '');
+        if(vm.password)
+            window.localStorage.setItem("password", vm.password);
+        else
+            window.localStorage.setItem("password", '');
+        if(vm.sitekey)
+            window.localStorage.setItem("sitekey", vm.sitekey);
+        else
+            window.localStorage.setItem("sitekey", '');
+        if(vm.sitename)
+            window.localStorage.setItem("sitename", vm.sitename);
+        else
+            window.localStorage.setItem("sitename", '');
         ipcRenderer.send('CloseWin');
     }
 

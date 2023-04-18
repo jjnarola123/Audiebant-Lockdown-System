@@ -89,7 +89,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         vm.disabledDbDtls = myService.disabledDbDtls;
         axios.get('https://www.communicateandprotect.com/api/api.php?', {
          params: {
-            request:'zones',
+            request:Constants.Request[4],
             sitekey:window.localStorage.getItem("sitekey"),
         }
         })
@@ -123,7 +123,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         //get group zones
         axios.get('https://www.communicateandprotect.com/api/api.php?',{
             params: {
-                request:'groups',
+                request:Constants.Request[8],
                 sitekey:window.localStorage.getItem("sitekey")
             }
         }).then(function (data) {  

@@ -33,6 +33,16 @@ app.constant('Constants', {
 	ResultStatus:{
 		1: 'Success',
 		2: 'Failed'
+	},
+	Request:{
+		1: 'login',
+		2: 'dbc',
+		3: 'sitekey',
+		4: 'zones',
+		5: 'message',
+		6: 'message_confirm',
+		7: 'install',
+		8: 'groups'
 	}
 }); 
 

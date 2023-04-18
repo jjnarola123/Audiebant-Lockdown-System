@@ -20,7 +20,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         if (f.$valid) {
             axios.get('https://www.communicateandprotect.com/api/api.php?', {
                 params: {
-                    request: "dbc",
+                    request: Constants.Request[2],
                     host: "45.157.41.195",
                     database: vm.database,
                     username: vm.username,
@@ -49,7 +49,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         if (f.$valid) {
             axios.get('https://www.communicateandprotect.com/api/api.php?', {
                 params: {
-                    request: "sitekey",
+                    request: Constants.Request[3],
                     sitekey: vm.sitekey
                 }
               })          

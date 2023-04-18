@@ -10,7 +10,7 @@ app.controller('LoginController', function ($scope, $location, Constants, myServ
         if (f.$valid) {  
         axios.get('https://www.communicateandprotect.com/api/api.php?', {
             params: {
-                request: "login",
+                request: Constants.Request[1],
                 user_name: vm.username,
                 password: vm.password
             }

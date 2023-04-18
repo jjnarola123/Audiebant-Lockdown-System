@@ -26,7 +26,7 @@ app.controller('MessageController', function ($scope,$location,Constants,myServi
     vm.onSaveConnectionDtls=function(){
         axios.get('https://www.communicateandprotect.com/api/api.php?',{
         params: {
-            request:'message_confirm',
+            request:Constants.Request[6],
             sitekey:window.localStorage.getItem("sitekey"),
             msgID:'1'
         }

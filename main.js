@@ -8,6 +8,7 @@ const createWindow = (Page, route) => {
     win = new BrowserWindow({
         width: 800,
         height: 675,
+        show: false,
         // closable:false,
         minimizable: false,
         maximizable: false,
@@ -29,7 +30,6 @@ const createWindow = (Page, route) => {
 
     const data = { "route": route }
     win.loadFile(Page, { query: { "data": JSON.stringify(data) } })
-    //win.loadFile(Page)
 }
 
 const createTrayAndMenu = () => {
@@ -39,13 +39,14 @@ const createTrayAndMenu = () => {
         {
             label: 'Connection Settings',
             click: function () {
-                createWindow("index.html", "dbcon")
+                win.show();
             }
         },
         {
             label: 'Set Zones',
             click: function () {
-                createWindow("index.html", "zones")
+                winZones.reload();
+                winZones.show();
             }
         },
         {
@@ -60,9 +61,37 @@ const createTrayAndMenu = () => {
     tray.setContextMenu(contextMenu)
 }
 
+let winZones = null
+const createZonesWindow = (Page, route) => {
+    winZones = new BrowserWindow({
+        width: 800,
+        height: 675,
+        show: false,
+        // closable:false,
+        minimizable: false,
+        maximizable: false,
+        icon: __dirname + '/assets/img/cp-tray-icon.jpg',
+        //autoHideMenuBar:"hedden",
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false
+        }
+    })
+
+    winZones.on('close', function (e) {
+        if (!force_quit) {
+            e.preventDefault();
+            winZones.hide();
+        }
+    });
+
+    const data = { "route": route }
+    winZones.loadFile(Page, { query: { "data": JSON.stringify(data) } })
+}
+
 let winMessage = null
 const createMessage = (Page, route) => {
-    if (!winMessage) {
         winMessage = new BrowserWindow({
             width: 800,
             height: 600,
@@ -78,11 +107,12 @@ const createMessage = (Page, route) => {
 
         const data = { "route": route }
         winMessage.loadFile(Page, { query: { "data": JSON.stringify(data) } })
-    }
 }
 
 app.whenReady().then(() => {
     createTrayAndMenu();
+    createWindow("index.html", "dbcon");
+    createZonesWindow("index.html", "zones");
     checkMessage();
 })
 
@@ -91,21 +121,30 @@ app.on('window-all-close', () => {
 })
 
 var messageObj;
+var site_key;
 function checkMessage() {
     setInterval(function () {
-        axios.get('https://www.communicateandprotect.com/api/api.php?',{
-            params: {
-                request:'message',
-                sitekey:window.localStorage.getItem("sitekey"),
-                msgtype:'General'
-            }      
-        })
-        .then(function (response) {
-            if (response.data.status == "Success") {
-                messageObj =  JSON.stringify(response.data.data[0]);
-                createMessage("index.html", "message");
-            }
-        });
+        if(site_key != '')
+        {
+            axios.get('https://www.communicateandprotect.com/api/api.php?',{
+                params: {
+                    request:'message',
+                    sitekey: site_key,
+                    msgtype:'General'
+                }      
+            })
+            .then(function (response) {
+                if (response.data.status == "Success") {
+                    messageObj =  JSON.stringify(response.data.data[0]);
+                    //if (!winMessage) {
+                    createMessage("index.html", "message");
+                    // }
+                    // else{
+                    //     winMessage.show(); 
+                    // }
+                }
+            });
+        }
     }, 15000);
 }
 
@@ -113,6 +152,8 @@ ipcMain.on('RequestMessage', (event) => {
     event.sender.send('MessageObject', messageObj)
 })
 
-ipcMain.on('close', () => app.quit())
-ipcMain.on('CloseMessage', () => winMessage.close())
+ipcMain.on('GetSiteKey', (event,args) => {
+    site_key = args;
+})
+
 ipcMain.on('CloseWin', () => win.close())

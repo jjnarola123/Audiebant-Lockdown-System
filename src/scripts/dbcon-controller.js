@@ -12,6 +12,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         vm.password = window.localStorage.getItem("password");
         vm.sitekey = window.localStorage.getItem("sitekey");
         vm.sitename = window.localStorage.getItem("sitename");
+        ipcRenderer.send('GetSiteKey', vm.sitekey);
     }
 
     vm.onTestConnection = function (f) {
@@ -90,6 +91,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
             window.localStorage.setItem("sitename", vm.sitename);
         else
             window.localStorage.setItem("sitename", '');
+        ipcRenderer.send('GetSiteKey', vm.sitekey);
         ipcRenderer.send('CloseWin');
     }
 

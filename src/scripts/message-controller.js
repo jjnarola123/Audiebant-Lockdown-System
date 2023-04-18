@@ -33,7 +33,8 @@ app.controller('MessageController', function ($scope,$location,Constants,myServi
     })      
     .then(function (response) {
         if (response.data.status == Constants.ResultStatus[1]) {
-            ipcRenderer.send('CloseMessage'); 
+            //ipcRenderer.send('CloseMessage'); 
+            window.close();
         }
     });            
     } 

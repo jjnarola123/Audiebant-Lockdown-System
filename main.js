@@ -134,7 +134,7 @@ function checkMessage() {
                 }      
             })
             .then(function (response) {
-                if (response.data.status == "Success") {
+                if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1) {
                     messageObj =  JSON.stringify(response.data.data[0]);
                     //if (!winMessage) {
                     createMessage("index.html", "message");

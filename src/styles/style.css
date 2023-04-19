@@ -203,6 +203,35 @@ label {
 											  transparent)
 } 
 
+.msg-scroll
+{ 
+    height:260px;
+    max-height: 260px;
+    overflow-y: scroll;   
+}
+
+.msg-scroll-style::-webkit-scrollbar-track
+{    border-radius: 100px;
+}
+.msg-scroll-style::-webkit-scrollbar
+{
+	width: 9px;
+}
+
+
+.msg-scroll-style::-webkit-scrollbar-thumb
+{ 
+    border: 5px;
+    border-radius: 50px;
+	background-color: #FFF;
+	background-image: -webkit-linear-gradient(90deg,
+	                                          rgb(170, 185, 231) 0%,
+											  rgba(170, 185, 231) 25%,
+											  transparent 100%,
+											  rgba(170, 185, 231) 75%,
+											  transparent)
+} 
+
 .custom-container{
     max-width: auto;
     margin-top: 3rem!important;

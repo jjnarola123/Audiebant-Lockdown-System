@@ -6,8 +6,13 @@ app.controller('MessageController', function ($scope,Constants) {
         vm.frmDate=new Date();    
         ipcRenderer.send('RequestMessage');
         ipcRenderer.on('MessageObject', (event, arg) => {
-            var data =JSON.parse(arg);         
-            vm.src=data[0].msg_school_logo;   
+            var data =JSON.parse(arg);  
+            if(data[0].msg_school_logo=='')       {
+                vm.src='file:///assets/img/image-not-found.png';
+            }else{
+               vm.src=data[0].msg_school_logo;  
+            }
+           
             vm.emoji=data[0].msg_custom_logo;
             vm.msgcolor=data[0].msg_colour;                      
             vm.message=data[0].msg_text; 

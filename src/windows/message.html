@@ -1,12 +1,12 @@
 <div class="custom-message-container" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak><br/>
     <div class="row">
-        <div class="col-sm-12 text-end"  ng-if="vm.src">      
-          <img src="{{vm.src}}" width="200px"  height="100px" />  
+        <div class="col-sm-12 text-end">      
+          <img ng-src="{{vm.src}}" width="200px"  height="100px" />  
         </div> 
     </div>
     <div class="row top-padding" >            
         <div class="col-sm-4" ng-if="vm.emoji">
-          <img src="{{vm.emoji}}"  width="200px" height="200px" />   
+          <img ng-src="{{vm.emoji}}" width="200px" height="200px" />   
         </div>
         <div class="col-sm-8 invalid-input" ng-style="{'font-size':vm.fontsize}">   
           <label ng-style="{'color':vm.msgcolor!='' ? vm.msgcolor : '#dc9435'}">{{vm.message}}</label>               

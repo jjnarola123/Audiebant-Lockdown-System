@@ -23,25 +23,17 @@ app.controller('MessageController', function ($scope,Constants) {
     vm.onSaveConnectionDtls=function(){
 
         var PCName=os.hostname();
-        var SiteName=window.localStorage.getItem("sitename");
-        var SiteKey=window.localStorage.getItem("sitekey");
-        window.close();
-       
-      
-
-
-    //     axios.get('https://www.communicateandprotect.com/api/api.php?',{
-    //     params: {
-    //         request:Constants.Request[6],
-    //         sitekey:window.localStorage.getItem("sitekey"),
-    //         msgID:'1'
-    //     }
-    // })      
-    // .then(function (response) {
-    //     if (response.data.status == Constants.ResultStatus[1]) {
-    //         //ipcRenderer.send('CloseMessage'); 
-    //         window.close();
-    //     }
-    // });            
+        var siteName=window.localStorage.getItem("sitename");
+        var siteKey=window.localStorage.getItem("sitekey");        
+        axios.get('https://www.communicateandprotect.com/api/api.php?',{
+            params: {
+                request:Constants.Request[6],
+                sitekey:siteKey,
+                msgID:'1'
+            }
+        })      
+        .then(function (response) {
+            window.close();
+        });             
     } 
 });

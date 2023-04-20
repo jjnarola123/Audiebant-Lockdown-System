@@ -17,7 +17,7 @@ html {
     widows: 100%; */
     margin: 0;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed !important;
     background: linear-gradient(170deg, #2a5379, #7ae4ff);
 }
 
@@ -172,7 +172,8 @@ label {
   
 .zone-scroll
 { 
-    max-height: 260px;
+    height: 300px;
+    max-height: 300px;
     overflow-y: scroll;   
 }
 

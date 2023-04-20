@@ -96,7 +96,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     }
 
     vm.onLogin = function(){
-        $location.path('/login');
+        $location.path('/login').search({param: 'fromdbcon'});
         $scope.$applyAsync();
     };  
  

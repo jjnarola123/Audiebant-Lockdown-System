@@ -1,8 +1,15 @@
 app.controller('LoginController', function ($scope, $location, Constants, myService) {
     var vm = this;
 
-    vm.onClose = function(){
-        ipcRenderer.send('CloseWin');
+    vm.onBack = function(){
+        var urlParams = $location.search();
+        if(urlParams.param == "fromdbcon"){
+            $location.path('/');
+        }
+        else if(urlParams.param == "fromsetzones"){
+            $location.path('/zones');
+        }
+        //ipcRenderer.send('CloseWin');
     }
 
     vm.onLogin = function(f) {

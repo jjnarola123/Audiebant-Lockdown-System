@@ -40,7 +40,6 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
     }        
 
     vm.updateAll=function(){
-        debugger
         if($('#allZones')[0].checked==true){
             angular.forEach($scope.groupzones, function(zonegroup) {             
                 $('#'+zonegroup.id)[0].checked=true;                         
@@ -143,7 +142,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
     };
 
     vm.onLogin = function(){       
-        $location.path('/login');
+        $location.path('/login').search({param: 'fromsetzones'});;
         $scope.$applyAsync();
     };  
 });

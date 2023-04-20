@@ -1,7 +1,7 @@
 <div class="custom-message-container" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak><br/>
     <div class="row">
-        <div class="col-sm-12 text-end">      
-          <img ng-src="{{vm.src}}" width="200px"  height="100px" />  
+        <div class="col-sm-12 text-end custom-img">      
+          <img ng-src="{{vm.src}}" width="200px" height="100px" />  
         </div> 
     </div>
     <br/>
@@ -18,7 +18,7 @@
             <h6 ng-style="{'color':'#dc9435'}">This alert message has been broadcast by dean high @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
           </div>
           <div class="col-sm-3 text-end">      
-              <button class="btn btn-custom" ng-style="{'background-color':'#dc9435'}" ng-click="vm.onSaveConnectionDtls();" type="submit">Close and confirm message &nbsp;</button>                                 
+              <button class="btn btn-custom" ng-style="{'background-color':'#dc9435'}" ng-click="vm.onSaveMessageDtls();" type="submit">Close and confirm message &nbsp;</button>                                 
           </div>                
     </div>
 </div>   

@@ -57,7 +57,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         }
     }
 
-    vm.onSaveConnectionDtls = function (f) {       
+    vm.onSaveZonesDtls = function (f) {       
         if (f.$valid) {              
             count = 0;
             selectedZones=[];
@@ -69,14 +69,14 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                 vm.result="";
             });
             if(count==0){
-               vm.result = "Please select at least one zone";
+               ipcRenderer.send('CloseZoneWin');
             }else{
                 // axios.post('https://www.audiebant.co.uk/api/api.php?', {
                 //     params: {
                 //         selectedZones;
                 //     }
                 // }).then(function (response) {   });     
-                ipcRenderer.send('CloseWin');
+                ipcRenderer.send('CloseZoneWin');
             }
         }
     }; 

@@ -1,12 +1,12 @@
 app.controller('MessageController', function ($scope,Constants) {  
     var vm = this;  
-
+    var data='';
     vm.onCheckMessage = function() {          
         $('body').removeClass('cls-body');
         vm.frmDate=new Date();    
         ipcRenderer.send('RequestMessage');
         ipcRenderer.on('MessageObject', (event, arg) => {
-            var data =JSON.parse(arg);  
+            data =JSON.parse(arg);  
             if(data[0].msg_school_logo=='')       {
                 vm.src='file:///assets/img/image-not-found.png';
             }else{
@@ -20,20 +20,23 @@ app.controller('MessageController', function ($scope,Constants) {
             $scope.$applyAsync();                 
          })
     };     
-    vm.onSaveConnectionDtls=function(){
-
-        var PCName=os.hostname();
-        var siteName=window.localStorage.getItem("sitename");
-        var siteKey=window.localStorage.getItem("sitekey");        
-        axios.get('https://www.communicateandprotect.com/api/api.php?',{
-            params: {
-                request:Constants.Request[6],
-                sitekey:siteKey,
-                msgID:'1'
-            }
-        })      
-        .then(function (response) {
-            window.close();
-        });             
+    vm.onSaveMessageDtls=function(){
+        if(data!='')
+        {
+            var PCName=os.hostname();
+            var siteName=window.localStorage.getItem("sitename");
+            var siteKey=window.localStorage.getItem("sitekey");        
+            axios.get('https://www.communicateandprotect.com/api/api.php?',{
+                params: {
+                    request:Constants.Request[6],
+                    sitekey:siteKey,
+                    msgID:data[0].msg_id
+                }
+            })      
+            .then(function (response) {
+                window.close();
+            });     
+        }    
+        window.close();
     } 
 });

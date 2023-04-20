@@ -1,5 +1,4 @@
 const { BrowserWindow, app, Tray, Menu, ipcMain } = require('electron');
-const path = require('path');
 const axios = require('axios');
 
 let win = null
@@ -9,10 +8,9 @@ const createWindow = (Page, route) => {
         width: 800,
         height: 675,
         show: false,
-        // closable:false,
-        minimizable: false,
-        maximizable: false,
-        icon: __dirname + '/assets/img/cp-tray-icon.jpg',
+        frame: false,
+        maximizable:false,
+        icon: __dirname + '/assets/img/cp-tray-icon.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
@@ -33,7 +31,7 @@ const createWindow = (Page, route) => {
 }
 
 const createTrayAndMenu = () => {
-    tray = new Tray(__dirname + '/assets/img/cp-tray-icon.jpg')
+    tray = new Tray(__dirname + '/assets/img/cp-tray-icon.png')
 
     let template = [
         {
@@ -67,10 +65,9 @@ const createZonesWindow = (Page, route) => {
         width: 800,
         height: 675,
         show: false,
-        // closable:false,
-        minimizable: false,
-        maximizable: false,
-        icon: __dirname + '/assets/img/cp-tray-icon.jpg',
+        frame: false,        
+        maximizable:false,
+        icon: __dirname + '/assets/img/cp-tray-icon.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
@@ -95,18 +92,18 @@ const createMessage = (Page, route) => {
         winMessage = new BrowserWindow({
             width: 800,
             height: 600,
-            minimizable: false,
-            maximizable: false,
-            icon: __dirname + '/assets/img/cp-tray-icon.jpg',
+            maximizable:false,
+            frame:false,
+            icon: __dirname + '/assets/img/cp-tray-icon.png',
             webPreferences: {
                 nodeIntegration: true,
                 enableRemoteModule: true,
                 contextIsolation: false
             }
-        });
-
+        });  
         const data = { "route": route }
         winMessage.loadFile(Page, { query: { "data": JSON.stringify(data) } })
+       
 }
 
 app.whenReady().then(() => {
@@ -136,7 +133,7 @@ function checkMessage() {
             .then(function (response) {
                 if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1) {
                     messageObj =  JSON.stringify(response.data.data[0]);
-                    //if (!winMessage) {
+                    //if (!winMessage) {                 
                     createMessage("index.html", "message");
                     // }
                     // else{
@@ -157,3 +154,4 @@ ipcMain.on('GetSiteKey', (event,args) => {
 })
 
 ipcMain.on('CloseWin', () => win.close())
+ipcMain.on('CloseZoneWin', () => winZones.close())

@@ -55,7 +55,7 @@ const createTrayAndMenu = () => {
         }
     ]
     let contextMenu = Menu.buildFromTemplate(template)
-    tray.setToolTip('Communicate and Protect')
+    tray.setToolTip('Audiebant Lockdown Solution')
     tray.setContextMenu(contextMenu)
 }
 
@@ -123,11 +123,11 @@ function checkMessage() {
     setInterval(function () {
         if(site_key != '')
         {
-            axios.get('https://www.communicateandprotect.com/api/api.php?',{
+            axios.get('https://www.audiebant.co.uk/api/desktop_api.php',{
                 params: {
                     request:'message',
                     sitekey: site_key,
-                    msgtype:'General'
+                    msgtype:'Lockdown'
                 }      
             })
             .then(function (response) {

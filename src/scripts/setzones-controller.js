@@ -86,7 +86,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         vm.disabledCheck=false;    
         $scope.checkAll=false;
         vm.disabledDbDtls = myService.disabledDbDtls;
-        axios.get('https://www.communicateandprotect.com/api/api.php?', {
+        axios.get('https://www.audiebant.co.uk/api/desktop_api.php?', {
          params: {
             request:Constants.Request[4],
             sitekey:window.localStorage.getItem("sitekey"),
@@ -120,7 +120,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
             }
         });
         //get group zones
-        axios.get('https://www.communicateandprotect.com/api/api.php?',{
+        axios.get('https://www.audiebant.co.uk/api/desktop_api.php?',{
             params: {
                 request:Constants.Request[8],
                 sitekey:window.localStorage.getItem("sitekey")

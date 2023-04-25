@@ -14,8 +14,8 @@ app.controller('LoginController', function ($scope, $location, Constants, myServ
 
     vm.onLogin = function(f) {
         f.$submitted = true;
-        if (f.$valid) {  
-        axios.get('https://www.communicateandprotect.com/api/api.php?', {
+        if (f.$valid) {
+        axios.get('https://www.audiebant.co.uk/api/desktop_api.php?', {
             params: {
                 request: Constants.Request[1],
                 user_name: vm.username,

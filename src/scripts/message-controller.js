@@ -6,17 +6,8 @@ app.controller('MessageController', function ($scope,Constants) {
         vm.frmDate=new Date();    
         ipcRenderer.send('RequestMessage');
         ipcRenderer.on('MessageObject', (event, arg) => {
-            data =JSON.parse(arg);  
-            if(data[0].msg_school_logo=='')       {
-                vm.src='file:///assets/img/image-not-found.png';
-            }else{
-               vm.src=data[0].msg_school_logo;  
-            }
-           
-            vm.emoji=data[0].msg_custom_logo;
-            vm.msgcolor=data[0].msg_colour;                      
+            data =JSON.parse(arg);                      
             vm.message=data[0].msg_text; 
-            vm.fontsize=data[0].msg_fontsize;
             $scope.$applyAsync();                 
          })
     };     
@@ -26,7 +17,7 @@ app.controller('MessageController', function ($scope,Constants) {
             var PCName=os.hostname();
             var siteName=window.localStorage.getItem("sitename");
             var siteKey=window.localStorage.getItem("sitekey");        
-            axios.get('https://www.communicateandprotect.com/api/api.php?',{
+            axios.get('https://www.audiebant.co.uk/api/desktop_api.php?',{
                 params: {
                     request:Constants.Request[6],
                     sitekey:siteKey,
@@ -34,9 +25,21 @@ app.controller('MessageController', function ($scope,Constants) {
                 }
             })      
             .then(function (response) {
+                //ack_log
+                axios.get('https://www.audiebant.co.uk/api/desktop_api.php?',{
+                    params: {
+                        request:Constants.Request[6],
+                        sitekey:siteKey,
+                        msgID:data[0].msg_id
+                    }
+                }).then(function (data) { 
+
+
+                });                
                 window.close();
             });     
         }    
+        
         window.close();
     } 
 });

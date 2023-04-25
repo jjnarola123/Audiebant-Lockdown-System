@@ -18,7 +18,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     vm.onTestConnection = function (f) {
         f.$submitted = true;
         if (f.$valid) {
-            axios.get('https://www.communicateandprotect.com/api/api.php?', {
+            axios.get('https://www.audiebant.co.uk/api/desktop_api.php?', {
                 params: {
                     request: Constants.Request[2],
                     host: "45.157.41.195",
@@ -46,7 +46,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     vm.onSaveSettings = function (f) {
         f.$submitted = true;
         if (f.$valid) {
-            axios.get('https://www.communicateandprotect.com/api/api.php?', {
+            axios.get('https://www.audiebant.co.uk/api/desktop_api.php?', {
                 params: {
                     request: Constants.Request[3],
                     sitekey: vm.sitekey

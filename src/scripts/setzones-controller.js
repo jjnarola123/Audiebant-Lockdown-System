@@ -63,7 +63,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
             selectedZones=[];
             $scope.zones.forEach(function(zone) {
                if($('#zone'+zone.zone_id)[0].checked==true){                
-                   selectedZones.push({"id":zone.id,"zone_name":zone.zone_name})
+                   selectedZones.push({"id":zone.zone_id,"zone_name":zone.zone_name})
                    count++;
                 }                
                 vm.result="";
@@ -71,11 +71,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
             if(count==0){
                ipcRenderer.send('CloseZoneWin');
             }else{
-                // axios.post('https://www.audiebant.co.uk/api/api.php?', {
-                //     params: {
-                //         selectedZones;
-                //     }
-                // }).then(function (response) {   });     
+                window.localStorage.setItem("savedZone", JSON.stringify(selectedZones));
                 ipcRenderer.send('CloseZoneWin');
             }
         }
@@ -103,6 +99,8 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                             });
                         }
                     }
+                    vm.getSavedZone= JSON.parse(window.localStorage.getItem("savedZone"));
+                    $scope.$applyAsync();
                 }
                 else{
                     vm.result=response.data.status+" :"+ response.data.message;
@@ -130,7 +128,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                 if(data.data.status==Constants.ResultStatus[1]){
                     if(data.data.data.length >= 0){    
                         for(let i=0;i<data.data.data.length;i++)
-                        {debugger
+                        {
                             $scope.$apply(function () {
                                 $scope.groupzones=data.data.data[i];
                             });

@@ -71,6 +71,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
             if(count==0){
                ipcRenderer.send('CloseZoneWin');
             }else{
+                window.localStorage.setItem("savedZone", JSON.stringify(selectedZones));
                 // axios.post('https://www.audiebant.co.uk/api/api.php?', {
                 //     params: {
                 //         selectedZones;
@@ -103,6 +104,8 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                             });
                         }
                     }
+                    vm.getSavedZone= JSON.parse(window.localStorage.getItem("savedZone"));
+                    $scope.$applyAsync();
                 }
                 else{
                     vm.result=response.data.status+" :"+ response.data.message;
@@ -130,7 +133,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                 if(data.data.status==Constants.ResultStatus[1]){
                     if(data.data.data.length >= 0){    
                         for(let i=0;i<data.data.data.length;i++)
-                        {debugger
+                        {
                             $scope.$apply(function () {
                                 $scope.groupzones=data.data.data[i];
                             });

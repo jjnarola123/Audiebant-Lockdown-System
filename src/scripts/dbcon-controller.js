@@ -30,14 +30,13 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
               .then(function (response) {
                 if(response){
                     if(response.data.status == Constants.ResultStatus[1]){
-                        vm.result = '';
                         vm.disabledLicDtls = false;
                         myService.disabledLicDtls = false;
                     }
                     else{
                         vm.disabledLicDtls = true;
-                        vm.result = response.data.message;
                     }
+                    vm.result = response.data.message;
                     $scope.$applyAsync();
                 }
             });
@@ -58,12 +57,11 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
                 if(response){
                     if(response.data.status == Constants.ResultStatus[1]){
                         vm.sitename = response.data.data[0][0].site_name;
-                        vm.licresult = '';
                     }
                     else{
-                        vm.licresult = response.data.message;
                         vm.sitename = '';
                     }
+                    vm.licresult = response.data.message;
                     $scope.$applyAsync();
                 }
             });

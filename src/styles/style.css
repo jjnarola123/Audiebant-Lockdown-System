@@ -11,15 +11,16 @@ html {
     font-family: 'Product Sans';
 }
 
-body {
+.cls-body {
     font-family: 'Product Sans';
     /* height: 100%;
     widows: 100%; */
     margin: 0;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed !important;
     background: linear-gradient(170deg, #2a5379, #7ae4ff);
 }
+
 
 .result {
     padding: 10px;
@@ -171,7 +172,8 @@ label {
   
 .zone-scroll
 { 
-    max-height: 260px;
+    height: 280px;
+    max-height: 300px;
     overflow-y: scroll;   
 }
 
@@ -202,9 +204,88 @@ label {
 											  transparent)
 } 
 
+.msg-scroll
+{ 
+    height:260px;
+    max-height: 260px;
+    overflow-y: scroll;   
+}
+
+.msg-scroll-style::-webkit-scrollbar-track
+{    border-radius: 100px;
+}
+.msg-scroll-style::-webkit-scrollbar
+{
+	width: 9px;
+}
+
+
+.msg-scroll-style::-webkit-scrollbar-thumb
+{ 
+    border: 5px;
+    border-radius: 50px;
+	background-color: #FFF;
+	background-image: -webkit-linear-gradient(90deg,
+	                                          rgb(170, 185, 231) 0%,
+											  rgba(170, 185, 231) 25%,
+											  transparent 100%,
+											  rgba(170, 185, 231) 75%,
+											  transparent)
+} 
+
 .custom-container{
     max-width: auto;
-    margin-top: 3rem!important;
+    margin-top: 2rem!important;
     margin-left:  2rem  !important;
     margin-right:  2rem  !important;
 }
+.custom-message-container{
+    max-width: auto;
+    margin-top: 2rem  !important;
+    margin-left: 0.8rem  !important;
+    margin-right: 0.8rem  !important;
+}
+
+.custom-img{
+    margin-top: -22px;
+}
+
+.top-padding{
+   padding-top:20px;
+}
+
+.form-control:disabled {
+    background-color: #ffffff21 !important;
+    opacity: 1 !important;
+}
+
+.btn-custom{
+    --bs-btn-color: #fff;  
+    --bs-btn-active-color: #fff;
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-focus-shadow-rgb: 225,83,97;   
+}
+
+.header{
+    display:block;
+    height:30px;
+    background:#dc9435;
+    text-decoration:none;
+    padding-left:30px;
+    font-size: 10pt;
+    font-weight: 500;
+    padding-top: 5px;
+    -webkit-app-region: drag;
+}
+
+.header:before{
+    content: '';
+    background:url('../../assets/img/cp-header-icon.png');
+    background-size:cover;
+        position:absolute;
+    width:20px;
+    height:20px;
+    margin-left:-25px;
+} 

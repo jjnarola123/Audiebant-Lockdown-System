@@ -1,36 +1,24 @@
-<div class="custom-container" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak>
-        <div class="justify-content-center">
-            <ng-form novalidate name="frm">
-              <div class="card">            
-                    <div class="card-header">
-                         <div class="row">
-                             <div class="col-sm-12 text-end">                        
-                               <img src="file:///assets/img/Audiebant_Logo_noTM.jpg" width="300px" height="70px" />                            
-                             </div>
-                          </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">            
-                              <div class="col-sm-4">
-                                   <img src="file:///assets/img/warning.png" width="200px" height="200px" >                                
-                               </div>
-                              <div class="col-sm-8 invalid-input">   
-                                {{vm.message}}
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                              </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                       <div class="row">
-                           <div class="col-sm-9">
-                               <h6>This alert message has been broadcast by dean high @ {{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
-                           </div>
-                           <div class="col-sm-3 text-end">      
-                               <button class="btn btn-main" ng-click="vm.onSaveConnectionDtls();" type="submit">Close and confirm message &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>                                 
-                           </div>                          
-                       </div>                       
-                    </div>
-              </div>      
-            </ng-form>           
-        </div>
+<div class="custom-message-container" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak><br/>
+  <div class="row">
+      <div class="col-sm-12 text-end custom-img">      
+        <img ng-src="file:///assets/img/audiebant_logo.jpg" width="400px" height="50px" />  
+      </div> 
+  </div>
+  <br/>
+  <div class="row top-padding msg-scroll msg-scroll-style" >            
+      <div class="col-sm-4">
+        <img ng-src="file:///assets/img/alert.jpg" width="200px" height="200px" />   
+      </div>
+      <div class="col-sm-8">   
+        <label class="it-would-not">{{vm.message}}</label>
       </div>   
+  </div>
+  <div class="row top-padding" >
+        <div class="col-sm-9">
+          <h6 ng-style="{'color':'#ff0000'}">This alert message has been broadcast by dean high @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
+        </div>
+        <div class="col-sm-3 text-end">      
+            <button class="btn btn-danger"  ng-click="vm.onSaveMessageDtls();" type="submit">Close and confirm message &nbsp;</button>                                 
+        </div>                
+  </div>
+</div>   

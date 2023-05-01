@@ -1,6 +1,6 @@
 const { BrowserWindow, app, Tray, Menu, ipcMain } = require('electron');
-const path = require('path');
 const axios = require('axios');
+//const isFirstRun = require('electron-first-run');
 
 let win = null
 var force_quit = false;
@@ -8,9 +8,10 @@ const createWindow = (Page, route) => {
     win = new BrowserWindow({
         width: 800,
         height: 675,
-        // closable:false,
-        minimizable: false,
-        maximizable: false,
+        show: false,
+        frame: false,
+        maximizable:false,
+        icon: __dirname + '/assets/img/cp-tray-icon.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
@@ -28,23 +29,23 @@ const createWindow = (Page, route) => {
 
     const data = { "route": route }
     win.loadFile(Page, { query: { "data": JSON.stringify(data) } })
-    //win.loadFile(Page)
 }
 
 const createTrayAndMenu = () => {
-    tray = new Tray(__dirname + '/assets/img/audiebant-tray-icon.jpg')
+    tray = new Tray(__dirname + '/assets/img/cp-tray-icon.png')
 
     let template = [
         {
             label: 'Connection Settings',
             click: function () {
-                createWindow("index.html", "dbcon")
+                win.show();
             }
         },
         {
             label: 'Set Zones',
             click: function () {
-                createWindow("index.html", "zones")
+                winZones.reload();
+                winZones.show();
             }
         },
         {
@@ -59,54 +60,137 @@ const createTrayAndMenu = () => {
     tray.setContextMenu(contextMenu)
 }
 
-let winMessage = null
-const createMessage = (Page, route) => {
-    //if (!winMessage) {
-    winMessage = new BrowserWindow({
+let winZones = null
+const createZonesWindow = (Page, route) => {
+    winZones = new BrowserWindow({
         width: 800,
-        height: 520,
-
-        frame: false,
+        height: 675,
+        show: false,
+        frame: false,        
+        maximizable:false,
+        icon: __dirname + '/assets/img/cp-tray-icon.png',
+        //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
             contextIsolation: false
         }
+    })
+
+    winZones.on('close', function (e) {
+        if (!force_quit) {
+            e.preventDefault();
+            winZones.hide();
+        }
     });
 
     const data = { "route": route }
-    winMessage.loadFile(Page, { query: { "data": JSON.stringify(data) } })
-    //}
+    winZones.loadFile(Page, { query: { "data": JSON.stringify(data) } })
+}
+
+let winMessage = null
+const createMessage = (Page, route) => {
+        winMessage = new BrowserWindow({
+            width: 800,
+            height: 600,
+            maximizable:false,
+            frame:false,
+            icon: __dirname + '/assets/img/cp-tray-icon.png',
+            webPreferences: {
+                nodeIntegration: true,
+                enableRemoteModule: true,
+                contextIsolation: false
+            }
+        });  
+        const data = { "route": route }
+        winMessage.loadFile(Page, { query: { "data": JSON.stringify(data) } })
+       
 }
 
 app.whenReady().then(() => {
+
+    //axios.get('https://localhost:44347/api/Car/GetAllModels?p='+ process.argv);  
+    //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     createTrayAndMenu();
+    createWindow("index.html", "dbcon");
+    createZonesWindow("index.html", "zones");
     checkMessage();
+
+   
+    
 })
 
 app.on('window-all-close', () => {
     if (process.platform !== 'darwin') app.quit()
 })
 
-
-ipcMain.on('close', () => app.quit())
-
-ipcMain.on('CloseMessage', () => winMessage.close())
-ipcMain.on('CloseWin', () => win.close())
-
 var messageObj;
+var site_key;
 function checkMessage() {
     setInterval(function () {
-        axios.get('https://www.communicateandprotect.com/api/api.php?request=login&user_name=admin&password=admin')
+        if(site_key != '')
+        {
+            axios.get('https://www.audiebant.co.uk/api/desktop_api.php',{
+                params: {
+                    request:'message',
+                    sitekey: site_key,
+                    msgtype:'Lockdown'
+                }      
+            })
             .then(function (response) {
-                if (response.data.status == "Success") {
-                    messageObj = response.data.status;
+                if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1) {
+                    messageObj =  JSON.stringify(response.data.data[0]);
+                    //if (!winMessage) {                 
                     createMessage("index.html", "message");
+                    // }
+                    // else{
+                    //     winMessage.show(); 
+                    // }
                 }
             });
+        }
     }, 15000);
 }
 
 ipcMain.on('RequestMessage', (event) => {
     event.sender.send('MessageObject', messageObj)
 })
+
+ipcMain.on('GetSiteKey', (event,args) => {
+    site_key = args;
+})
+
+ipcMain.on('CloseWin', () => win.close())
+ipcMain.on('CloseZoneWin', () => winZones.close())
+
+
+
+
+// app.on('will-uninstall', (event) => {
+//     // Check if the app is being uninstalled on Windows
+//     if (process.platform === 'win32' ) {
+//         axios.get('https://localhost:44347/api/Car/GetAllModels?p='+ JSON.stringify(event)); 
+//         event.preventDefault();
+//         app.quit();
+//     }
+//   });
+// app.on('before-quit', () => {
+
+//     // Check if the app is being uninstalled
+//     if (process.platform === 'win32') {
+    
+//         axios.get('https://localhost:44347/api/Car/GetAllModels?p='+ process.argv).then(res=>{
+//             app.quit();
+//         });  
+       
+//     }
+
+// });
+
+if (process.argv.includes('--uninstall')) {
+    // Gracefully close the app
+    app.quit()
+    app.on('window-all-closed', () => {
+      app.quit()
+    })
+  }

@@ -1,99 +1,116 @@
+const $ = require('jquery')
 app.controller('SetZonesController', function ($scope,$location,Constants,myService) {  
     var vm = this;
+    vm.updateSelection = function(index) {
+        
+        if($('#allZones')[0].checked==true && index > 1){
+            index=1;
+        }
+        if($('#allZones')[0].checked==true && index == 1){
+            index=2;
+        }
+        $('#allZones')[0].checked=false;
 
-    vm.updateSelection = function(position, entities) {
-        angular.forEach(entities, function(zonegroup, index) {
-          $scope.checkAll=false;
-          if (position != index)
-               zonegroup.id = false;  
+        angular.forEach($scope.groupzones, function(zone) {     
+            if(index==zone.id){
+                if($('#'+zone.id)[0].checked==true){
+                  $('#'+zone.id)[0].checked=true;
+                }
+                else{
+                    $('#'+zone.id)[0].checked=false;
+                }
+            }
+            else{
+                $('#'+zone.id)[0].checked=false;
+            } 
+        });        
+        angular.forEach($scope.zones, function(zone) {
+            if(index==zone.zone_id){
+                if($('#'+zone.zone_id)[0].checked==true){
+                  $('#zone'+zone.zone_id)[0].checked=true;
+                }
+                else{
+                    $('#zone'+zone.zone_id)[0].checked=false;
+                }
+            }
+            else{
+                $('#zone'+zone.zone_id)[0].checked=false;
+            }
         });
-    }
+    }        
 
-    vm.updateAll=function(f){
-        if(f.checkAll==false){
-            $scope.checkAll='All';
+    vm.updateAll=function(){
+        if($('#allZones')[0].checked==true){
             angular.forEach($scope.groupzones, function(zonegroup) {             
-                zonegroup.id = true;                           
+                $('#'+zonegroup.id)[0].checked=true;                         
+            });
+            angular.forEach($scope.zones, function(zone) {
+               $('#zone'+zone.zone_id)[0].checked=true;
             });
         }else{
-            $scope.checkAll=false;
-            angular.forEach($scope.groupzones, function(zonegroup) {             
-                zonegroup.id = false;                           
+            angular.forEach($scope.groupzones, function(zonegroup) {    
+                $('#'+zonegroup.id)[0].checked=false;                                
             });
+            angular.forEach($scope.zones, function(zone) {
+                $('#zone'+zone.zone_id)[0].checked=false;
+             });
         }
     }
-    vm.onSaveConnectionDtls = function (f) {       
+
+    vm.onSaveZonesDtls = function (f) {       
         if (f.$valid) {              
             count = 0;
             selectedZones=[];
             $scope.zones.forEach(function(zone) {
-                if (zone.selected) {   
+               if($('#zone'+zone.zone_id)[0].checked==true){                
                    selectedZones.push({"id":zone.id,"zone_name":zone.zone_name})
                    count++;
-                }
+                }                
                 vm.result="";
             });
             if(count==0){
-               vm.result = "Please select at least one zone";
+               ipcRenderer.send('CloseZoneWin');
             }else{
                 // axios.post('https://www.audiebant.co.uk/api/api.php?', {
                 //     params: {
                 //         selectedZones;
                 //     }
                 // }).then(function (response) {   });     
-                ipcRenderer.send('CloseWin');
+                ipcRenderer.send('CloseZoneWin');
             }
         }
     }; 
 
-    vm.onGetZones = function() {     
+    vm.onGetZones = function() {   
+        vm.siteName= window.localStorage.getItem("sitename"),
         vm.disabledCheck=false;    
         $scope.checkAll=false;
-        vm.disabledDbDtls = myService.disabledDbDtls; 
-        axios.get('https://www.audiebant.co.uk/api/api.php?', {
-            params: {
-                request: "zones",
-                _area:"DeanHigh"
-            }
-        }).then(function (response) {  
+        vm.disabledDbDtls = myService.disabledDbDtls;
+        axios.get('https://www.audiebant.co.uk/api/desktop_api.php?', {
+         params: {
+            request:Constants.Request[4],
+            sitekey:window.localStorage.getItem("sitekey"),
+        }
+        })
+        .then(function (response) {        
             if(response){            
                 if(response.data.status==Constants.ResultStatus[1]){
                     if(response.data.data.length >= 0){    
                         for(let i=0;i<response.data.data.length;i++)
                         {
-                            $scope.$apply(function () {
+                            $scope.$apply(function () {                                
                                 $scope.zones =response.data.data[i];
                             });
                         }
-                        //get group zones
-                        axios.get('https://www.audiebant.co.uk/api/api.php?',{
-                            params: {
-                                request: "zones",
-                                _area:"DeanHigh"
-                            }
-                        }).then(function (data) {  
-                            if(data){            
-                                if(data.data.status==Constants.ResultStatus[1]){
-                                    if(data.data.data.length >= 0){    
-                                        for(let i=0;i<data.data.data.length;i++)
-                                        {
-                                            $scope.$apply(function () {
-                                                $scope.groupzones=data.data.data[i];
-                                            });
-                                        }
-                                    }
-                                }
-                            }else{
-                                vm.groupresult="No Zone Found";
-                            }
-                        })
                     }
                 }
                 else{
-                    vm.result=response.data.status;
+                    vm.result=response.data.status+" :"+ response.data.message;
+                    $scope.$applyAsync();
                 }
             }else{
                 vm.result="No Data Found";
+                $scope.$applyAsync();
             }
         }).catch(error => {
             if (error.response) {
@@ -102,10 +119,30 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                 });
             }
         });
+        //get group zones
+        axios.get('https://www.audiebant.co.uk/api/desktop_api.php?',{
+            params: {
+                request:Constants.Request[8],
+                sitekey:window.localStorage.getItem("sitekey")
+            }
+        }).then(function (data) {  
+            if(data){    
+                if(data.data.status==Constants.ResultStatus[1]){
+                    if(data.data.data.length >= 0){    
+                        for(let i=0;i<data.data.data.length;i++)
+                        {debugger
+                            $scope.$apply(function () {
+                                $scope.groupzones=data.data.data[i];
+                            });
+                        }
+                    }
+                }
+            }
+        })
     };
-    
+
     vm.onLogin = function(){       
-        $location.path('/login');
+        $location.path('/login').search({param: 'fromsetzones'});;
         $scope.$applyAsync();
     };  
 });

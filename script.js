@@ -5,15 +5,15 @@ app.config(function($routeProvider) {
 		templateUrl: `${__dirname}/src/windows/main.html`,
 		controller: 'MainController'
 	}).when('/dbcon', {
-		title: 'Connection Settings',
+		title: '- Connection Settings',
 		templateUrl: `${__dirname}/src/windows/dbcon.html`,
 		controller: 'DbConController'
 	}).when('/login', {
-		title: 'Login',
+		title: '- Login',
 		templateUrl: `${__dirname}/src/windows/login.html`,
 		controller: 'LoginController'
 	}).when('/zones', {
-		title: 'Set Zones',
+		title: '- Set Zones',
 		templateUrl: `${__dirname}/src/windows/setzones.html`,
 		controller: 'SetZonesController'
 	}).when('/message', {
@@ -33,12 +33,22 @@ app.constant('Constants', {
 	ResultStatus:{
 		1: 'Success',
 		2: 'Failed'
+	},
+	Request:{
+		1: 'login',
+		2: 'dbc',
+		3: 'sitekey',
+		4: 'zones',
+		5: 'message',
+		6: 'message_confirm',
+		7: 'install',
+		8: 'groups'
 	}
 }); 
 
 app.service('myService', function() {
 	  this.disabledDbDtls = true;
-	  this.disabledLicDtls = true;
+	  this.disabledLicDtls = true;	  
 });
 
 app.run(['$rootScope', function($rootScope) {

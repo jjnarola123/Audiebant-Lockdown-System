@@ -1,36 +1,37 @@
-<div class="containerstyle-mt" ng-controller="SetZonesController as vm"  ng-init="vm.onGetZones()" ng-cloak>
+<div class="custom-container" ng-controller="SetZonesController as vm"  ng-init="vm.onGetZones()" ng-cloak>
     <div class="justify-content-center ">
         <ng-form novalidate name="frm">
           <div class="card">            
                 <div class="card-header">
-                     <div class="row">
-                         <div class="col-sm-4">
-                            <h6>Audiebant Set Zones</h6>
-                         </div>
-                         <div class="col-sm-8 text-end">    
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <h6>Communicate Set Zones for <span class="invalid-input">{{vm.siteName}}</span></h6>
+                        </div>
+                        <div class="col-sm-2 text-end">    
                             <div ng-if="vm.disabledDbDtls">                    
                                <a class="lnk-login"  ng-disabled="vm.disabledDbDtls"  ng-click="vm.onLogin()">Login</a>                                   
                             </div>
-                          </div>
-                         <div class="fs-12">* Please tick the relevant zones from the list below. if no zones are showing, please check you have an active internet connection.</div>
-                      </div>
+                        </div>
+                        <div class="fs-12">* Please tick the relevant zones from the list below. if no zones are showing, please check you have an active internet connection.</div>
+                    </div>
                 </div>
                 <div class="card-body">
                   <div class="row">            
                       <h6>Choose zone(s) :</h6>
                       <div class="col-sm-4">
-                        <input type="checkbox" ng-disabled="vm.disabledDbDtls" ng-model="All" ng-checked="checkAll" ng-click="vm.updateAll(this)"  ng-disabled=''><label>All zone(s)</label>
+                        <input type="checkbox" ng-disabled="vm.disabledDbDtls" id="allZones" ng-click="vm.updateAll()"  ng-disabled=''><label>All zone(s)</label>
                       </div>
                       <div class="col-sm-4" ng-repeat='zonegroup in groupzones'>
-                        <input ng-model="zonegroup.id" ng-disabled="vm.disabledDbDtls" ng-click="vm.updateSelection($index, groupzones)" type="checkbox" />            
-                        <label for='{{zonegroup.zone_name}}'>{{zonegroup.zone_name}}</label>
+                        <input type="checkbox" id="{{zonegroup.id}}" ng-model="zonegroup.zone_name" ng-disabled="vm.disabledDbDtls" ng-click="vm.updateSelection(zonegroup.id)"  />            
+                        <label for='{{zonegroup.group_name}}'>{{zonegroup.group_name}}</label>
                       </div>      
                   </div>
+                  <hr/>
                   <div class="row">            
                           <div class="col-sm-6"></div>
                           <div class="col-sm-6">
                               <div class="form-group">
-                                  <h6>Current selected zones :</6>
+                                  <h6>Current selected zones :</h6>
                               </div>
                               <div class="form-group">
                                   <h6>Replace by ticking new zones on left...</h6>
@@ -38,7 +39,7 @@
                           </div>
                           <div class="col-sm-6">
                               <div class="zone-scroll scroll-style">                          
-                                  <div class="form-group" ng-repeat='zone in zones' ><input type='checkbox'  ng-checked="checkAll" id='{{zone.id}}' ng-disabled="vm.disabledDbDtls" value='{{ zone.zone_name }}' ng-model='zone.selected'>&nbsp;<label for='{{zone.zone_name}}'>{{zone.zone_name}}</label></div>                               
+                                  <div class="form-group" ng-repeat='zone in zones'><input type='checkbox' id='zone{{zone.zone_id}}' ng-disabled="vm.disabledDbDtls" value='{{ zone.zone_name }}'>&nbsp;<label for='{{zone.zone_name}}'>{{zone.zone_name}}</label></div>                               
                              </div>  
                           </div>
                           <div class="col-sm-6"  >   
@@ -50,7 +51,7 @@
                           </div>                   
                           <div class="row mt-2" ng-if="vm.result"> 
                               <div class="col-sm-12">
-                                  <div class="d-flex justify-content-center it-would-not">{{vm.result}}</div>
+                                  <div class="d-flex justify-content-center invalid-input">{{vm.result}}</div>
                               </div>
                           </div>  
                   </div>
@@ -58,11 +59,11 @@
                 <div class="card-footer">
                     <div class="float-right">    
                         <div class="form-group">                                
-                            <button class="btn btn-main" type="submit" ng-disabled="vm.disabledDbDtls" ng-click="vm.onSaveConnectionDtls(frm);">Update Zones and Close</button>
+                            <button class="btn btn-main" type="submit"  ng-click="vm.onSaveZonesDtls(frm);">Update Zones and Close</button>
                         </div>
                     </div>
                 </div>
           </div>      
         </ng-form>           
     </div>
-  </div>   
+  </div>  

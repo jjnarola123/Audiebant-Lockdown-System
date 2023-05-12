@@ -7,8 +7,6 @@ app.controller('MainController', function ($scope, $location, myService, Constan
     var vm = this;
     
     vm.onMainInit = function (){
-        console.log(os.hostname());
-
         let query = querystring.parse(global.location.search);
         let data = JSON.parse(query['?data']);
 
@@ -20,6 +18,9 @@ app.controller('MainController', function ($scope, $location, myService, Constan
         }
         else if(data.route == "message"){
             $location.path('/message');
+        }
+        else if(data.route == "uninstall"){
+            $location.path('/uninstall');
         }
     }
 });

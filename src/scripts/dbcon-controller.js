@@ -53,10 +53,16 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
                 }
               })          
               .then(function (response) {
-                  debugger;
                 if(response){
                     if(response.data.status == Constants.ResultStatus[1]){
                         vm.sitename = response.data.data[0][0].site_name;
+                        axios.get('https://www.communicateandprotect.com/api/api.php?', {
+                            params: {
+                                request: Constants.Request[7],
+                                sitekey: vm.sitekey,
+                                PCName:os.hostname()
+                            }
+                        });
                     }
                     else{
                         vm.sitename = '';

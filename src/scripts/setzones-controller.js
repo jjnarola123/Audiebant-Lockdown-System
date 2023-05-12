@@ -61,20 +61,24 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         if (f.$valid) {              
             count = 0;
             selectedZones=[];
-            $scope.zones.forEach(function(zone) {
-               if($('#zone'+zone.zone_id)[0].checked==true){                
-                   selectedZones.push({"id":zone.zone_id,"zone_name":zone.zone_name})
-                   count++;
-                }                
-                vm.result="";
-            });
-            if(count==0){
-               ipcRenderer.send('CloseZoneWin');
+            if($scope.zones !=null){            
+                $scope.zones.forEach(function(zone) {
+                if($('#zone'+zone.zone_id)[0].checked==true){                
+                    selectedZones.push({"id":zone.zone_id,"zone_name":zone.zone_name})
+                    count++;
+                    }                
+                    vm.result="";
+                });
+                if(count==0){
+                ipcRenderer.send('CloseZoneWin');
+                }else{
+                    window.localStorage.setItem("savedZone", JSON.stringify(selectedZones));
+                    ipcRenderer.send('CloseZoneWin');
+                }
             }else{
-                window.localStorage.setItem("savedZone", JSON.stringify(selectedZones));
                 ipcRenderer.send('CloseZoneWin');
             }
-        }
+        }        
     }; 
 
     vm.onGetZones = function() {   

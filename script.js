@@ -16,6 +16,10 @@ app.config(function($routeProvider) {
 		title: '- Set Zones',
 		templateUrl: `${__dirname}/src/windows/setzones.html`,
 		controller: 'SetZonesController'
+	}).when('/uninstall', {
+		title: '- Uninstall',
+		templateUrl: `${__dirname}/src/windows/uninstall.html`,
+		controller: 'UninstallController'
 	}).when('/message', {
 		templateUrl: `${__dirname}/src/windows/message.html`,
 		controller: 'MessageController'
@@ -42,7 +46,8 @@ app.constant('Constants', {
 		5: 'message',
 		6: 'message_confirm',
 		7: 'install',
-		8: 'groups'
+		8: 'groups',
+		9: 'uninstall'
 	}
 }); 
 

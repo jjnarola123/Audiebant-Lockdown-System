@@ -8,11 +8,11 @@ app.controller('MessageController', function ($scope,Constants) {
         ipcRenderer.on('MessageObject', (event, arg) => {
             data =JSON.parse(arg);  
             if(data[0].msg_school_logo=='')       {
-                vm.src='file:///assets/img/image-not-found.png';
-            }else{
-               vm.src=data[0].msg_school_logo;  
-            }
-           
+                vm.src=__dirname + '/assets/img/image-not-found.png';
+             }else{
+                vm.src=data[0].msg_school_logo;  
+            } 
+                      
             vm.emoji=data[0].msg_custom_logo;
             vm.msgcolor=data[0].msg_colour;                      
             vm.message=data[0].msg_text; 
@@ -24,12 +24,12 @@ app.controller('MessageController', function ($scope,Constants) {
         if(data!='')
         {
             var PCName=os.hostname();
-            var siteName=window.localStorage.getItem("sitename");
             var siteKey=window.localStorage.getItem("sitekey");        
             axios.get('https://www.communicateandprotect.com/api/api.php?',{
                 params: {
                     request:Constants.Request[6],
                     sitekey:siteKey,
+                    PCName:os.hostname(),
                     msgID:data[0].msg_id
                 }
             })      

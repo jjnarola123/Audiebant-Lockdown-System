@@ -8,7 +8,35 @@
     "start": "electron .",
     "build": "electron-builder"
   },
-  "author": "Narola Infotech",
+  "build": {
+    "productName": "communicate-and-protect",
+    "appId": "com.communicate-and-protect.myapp",
+    "asar": true,   
+    "mac": {
+      "target": "dmg",
+       "icon":"assets/img/icon.icns"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]         
+        }
+      ],
+      "icon":"assets/img/icon.png"
+    },
+    "linux": {
+      "target": "deb",
+      "icon":"assets/img/icon.png"
+     },
+    "directories": {
+      "output": "dist"
+    }
+  },
+  "author": "Narola Infotech <inquiry@narolainfotech.com>",
   "license": "ISC",
   "devDependencies": {
     "electron": "^23.2.0",

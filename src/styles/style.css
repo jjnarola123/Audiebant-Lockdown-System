@@ -282,7 +282,7 @@ label {
 
 .header:before{
     content: '';
-    background:url('file:///assets/img/cp-header-icon.png');
+    background:url('../../assets/img/cp-header-icon.png');
     background-size:cover;
         position:absolute;
     width:20px;

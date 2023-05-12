@@ -8,7 +8,7 @@ const createWindow = (Page, route) => {
         width: 800,
         height: 675,
         show: false,
-        frame: false,
+        frame: false,   
         maximizable:false,
         icon: __dirname + '/assets/img/cp-tray-icon.png',
         //autoHideMenuBar:"hedden",
@@ -52,7 +52,15 @@ const createTrayAndMenu = () => {
             click: function () {
                 force_quit = true; app.quit()
             }
-        }
+        },       
+        { type: 'separator' },
+        {
+            label: 'Uninstall',
+            click: function () {
+                winUninstall.reload();
+                winUninstall.show();
+            }
+        }      
     ]
     let contextMenu = Menu.buildFromTemplate(template)
     tray.setToolTip('Communicate and Protect')
@@ -106,10 +114,39 @@ const createMessage = (Page, route) => {
        
 }
 
+let winUninstall=null
+const createUninsatllerWindow = (Page, route) => {
+    winUninstall = new BrowserWindow({
+        width: 800,
+        height: 675,       
+        show: false,
+        frame: false,   
+        maximizable:false,
+        icon: __dirname + '/assets/img/cp-tray-icon.png',
+        //autoHideMenuBar:"hedden",
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false
+        }
+    })
+
+    winUninstall.on('close', function (e) {
+        if (!force_quit) {
+            e.preventDefault();
+            winUninstall.hide();
+        }
+    });
+
+    const data = { "route": route }
+    winUninstall.loadFile(Page, { query: { "data": JSON.stringify(data) } })
+}
+
 app.whenReady().then(() => {
     createTrayAndMenu();
     createWindow("index.html", "dbcon");
     createZonesWindow("index.html", "zones");
+    createUninsatllerWindow("index.html", "uninstall");
     checkMessage();
 })
 
@@ -144,7 +181,7 @@ function checkMessage() {
         }
     }, 15000);
 }
-
+winZones
 ipcMain.on('RequestMessage', (event) => {
     event.sender.send('MessageObject', messageObj)
 })
@@ -155,3 +192,6 @@ ipcMain.on('GetSiteKey', (event,args) => {
 
 ipcMain.on('CloseWin', () => win.close())
 ipcMain.on('CloseZoneWin', () => winZones.close())
+ipcMain.on('CloseWindow', () => winUninstall.close())
+ipcMain.on('CloseUniWindow', () => {force_quit=true, app.quit()})
+

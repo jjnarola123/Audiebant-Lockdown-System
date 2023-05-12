@@ -1,0 +1,41 @@
+<div class="custom-container" ng-controller="UninstallController as vm" ng-init="vm.onUninstall()"  ng-cloak>
+    <div class="justify-content-center ">
+        <ng-form novalidate name="frm" ng-class="{'was-validated': frm.$submitted }">
+          <div class="card">            
+                <div class="card-header">   
+                    <div class="col-sm-10">
+                        <h6>Site name : <span class="invalid-input">{{vm.siteName}}</span></h6>
+                    </div>              
+                </div>
+                <div class="card-body">                           
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                  <label class="col-sm-4 col-form-label" for="sitekey">Please confirm site key:</label>  
+                                  <input id="sitekey" type="text" name="sitekey" ng-model="vm.sitekey" required class="form-control inp" />   
+                                  <div class="invalid-feedback" ng-if="frm.sitekey.$invalid && frm.$submitted">
+                                    <i class="zmdi zmdi-alert-polygon"
+                                       ng-if="frm.sitekey.$error.required">&nbsp;Site key
+                                    is required. </i>
+                                 </div>                
+                            </div>                        
+                        </div>     
+                        <div class="row mt-2" ng-if="vm.result"> 
+                            <div class="col-sm-12">
+                                <div class="d-flex justify-content-center invalid-input">{{vm.result}}</div>
+                            </div>
+                        </div>                 
+                    </div> 
+                </div>
+                <div class="card-footer">
+                    <div class="float-right">    
+                        <div class="form-group">                                
+                            <button class="btn btn-main" type="submit"  ng-click="vm.onSave(frm);">Uninstall</button>
+                            <button class="btn btn-main" type="submit"  ng-click="vm.onCancel();">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+          </div>      
+        </ng-form>           
+    </div>
+  </div>  

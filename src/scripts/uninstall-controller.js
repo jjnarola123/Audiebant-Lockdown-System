@@ -25,7 +25,7 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                         window.localStorage.clear();                                           
                         // uninstall from linux   
                         spawn('gnome-terminal', ['-e', 'sudo apt purge communicate-and-protect']);
-                        ipcRenderer.send('CloseUniWindow');
+                        ipcRenderer.send('CloseWindow');
                   
                     }else{
                         vm.result=response.data.status+ ": Invalid site key !";                       

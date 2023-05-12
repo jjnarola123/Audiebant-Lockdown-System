@@ -193,5 +193,4 @@ ipcMain.on('GetSiteKey', (event,args) => {
 ipcMain.on('CloseWin', () => win.close())
 ipcMain.on('CloseZoneWin', () => winZones.close())
 ipcMain.on('CloseWindow', () => winUninstall.close())
-ipcMain.on('CloseUniWindow', () => {force_quit=true, app.quit()})
 

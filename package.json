@@ -14,7 +14,7 @@
     "asar": true,   
     "mac": {
       "target": "dmg",
-       "icon":"assets/img/icon.icns"
+       "icon":"assets/img/iconmac.icns"
     },
     "win": {
       "target": [

@@ -1,6 +1,6 @@
 const { BrowserWindow, app, Tray, Menu, ipcMain } = require('electron');
 const axios = require('axios');
-
+const path = require('path');
 let win = null
 var force_quit = false;
 const createWindow = (Page, route) => {
@@ -31,7 +31,7 @@ const createWindow = (Page, route) => {
 }
 
 const createTrayAndMenu = () => {
-    tray = new Tray(__dirname + '/assets/img/cp-tray-icon.png')
+    tray = new Tray(__dirname + '/assets/img/icon-mac-tray.png')
 
     let template = [
         {
@@ -142,7 +142,7 @@ const createUninsatllerWindow = (Page, route) => {
     winUninstall.loadFile(Page, { query: { "data": JSON.stringify(data) } })
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(() => {   
     createTrayAndMenu();
     createWindow("index.html", "dbcon");
     createZonesWindow("index.html", "zones");
@@ -193,4 +193,10 @@ ipcMain.on('GetSiteKey', (event,args) => {
 ipcMain.on('CloseWin', () => win.close())
 ipcMain.on('CloseZoneWin', () => winZones.close())
 ipcMain.on('CloseWindow', () => winUninstall.close())
+
+ipcMain.on('getPath', (event) => {
+    const getPath=app.getPath('exe');
+    const appPath = path.dirname(getPath);   
+    event.sender.send('sendPath', appPath)
+})
 

@@ -47,7 +47,8 @@ app.constant('Constants', {
 		6: 'message_confirm',
 		7: 'install',
 		8: 'groups',
-		9: 'uninstall'
+		9: 'uninstall',
+		10: 'acknowledge'
 	}
 }); 
 

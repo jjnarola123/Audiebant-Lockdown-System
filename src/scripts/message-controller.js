@@ -22,8 +22,7 @@ app.controller('MessageController', function ($scope,Constants) {
     };     
     vm.onSaveMessageDtls=function(){
         if(data!='')
-        {
-            var PCName=os.hostname();
+        {     
             var siteKey=window.localStorage.getItem("sitekey");        
             axios.get('https://www.communicateandprotect.com/api/api.php?',{
                 params: {
@@ -32,11 +31,35 @@ app.controller('MessageController', function ($scope,Constants) {
                     PCName:os.hostname(),
                     msgID:data[0].msg_id
                 }
-            })      
-            .then(function (response) {
-                window.close();
-            });     
-        }    
-        window.close();
+            }).then(function (response) 
+            {
+                if(response)
+                {             
+                    if(response.data.status == Constants.ResultStatus[1])
+                    {
+                        axios.get('https://www.communicateandprotect.com/api/api.php?',{
+                            params: {
+                                request:Constants.Request[10],
+                                sitekey:siteKey,
+                                PCName:os.hostname(),
+                                MessageID:data[0].msg_id
+                            }
+                        }).then(function (res){
+                            window.close();  
+                        });       
+                    }else{
+                        window.close();  
+                    }
+                }
+                else
+                {
+                    window.close();  
+                }            
+            });
+        }
+        else
+        {
+            window.close();
+        }       
     } 
 });

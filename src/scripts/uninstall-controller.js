@@ -1,5 +1,5 @@
 const { spawn,exec } = require('child_process');
-
+const path = require('path');
 app.controller('UninstallController', function ($scope,$location,Constants,myService) {  
     var vm = this;    
     let appPath='';
@@ -13,7 +13,7 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
         $scope.$applyAsync();      
     }
 
-    vm.onSave = function (f) {        
+    vm.onSave = function (f) {  
         f.$submitted = true;
         if (f.$valid) 
         {
@@ -28,8 +28,19 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                 if(response){                
                     if(response.data.status == Constants.ResultStatus[1]){
                         window.localStorage.clear(); 
-                        if(process.platform == 'darwin'){
-
+                        //Uninstall from Windows
+                       if(process.platform.startsWith("win")){                              
+                            const uninstallCommand = `start "" "${path.join(appPath[0], 'Uninstall communicate-and-protect.exe')}"`;
+                            exec(uninstallCommand, (error, stdout, stderr) => {
+                                ipcRenderer.send('CloseWindowUni');
+                                if (error) {          
+                                    return;
+                                }
+                            });
+                       }
+                       else if(process.platform == 'darwin')
+                       {
+                            //Uninstall from MAC
                             let installationPath="";
                             for(let i=1;i<=appPath.length;i++){
                                 if(appPath[i]=='communicate-and-protect.app'){
@@ -49,7 +60,7 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                             });
                         }
                         else{                        
-                            // uninstall from linux   
+                            //Uninstall from linux   
                             spawn('gnome-terminal', ['-e', 'sudo apt purge communicate-and-protect']);                           
                         }
                         ipcRenderer.send('CloseWindow');

@@ -31,7 +31,8 @@ const createWindow = (Page, route) => {
 }
 
 const createTrayAndMenu = () => {
-    tray = new Tray(__dirname + '/assets/img/icon-mac-tray.png')
+   // tray = new Tray(__dirname + '/assets/img/icon-mac-tray.png')
+    tray = new Tray(__dirname + '/assets/img/cp-tray-icon.png')
 
     let template = [
         {
@@ -198,5 +199,10 @@ ipcMain.on('getPath', (event) => {
     const getPath=app.getPath('exe');
     const appPath = path.dirname(getPath);   
     event.sender.send('sendPath', appPath)
+})
+ipcMain.on('CloseWindowUni', () => {
+    force_quit = true;
+     app.quit()
+
 })
 

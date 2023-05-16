@@ -26,11 +26,11 @@
           ]         
         }
       ],
-      "icon":"assets/img/icon.png"
+      "icon":"assets/img/icon-win.png"
     },
     "linux": {
       "target": "deb",
-      "icon":"assets/img/icon.png"
+      "icon":"assets/img/icon-win.png"
      },
     "directories": {
       "output": "dist"

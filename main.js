@@ -246,7 +246,7 @@ function checkMessage() {
             // });       
 
         }
-    }, 5000);
+    }, 15000);
 }
 ipcMain.on('RequestMessage', (event) => {
     event.sender.send('MessageObject', messageObj)

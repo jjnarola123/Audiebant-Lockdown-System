@@ -57,7 +57,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         }
     }
 
-    vm.onSaveZonesDtls = function (f) {       
+    vm.onSaveZonesDtls = function (f) { 
         if (f.$valid) {              
             count = 0;
             selectedZones=[];
@@ -81,67 +81,90 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         }        
     }; 
 
-    vm.onGetZones = function() {   
-        vm.siteName= window.localStorage.getItem("sitename"),
-        vm.disabledCheck=false;    
-        $scope.checkAll=false;
-        vm.disabledDbDtls = myService.disabledDbDtls;
-        axios.get('https://www.communicateandprotect.com/api/api.php?', {
-         params: {
-            request:Constants.Request[4],
-            sitekey:window.localStorage.getItem("sitekey"),
-        }
-        })
-        .then(function (response) {        
-            if(response){            
-                if(response.data.status==Constants.ResultStatus[1]){
-                    if(response.data.data.length >= 0){    
-                        for(let i=0;i<response.data.data.length;i++)
-                        {
-                            $scope.$apply(function () {                                
-                                $scope.zones =response.data.data[i];
-                            });
+    vm.onGetZones = function() { 
+        // if(window.localStorage.getItem("sitekey") !=null || window.localStorage.getItem("sitekey") != undefined){
+        //     axios.get('https://www.communicateandprotect.com/api/api.php?', {
+        //         params: {
+        //             request: Constants.Request[3],
+        //             sitekey: window.localStorage.getItem("sitekey") 
+        //         }
+        //     })          
+        //     .then(function (response) {
+        //         if(response){
+        //             if(response.data.status == Constants.ResultStatus[1]){
+                    
+                        vm.siteName= window.localStorage.getItem("sitename"),
+                        vm.disabledCheck=false;    
+                        $scope.checkAll=false;
+                        vm.disabledDbDtls = myService.disabledDbDtls;
+                        axios.get('https://www.communicateandprotect.com/api/api.php?', {
+                        params: {
+                            request:Constants.Request[4],
+                            sitekey:window.localStorage.getItem("sitekey"),
                         }
+                        })
+                        .then(function (response) {        
+                            if(response){            
+                                if(response.data.status==Constants.ResultStatus[1]){
+                                    if(response.data.data.length >= 0){    
+                                        for(let i=0;i<response.data.data.length;i++)
+                                        {
+                                            $scope.$apply(function () {                                
+                                                $scope.zones =response.data.data[i];
+                                            });
+                                        }
+                                    }
+                                    vm.getSavedZone= JSON.parse(window.localStorage.getItem("savedZone"));
+                                    $scope.$applyAsync();
+                                }
+                                else{
+                                    vm.result=response.data.status+" :"+ response.data.message;
+                                    $scope.$applyAsync();
+                                }
+                            }else{
+                                vm.result="No Data Found";
+                                $scope.$applyAsync();
+                            }
+                        }).catch(error => {
+                            if (error.response) {
+                                $scope.$apply(function () {
+                                    $scope.vm.result =error.response.status + error.response.statusText;
+                                });
+                            }
+                        });
+                        //get group zones
+                        axios.get('https://www.communicateandprotect.com/api/api.php?',{
+                            params: {
+                                request:Constants.Request[8],
+                                sitekey:window.localStorage.getItem("sitekey")
+                            }
+                        }).then(function (data) {  
+                            if(data){    
+                                if(data.data.status==Constants.ResultStatus[1]){
+                                    if(data.data.data.length >= 0){    
+                                        for(let i=0;i<data.data.data.length;i++)
+                                        {
+                                            $scope.$apply(function () {
+                                                $scope.groupzones=data.data.data[i];
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        })
                     }
-                    vm.getSavedZone= JSON.parse(window.localStorage.getItem("savedZone"));
-                    $scope.$applyAsync();
-                }
-                else{
-                    vm.result=response.data.status+" :"+ response.data.message;
-                    $scope.$applyAsync();
-                }
-            }else{
-                vm.result="No Data Found";
-                $scope.$applyAsync();
-            }
-        }).catch(error => {
-            if (error.response) {
-                $scope.$apply(function () {
-                    $scope.vm.result =error.response.status + error.response.statusText;
-                });
-            }
-        });
-        //get group zones
-        axios.get('https://www.communicateandprotect.com/api/api.php?',{
-            params: {
-                request:Constants.Request[8],
-                sitekey:window.localStorage.getItem("sitekey")
-            }
-        }).then(function (data) {  
-            if(data){    
-                if(data.data.status==Constants.ResultStatus[1]){
-                    if(data.data.data.length >= 0){    
-                        for(let i=0;i<data.data.data.length;i++)
-                        {
-                            $scope.$apply(function () {
-                                $scope.groupzones=data.data.data[i];
-                            });
-                        }
-                    }
-                }
-            }
-        })
-    };
+                    // else{
+                    //     axios.get('https://www.communicateandprotect.com/api/api.php?', {
+                    //         params: {
+                    //             request: Constants.Request[9],
+                    //             sitekey: window.localStorage.getItem("sitekey"),
+                    //             PCName: os.hostname()
+                    //         }
+                    //     })  
+                    //     window.localStorage.clear();
+                    // }
+                 
+   
 
     vm.onLogin = function(){       
         $location.path('/login').search({param: 'fromsetzones'});;

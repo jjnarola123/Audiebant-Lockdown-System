@@ -1,0 +1,29 @@
+<div class="custom-message-container" ng-controller="LockdownmessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak><br/>
+    <div class="row">
+        <div class="col-sm-12 text-end custom-img">      
+          <img ng-src="file:///assets/img/school-logo.png" width="250px" height="50px"  />  
+        </div> 
+    </div>
+    <br/>
+    <div class="row top-padding" >            
+        <div class="col-sm-4">
+          <img ng-src="file:///assets/img/alert.png" width="250px" height="250px" />   
+        </div>
+        <div class="col-sm-8" style="font-size:30pt">   
+          <center><label ng-style="{'color':'#CC0000','display': 'block'}">{{vm.message}}</label></center>
+        </div>   
+    </div>
+    <!-- <div hidden>  
+      <audio controls autoplay>
+        <source src="file:///assets/Messagetone.mp3" type="audio/mpeg">        
+      </audio>
+    </div> -->
+    <div class="row" >
+          <div class="col-sm-9">
+            <h6 class="footer" ng-style="{'color':'#CC0000'}">This alert message has been broadcast by {{vm.msgname}} @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
+          </div>
+          <div class="col-sm-3">      
+              <button class="btn btn-custom" style="background-color:#CC0000"  ng-click="vm.onSaveMessageDtls();" type="submit">Close and confirm message &nbsp;</button>                                 
+          </div>                
+    </div>
+  </div>   

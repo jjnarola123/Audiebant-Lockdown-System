@@ -1,6 +1,8 @@
 const { BrowserWindow, app, Tray, Menu, ipcMain } = require('electron');
 const axios = require('axios');
 const path = require('path');
+const os = require('os') 
+const AutoLaunch = require('auto-launch');
 let win = null
 var force_quit = false;
 const createWindow = (Page, route) => {
@@ -56,7 +58,7 @@ const createTrayAndMenu = () => {
         },       
         { type: 'separator' },
         {
-            label: 'Uninstall',
+            label: 'Disconnect',
             click: function () {
                 winUninstall.reload();
                 winUninstall.show();
@@ -96,11 +98,11 @@ const createZonesWindow = (Page, route) => {
     winZones.loadFile(Page, { query: { "data": JSON.stringify(data) } })
 }
 
-let winMessage = null
-const createMessage = (Page, route) => {
-        winMessage = new BrowserWindow({
+let winGeneralMessage = null
+const createGeneralMessage = (Page, route) => {
+    winGeneralMessage = new BrowserWindow({
             width: 800,
-            height: 600,
+            height: 510,
             maximizable:false,
             frame:false,
             icon: __dirname + '/assets/img/cp-tray-icon.png',
@@ -110,8 +112,37 @@ const createMessage = (Page, route) => {
                 contextIsolation: false
             }
         });  
+
+        winGeneralMessage.on('close', function (e) {         
+            winGeneralMessage.webContents.close();   
+            winGeneralMessage=null;         
+        });
         const data = { "route": route }
-        winMessage.loadFile(Page, { query: { "data": JSON.stringify(data) } })
+        winGeneralMessage.loadFile(Page, { query: { "data": JSON.stringify(data) } })
+       
+}
+
+let winLockdownMessage = null
+const createLockdownMessage = (Page, route) => {
+    winLockdownMessage = new BrowserWindow({
+            width: 800,
+            height: 500,
+            maximizable:false,
+            frame:false,
+            icon: __dirname + '/assets/img/cp-tray-icon.png',
+            webPreferences: {
+                nodeIntegration: true,
+                enableRemoteModule: true,
+                contextIsolation: false
+            }
+        });  
+
+        winLockdownMessage.on('close', function (e) {         
+            winLockdownMessage.webContents.close();   
+            winLockdownMessage=null;         
+        });
+        const data = { "route": route }
+        winLockdownMessage.loadFile(Page, { query: { "data": JSON.stringify(data) } })
        
 }
 
@@ -119,9 +150,9 @@ let winUninstall=null
 const createUninsatllerWindow = (Page, route) => {
     winUninstall = new BrowserWindow({
         width: 800,
-        height: 675,       
+        height: 675,  
         show: false,
-        frame: false,   
+        frame: false, 
         maximizable:false,
         icon: __dirname + '/assets/img/cp-tray-icon.png',
         //autoHideMenuBar:"hedden",
@@ -143,7 +174,7 @@ const createUninsatllerWindow = (Page, route) => {
     winUninstall.loadFile(Page, { query: { "data": JSON.stringify(data) } })
 }
 
-app.whenReady().then(() => {   
+app.whenReady().then(() => { 
     createTrayAndMenu();
     createWindow("index.html", "dbcon");
     createZonesWindow("index.html", "zones");
@@ -156,35 +187,72 @@ app.on('window-all-close', () => {
 })
 
 var messageObj;
+var messageObjLockdown;
 var site_key;
 function checkMessage() {
     setInterval(function () {
-        if(site_key != '')
-        {
-            axios.get('https://www.communicateandprotect.com/api/api.php?',{
-                params: {
-                    request:'message',
-                    sitekey: site_key,
-                    msgtype:'General'
-                }      
-            })
-            .then(function (response) {
-                if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1) {
-                    messageObj =  JSON.stringify(response.data.data[0]);
-                    //if (!winMessage) {                 
-                    createMessage("index.html", "message");
+        if(site_key != ''){
+
+            // axios.get('https://www.communicateandprotect.com/api/api.php?', {
+            //     params: {
+            //         request: "sitekey",
+            //         sitekey: site_key
+            //     }
+            // })          
+            // .then(function (response) {
+            //     if(response){
+            //         if(response.data.status == "Success"){
+
+                        axios.get('https://www.communicateandprotect.com/api/api.php?',{
+                            params: {
+                                request:'message',
+                                sitekey: site_key,
+                                msgtype:'General'
+                            }      
+                        })
+                        .then(function (response) {               
+                            if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1) {
+                                messageObj =  JSON.stringify(response.data.data[0]);                
+                                if (!winGeneralMessage) { 
+                                    createGeneralMessage("index.html", "message");                                                  
+                                }                
+                            }
+                        });
+                        axios.get('https://www.communicateandprotect.com/api/api.php?',{
+                            params: {
+                                request:'message',
+                                sitekey: site_key,
+                                msgtype:'General'
+                            }      
+                        })
+                        .then(function (response) {               
+                            if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1) {
+                                messageObjLockdown = JSON.stringify(response.data.data[0]);                
+                                if (!winLockdownMessage) { 
+                                    createLockdownMessage("index.html", "lockdownmessage");                    
+                                }                
+                            }
+                        });
+                    // } else{
+                    //     axios.get('https://www.communicateandprotect.com/api/api.php?', {
+                    //         params: {
+                    //             request: "uninstall",
+                    //             sitekey: site_key,
+                    //             PCName: os.hostname()
+                    //         }
+                    //     })  
                     // }
-                    // else{
-                    //     winMessage.show(); 
-                    // }
-                }
-            });
+            //     }   
+            // });       
+
         }
-    }, 15000);
+    }, 5000);
 }
-winZones
 ipcMain.on('RequestMessage', (event) => {
     event.sender.send('MessageObject', messageObj)
+})
+ipcMain.on('RequestMessageLockdown', (event) => {
+    event.sender.send('MessageObjectLockdown', messageObjLockdown)
 })
 
 ipcMain.on('GetSiteKey', (event,args) => {
@@ -194,6 +262,8 @@ ipcMain.on('GetSiteKey', (event,args) => {
 ipcMain.on('CloseWin', () => win.close())
 ipcMain.on('CloseZoneWin', () => winZones.close())
 ipcMain.on('CloseWindow', () => winUninstall.close())
+ipcMain.on('CloseMessageGeneralWin', () => winGeneralMessage.close())
+ipcMain.on('CloseMessageLockdownWin', () => winLockdownMessage.close())
 
 ipcMain.on('getPath', (event) => {
     const getPath=app.getPath('exe');
@@ -202,7 +272,6 @@ ipcMain.on('getPath', (event) => {
 })
 ipcMain.on('CloseWindowUni', () => {
     force_quit = true;
-     app.quit()
-
+     app.quit()    
 })
 

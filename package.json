@@ -9,12 +9,12 @@
     "build": "electron-builder"
   },
   "build": {
-    "productName": "communicate-and-protect",
+    "productName": "Communicate and Protect",
     "appId": "com.communicate-and-protect.myapp",
-    "asar": true,   
+    "asar": true,
     "mac": {
       "target": "dmg",
-       "icon":"assets/img/iconmac.icns"
+      "icon": "assets/img/iconmac.icns"
     },
     "win": {
       "target": [
@@ -23,15 +23,15 @@
           "arch": [
             "x64",
             "ia32"
-          ]         
+          ]
         }
       ],
-      "icon":"assets/img/icon-win.png"
+      "icon": "assets/img/icon-win.png"
     },
     "linux": {
       "target": "deb",
-      "icon":"assets/img/icon-win.png"
-     },
+      "icon": "assets/img/icon-win.png"
+    },
     "directories": {
       "output": "dist"
     }
@@ -43,6 +43,7 @@
     "electron-builder": "^23.6.0"
   },
   "dependencies": {
+    "auto-launch": "^5.0.6",
     "axios": "^1.3.4",
     "jquery": "^3.6.4"
   }

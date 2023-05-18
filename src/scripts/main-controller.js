@@ -22,5 +22,8 @@ app.controller('MainController', function ($scope, $location, myService, Constan
         else if(data.route == "uninstall"){
             $location.path('/uninstall');
         }
+        else if(data.route == "lockdownmessage"){
+            $location.path('/lockdownmessage');
+        }
     }
 });

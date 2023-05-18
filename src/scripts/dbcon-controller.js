@@ -3,8 +3,31 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     vm.onDisabled = function (){
         vm.disabledDbDtls = myService.disabledDbDtls;
         vm.disabledLicDtls = myService.disabledLicDtls;
-        vm.onLoadLocalInfo();
-    }
+        // if(window.localStorage.getItem("sitekey") !=null || window.localStorage.getItem("sitekey") != undefined){
+        //     axios.get('https://www.communicateandprotect.com/api/api.php?', {
+        //         params: {
+        //             request: Constants.Request[3],
+        //             sitekey: window.localStorage.getItem("sitekey") 
+        //         }
+        //     })          
+        //     .then(function (response) {
+        //         if(response){
+        //             if(response.data.status == Constants.ResultStatus[1]){
+                        vm.onLoadLocalInfo();
+    //                 }else{
+    //                     axios.get('https://www.communicateandprotect.com/api/api.php?', {
+    //                         params: {
+    //                             request: Constants.Request[9],
+    //                             sitekey: window.localStorage.getItem("sitekey"),
+    //                             PCName: os.hostname()
+    //                         }
+    //                     })  
+    //                     window.localStorage.clear();
+    //                 }
+    //             }            
+    //         });
+    //     }      
+     }
 
     vm.onLoadLocalInfo = function () {
         vm.database = window.localStorage.getItem("database");
@@ -13,6 +36,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         vm.sitekey = window.localStorage.getItem("sitekey");
         vm.sitename = window.localStorage.getItem("sitename");
         ipcRenderer.send('GetSiteKey', vm.sitekey);
+        $scope.$applyAsync();
     }
 
     vm.onTestConnection = function (f) {

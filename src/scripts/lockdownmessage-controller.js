@@ -1,32 +1,16 @@
-app.controller('MessageController', function ($scope,Constants) {  
+app.controller('LockdownmessageController', function ($scope,Constants) {  
     var vm = this;  
     var data='';
-    vm.onCheckMessage = function() {       
+    vm.onCheckMessage = function() {          
         $('body').removeClass('cls-body');
         vm.frmDate=new Date();    
-        ipcRenderer.send('RequestMessage');
-        ipcRenderer.on('MessageObject', (event, arg) => {
-            data =JSON.parse(arg);  
-            if(data[0].msg_school_logo=='')      
-            {
-                vm.src=__dirname + '/assets/img/school-logo.png';  
-            }else{
-                vm.msglogo=data[0].msg_school_logo;  
-            } 
-
-            // if(data[0].msg_sound=='0')      
-            // {
-            //     vm.sound=__dirname + '/assets/Messagetone.mp3'; 
-            // }else{
-            //     vm.sound=data[0].msg_sound;
-            // }       
-            vm.emoji=data[0].msg_custom_logo;
-            vm.msgcolor=data[0].msg_colour;                      
-            vm.message=data[0].msg_text; 
-            vm.fontsize=data[0].msg_fontsize;
-            vm.msgname= data[0].msg_setby
+        ipcRenderer.send('RequestMessageLockdown');
+        ipcRenderer.on('MessageObjectLockdown', (event, arg) => {
+            data =JSON.parse(arg);                      
+            vm.message=data[0].msg_text;
+            vm.msgname=data[0].msg_setby;             
             $scope.$applyAsync();                 
-         })
+        })
     };     
     vm.onSaveMessageDtls=function(){
         if(data!='')
@@ -53,22 +37,21 @@ app.controller('MessageController', function ($scope,Constants) {
                                 MessageID:data[0].msg_id
                             }
                         }).then(function (res){
-                            ipcRenderer.send('CloseMessageGeneralWin');
-
+                            ipcRenderer.send('CloseMessageLockdownWin');
                         });       
                     }else{
-                        ipcRenderer.send('CloseMessageGeneralWin');
+                        ipcRenderer.send('CloseMessageLockdownWin'); 
                     }
                 }
                 else
                 {
-                    ipcRenderer.send('CloseMessageGeneralWin');
+                    ipcRenderer.send('CloseMessageLockdownWin'); 
                 }            
             });
         }
         else
         {
-            ipcRenderer.send('CloseMessageGeneralWin');
+            ipcRenderer.send('CloseMessageLockdownWin');
         }       
     } 
 });

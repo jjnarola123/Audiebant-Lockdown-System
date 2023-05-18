@@ -23,6 +23,9 @@ app.config(function($routeProvider) {
 	}).when('/message', {
 		templateUrl: `${__dirname}/src/windows/message.html`,
 		controller: 'MessageController'
+	}).when('/lockdownmessage', {
+		templateUrl: `${__dirname}/src/windows/lockdownmessage.html`,
+		controller: 'LockdownmessageController'
 	}).otherwise({
 		template: '404 Not Found'
 	});

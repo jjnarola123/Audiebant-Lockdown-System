@@ -206,8 +206,8 @@ label {
 
 .msg-scroll
 { 
-    height:260px;
-    max-height: 260px;
+    height:200px;
+    max-height: 200px;
     overflow-y: scroll;   
 }
 
@@ -266,6 +266,9 @@ label {
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --bs-btn-hover-color: #fff;
     --bs-btn-focus-shadow-rgb: 225,83,97;   
+    font-size:large;
+    margin-left:-30px;
+    margin-top:-15px;
 }
 
 .header{
@@ -289,3 +292,10 @@ label {
     height:20px;
     margin-left:-25px;
 } 
+
+.footer{
+    color:'#CC0000';
+    font-size:'12pt';
+    display:'block';
+    padding-block: '10px 30px';
+}

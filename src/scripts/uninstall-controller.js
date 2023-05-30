@@ -30,6 +30,7 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                 if(response){       
                     if(response.data.status == Constants.ResultStatus[1]){ 
                         //Uninstall from Windows
+                        window.localStorage.clear();
                         if(process.platform.startsWith("win")){                              
                             var uninstallCommand = `start "" "${path.join(appPath[0], 'Uninstall Communicate and Protect.exe')}"`;                           
                             exec(uninstallCommand, (error, stdout, stderr) => {

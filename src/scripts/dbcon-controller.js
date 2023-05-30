@@ -94,6 +94,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
                         vm.sitename = '';
                     }
                     vm.licresult = response.data.message;
+                    window.localStorage.clear();
                     $scope.$applyAsync();
                 }
             });

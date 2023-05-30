@@ -63,10 +63,16 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                         }
                         else{                
                             //Uninstall from linux   
-                            spawn('gnome-terminal', ['-e', 'sudo apt purge communicate-and-protect']);                           
-                        }
-                       ipcRenderer.send('CloseWindowUni');
-                  
+                            //spawn('gnome-terminal', ['-e', 'sudo apt purge communicate-and-protect']);     
+                            const command = 'gnome-terminal -e "sudo apt purge communicate-and-protect"';
+                            exec(command, (error, stdout, stderr) => {
+                                if (error) {
+                                    console.error(`Error executing command: ${error}`);
+                                    return;
+                                } 
+                                ipcRenderer.send('CloseWindowUni'); 
+                            });                        
+                        }                  
                     }else{
                         vm.result=response.data.status+ ": Invalid site key !";                       
                     }

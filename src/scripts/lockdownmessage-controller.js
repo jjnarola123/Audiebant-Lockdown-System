@@ -8,7 +8,18 @@ app.controller('LockdownmessageController', function ($scope,Constants) {
         ipcRenderer.on('MessageObjectLockdown', (event, arg) => {
             data =JSON.parse(arg);                      
             vm.message=data[0].msg_text;
-            vm.msgname=data[0].msg_setby;             
+            vm.msgname=data[0].msg_setby;      
+            if(data[0].msg_school_logo!=''){
+                vm.msglogo=data[0].msg_school_logo;  
+            } else{
+                vm.msglogo=__dirname + '/assets/img/icon-win.png';   
+            }  
+            if(data[0].msg_sound=='0')      
+            {
+                vm.sound=__dirname + '/assets/Messagetone.mp3'; 
+            }else{
+                vm.sound=data[0].msg_sound;
+            } 
             $scope.$applyAsync();                 
         })
     };     

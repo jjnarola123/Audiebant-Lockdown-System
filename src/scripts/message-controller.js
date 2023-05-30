@@ -9,17 +9,16 @@ app.controller('MessageController', function ($scope,Constants) {
             data =JSON.parse(arg);  
             if(data[0].msg_school_logo=='')      
             {
-                vm.src=__dirname + '/assets/img/school-logo.png';  
+                vm.src=__dirname + '/assets/img/icon-win.png';  
             }else{
-                vm.msglogo=data[0].msg_school_logo;  
+                vm.src=data[0].msg_school_logo;  
             } 
-
-            // if(data[0].msg_sound=='0')      
-            // {
-            //     vm.sound=__dirname + '/assets/Messagetone.mp3'; 
-            // }else{
-            //     vm.sound=data[0].msg_sound;
-            // }       
+            if(data[0].msg_sound=='0')      
+            {
+                vm.sound=__dirname + '/assets/Messagetone.mp3'; 
+            }else{
+                vm.sound=data[0].msg_sound;
+            }       
             vm.emoji=data[0].msg_custom_logo;
             vm.msgcolor=data[0].msg_colour;                      
             vm.message=data[0].msg_text; 

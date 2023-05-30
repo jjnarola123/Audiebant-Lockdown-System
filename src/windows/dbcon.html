@@ -107,15 +107,24 @@
                                        <div class="d-flex justify-content-center invalid-input">{{vm.licresult}}</div>
                                     </div>
                             </div>
-                         </div>
-                         <div class="card-footer">
-                            <div class="float-right">
-                               <button class="btn btn-main" type="submit" ng-disabled="vm.disabledLicDtls" ng-click="vm.onSaveSettings(frmlic);">Check License and Save Settings</button>
-                               &nbsp;
-                               <button class="btn btn-main" type="button" ng-click="vm.onSaveAndClose();">Save and Close</button>
-                            </div>
-                         </div>
-                      </div>
+                           </div>
+                           <div class="card-footer">
+                              <div class="row">
+                                 <div class="col-sm-9">
+                                    <div class="float-right">
+                                       <button class="btn btn-main" type="submit" ng-disabled="vm.disabledLicDtls" ng-click="vm.onSaveSettings(frmlic);">Check License and Save Settings</button>
+                                       &nbsp;
+                                       <button class="btn btn-main" type="button" ng-click="vm.onSaveAndClose();">Save and Close</button>                 
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-3">
+                                    <div class="text-end">
+                                       <button class="btn btn-danger" type="button"  ng-disabled="vm.disabledDbDtls" ng-click="vm.onExit();">Shut down</button>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>                         
+                        </div>
                    </ng-form>
                 </div>
              </div>

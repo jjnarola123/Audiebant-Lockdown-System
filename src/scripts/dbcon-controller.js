@@ -2,32 +2,34 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     var vm = this;
     vm.onDisabled = function (){
         vm.disabledDbDtls = myService.disabledDbDtls;
-        vm.disabledLicDtls = myService.disabledLicDtls;
-        // if(window.localStorage.getItem("sitekey") !=null || window.localStorage.getItem("sitekey") != undefined){
-        //     axios.get('https://www.communicateandprotect.com/api/api.php?', {
-        //         params: {
-        //             request: Constants.Request[3],
-        //             sitekey: window.localStorage.getItem("sitekey") 
-        //         }
-        //     })          
-        //     .then(function (response) {
-        //         if(response){
-        //             if(response.data.status == Constants.ResultStatus[1]){
+        vm.disabledLicDtls = myService.disabledLicDtls;        
+        if(window.localStorage.getItem("sitekey") !=null || window.localStorage.getItem("sitekey") != undefined){
+            axios.get('https://www.communicateandprotect.com/api/api.php?', {
+                params: {
+                    request: Constants.Request[3],
+                    sitekey: window.localStorage.getItem("sitekey") 
+                }
+            }).then(function (response) {
+                if(response){
+                   if(response.data.status == Constants.ResultStatus[1] && checkSiteKeyExpiry(response.data.data[0][0].key_expiry)){
                         vm.onLoadLocalInfo();
-    //                 }else{
-    //                     axios.get('https://www.communicateandprotect.com/api/api.php?', {
-    //                         params: {
-    //                             request: Constants.Request[9],
-    //                             sitekey: window.localStorage.getItem("sitekey"),
-    //                             PCName: os.hostname()
-    //                         }
-    //                     })  
-    //                     window.localStorage.clear();
-    //                 }
-    //             }            
-    //         });
-    //     }      
-     }
+                    }else{
+                         axios.get('https://www.communicateandprotect.com/api/api.php?', {
+                            params: {
+                                request: Constants.Request[9],
+                                sitekey: window.localStorage.getItem("sitekey"),
+                                PCName: os.hostname()
+                            }
+                        })  
+                        window.localStorage.clear();
+                    }
+                }            
+            });
+        }   
+        else{
+            vm.onLoadLocalInfo();
+        }   
+    }
 
     vm.onLoadLocalInfo = function () {
         vm.database = window.localStorage.getItem("database");
@@ -127,5 +129,12 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         $location.path('/login').search({param: 'fromdbcon'});
         $scope.$applyAsync();
     };  
- 
+    vm.onExit=function(){
+        ipcRenderer.send('CloseWindowUni');
+    }
+    function checkSiteKeyExpiry(newDate){
+        var date=new Date();
+        var currentDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+        return(Date.parse(newDate) > Date.parse(currentDate));
+    }
 });

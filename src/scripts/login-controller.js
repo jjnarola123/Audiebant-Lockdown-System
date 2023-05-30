@@ -9,6 +9,9 @@ app.controller('LoginController', function ($scope, $location, Constants, myServ
         else if(urlParams.param == "fromsetzones"){
             $location.path('/zones');
         }
+        else if(urlParams.param == "fromuninstall"){
+            $location.path('/uninstall');
+        }
         //ipcRenderer.send('CloseWin');
     }
 

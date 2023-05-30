@@ -81,17 +81,17 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         }        
     }; 
 
-    vm.onGetZones = function() { 
-        // if(window.localStorage.getItem("sitekey") !=null || window.localStorage.getItem("sitekey") != undefined){
-        //     axios.get('https://www.communicateandprotect.com/api/api.php?', {
-        //         params: {
-        //             request: Constants.Request[3],
-        //             sitekey: window.localStorage.getItem("sitekey") 
-        //         }
-        //     })          
-        //     .then(function (response) {
-        //         if(response){
-        //             if(response.data.status == Constants.ResultStatus[1]){
+    vm.onGetZones = function() {         
+        if(window.localStorage.getItem("sitekey") !=null || window.localStorage.getItem("sitekey") != undefined){
+            axios.get('https://www.communicateandprotect.com/api/api.php?', {
+                params: {
+                    request: Constants.Request[3],
+                    sitekey: window.localStorage.getItem("sitekey") 
+                }
+            })          
+            .then(function (response) {
+                if(response){
+                    if(response.data.status == Constants.ResultStatus[1] &&  checkSiteKeyExpiry(response.data.data[0][0].key_expiry)){
                     
                         vm.siteName= window.localStorage.getItem("sitename"),
                         vm.disabledCheck=false;    
@@ -153,21 +153,35 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                             }
                         })
                     }
-                    // else{
-                    //     axios.get('https://www.communicateandprotect.com/api/api.php?', {
-                    //         params: {
-                    //             request: Constants.Request[9],
-                    //             sitekey: window.localStorage.getItem("sitekey"),
-                    //             PCName: os.hostname()
-                    //         }
-                    //     })  
-                    //     window.localStorage.clear();
-                    // }
-                 
-   
+                    else{                        
+                        axios.get('https://www.communicateandprotect.com/api/api.php?', {
+                            params: {
+                                request: Constants.Request[9],
+                                sitekey: window.localStorage.getItem("sitekey"),
+                                PCName: os.hostname()
+                            }
+                        })  
+                        $scope.$apply(function () {
+                            vm.disabledDbDtls = myService.disabledDbDtls;
+                            $scope.vm.result ="Site key is expired"; 
+                        });                                         
+                        window.localStorage.clear();                   
+                    }
+                }
+           });
+        }else{
+            $scope.vm.result ="No site key found"; 
+            vm.disabledDbDtls = myService.disabledDbDtls;
+        }
+   };
 
     vm.onLogin = function(){       
         $location.path('/login').search({param: 'fromsetzones'});;
         $scope.$applyAsync();
     };  
+    function checkSiteKeyExpiry(newDate){
+        var date=new Date();
+        var currentDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+        return(Date.parse(newDate) > Date.parse(currentDate));
+    }
 });

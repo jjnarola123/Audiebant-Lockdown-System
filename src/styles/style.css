@@ -268,7 +268,8 @@ label {
     --bs-btn-focus-shadow-rgb: 225,83,97;   
     font-size:large;
     margin-left:-30px;
-    margin-top:-15px;
+    margin-top:20px;
+    border-radius: 12px;
 }
 
 .header{
@@ -294,8 +295,7 @@ label {
 } 
 
 .footer{
-    color:'#CC0000';
-    font-size:'12pt';
-    display:'block';
-    padding-block: '10px 30px';
+    font-size:12pt;
+    display:block;
+    margin-top:40px; 
 }

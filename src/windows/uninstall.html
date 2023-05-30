@@ -2,17 +2,25 @@
     <div class="justify-content-center ">
         <ng-form novalidate name="frm" ng-class="{'was-validated': frm.$submitted }">
           <div class="card">            
-                <div class="card-header">   
-                    <div class="col-sm-10">
-                        <h6>Site name : <span class="invalid-input">{{vm.siteName}}</span></h6>
-                    </div>              
+                <div class="card-header">  
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <h6>Site name : <span class="invalid-input">{{vm.siteName}}</span></h6>
+                        </div>         
+                        <div class="col-sm-7 text-end">
+                            <div ng-if="vm.disabledDbDtls">
+                            <a class="lnk-login" ng-click="vm.onLogin()">Login</a>
+                            <div class="fs-12">* Required administrator login to disconnect the application</div>
+                            </div>
+                        </div>   
+                    </div>    
                 </div>
                 <div class="card-body">                           
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
                                   <label class="col-sm-4 col-form-label" for="sitekey">Please confirm site key:</label>  
-                                  <input id="sitekey" type="text" name="sitekey" ng-model="vm.sitekey" required class="form-control inp" />   
+                                  <input id="sitekey" type="text" name="sitekey" ng-disabled="vm.disabledDbDtls" ng-model="vm.sitekey" required class="form-control inp" />   
                                   <div class="invalid-feedback" ng-if="frm.sitekey.$invalid && frm.$submitted">
                                     <i class="zmdi zmdi-alert-polygon"
                                        ng-if="frm.sitekey.$error.required">&nbsp;Site key
@@ -30,7 +38,7 @@
                 <div class="card-footer">
                     <div class="float-right">    
                         <div class="form-group">                                
-                            <button class="btn btn-main" type="submit"  ng-click="vm.onSave(frm);">Uninstall</button>
+                            <button class="btn btn-main" type="submit" ng-disabled="vm.disabledDbDtls" ng-click="vm.onSave(frm);">Disconnect</button>
                             <button class="btn btn-main" type="submit"  ng-click="vm.onCancel();">Cancel</button>
                         </div>
                     </div>

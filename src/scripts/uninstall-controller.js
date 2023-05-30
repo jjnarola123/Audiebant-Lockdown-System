@@ -1,9 +1,11 @@
 const { spawn,exec } = require('child_process');
 const path = require('path');
+const fs = require('fs-extra');
 app.controller('UninstallController', function ($scope,$location,Constants,myService) {  
     var vm = this;    
     let appPath='';
     vm.onUninstall = function () {   
+        vm.disabledDbDtls = myService.disabledDbDtls;
         vm.sitekey= window.localStorage.getItem('sitekey');
         vm.siteName= window.localStorage.getItem("sitename");      
         ipcRenderer.send('getPath');
@@ -25,45 +27,44 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                 }
             })          
             .then(function (response) {
-                if(response){                
-                    if(response.data.status == Constants.ResultStatus[1]){
-                        window.localStorage.clear(); 
+                if(response){       
+                    if(response.data.status == Constants.ResultStatus[1]){ 
                         //Uninstall from Windows
-                       if(process.platform.startsWith("win")){                              
-                            const uninstallCommand = `start "" "${path.join(appPath[0], 'Uninstall communicate-and-protect.exe')}"`;
+                        if(process.platform.startsWith("win")){                              
+                            var uninstallCommand = `start "" "${path.join(appPath[0], 'Uninstall Communicate and Protect.exe')}"`;                           
                             exec(uninstallCommand, (error, stdout, stderr) => {
-                                ipcRenderer.send('CloseWindowUni');
                                 if (error) {          
                                     return;
                                 }
+                                ipcRenderer.send('CloseWindowUni');
                             });
-                       }
-                       else if(process.platform == 'darwin')
-                       {
+                        }
+                        else if(process.platform == 'darwin')
+                        {
                             //Uninstall from MAC
                             let installationPath="";
                             for(let i=1;i<=appPath.length;i++){
-                                if(appPath[i]=='communicate-and-protect.app'){
-                                    installationPath=installationPath + "/" + appPath[i];
+                                if(appPath[i].includes('.app')){
+                                    installationPath=installationPath + "/"+ appPath[i];
                                     break;
                                 }else{
                                     installationPath=installationPath + "/" + appPath[i]; 
                                 }
                             }
-
-                            const command = `osascript -e 'tell application "Terminal" to do script "sudo rm -rf  ${installationPath}"'`;
-                    
-                            exec(command, (error, stdout, stderr) => {
-                              if (error) {                              
-                                return;
-                              }                    
-                            });
+                            fs.remove(installationPath)
+                            .then(() => {                               
+                              ipcRenderer.send('CloseWindowUni'); 
+                            })
+                            .catch((err) => {
+                              console.error('Error removing folder:', err);
+                            });  
+                            //const command = `osascript -e 'tell application "Terminal" to do script "sudo rm -rf  ${installationPath}"'`;
                         }
-                        else{                        
+                        else{                
                             //Uninstall from linux   
                             spawn('gnome-terminal', ['-e', 'sudo apt purge communicate-and-protect']);                           
                         }
-                        ipcRenderer.send('CloseWindow');
+                       ipcRenderer.send('CloseWindowUni');
                   
                     }else{
                         vm.result=response.data.status+ ": Invalid site key !";                       
@@ -73,7 +74,10 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
             }); 
         }       
     };
-
+    vm.onLogin = function(){
+        $location.path('/login').search({param: 'fromuninstall'});
+        $scope.$applyAsync();
+    };  
     vm.onCancel = function(){       
         ipcRenderer.send('CloseWindow');
     }

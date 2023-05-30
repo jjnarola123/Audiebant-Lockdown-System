@@ -16,6 +16,7 @@ const createWindow = (Page, route) => {
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
+            devTools:false,
             enableRemoteModule: true,
             contextIsolation: false
         }
@@ -77,6 +78,7 @@ const createZonesWindow = (Page, route) => {
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
+            devTools:false,
             enableRemoteModule: true,
             contextIsolation: false
         }
@@ -104,6 +106,7 @@ const createGeneralMessage = (Page, route) => {
             icon: __dirname + '/assets/img/icon-win.png',
             webPreferences: {
                 nodeIntegration: true,
+                devTools:false,
                 enableRemoteModule: true,
                 contextIsolation: false
             }
@@ -129,6 +132,7 @@ const createLockdownMessage = (Page, route) => {
             icon: __dirname + '/assets/img/icon-win.png',
             webPreferences: {
                 nodeIntegration: true,
+                devTools:false,
                 enableRemoteModule: true,
                 contextIsolation: false
             }
@@ -155,6 +159,7 @@ const createUninsatllerWindow = (Page, route) => {
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
+            devTools:false,
             enableRemoteModule: true,
             contextIsolation: false
         }

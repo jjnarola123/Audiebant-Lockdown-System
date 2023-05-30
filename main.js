@@ -241,15 +241,17 @@ function checkMessage() {
                             if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1) {
                                 messageObj =  JSON.stringify(response.data.data[0]); 
                                 var apiZoneId = response.data.data[0][0].msg_zones.split(',');
-                                for(let i=0;i<localZoneId.length;i++){
-                                    for(let j=0;j<apiZoneId.length;j++){
-                                        if(localZoneId[i].id == apiZoneId[j]){
-                                            if (!winGeneralMessage) { 
-                                                createGeneralMessage("index.html", "message");                                                  
-                                            }                                          
-                                        }
-                                    }                    
-                                }           
+                                if(localZoneId.length>0){
+                                    for(let i=0;i<localZoneId.length;i++){
+                                        for(let j=0;j<apiZoneId.length;j++){
+                                            if(localZoneId[i].id == apiZoneId[j]){
+                                                if (!winGeneralMessage) { 
+                                                    createGeneralMessage("index.html", "message");                                                  
+                                                }                                          
+                                            }
+                                        }                    
+                                    }    
+                                }       
                             }
                         });
                         axios.get('https://www.communicateandprotect.com/api/api.php?',{
@@ -263,15 +265,17 @@ function checkMessage() {
                             if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1 ) {
                                 messageObjLockdown = JSON.stringify(response.data.data[0]);    
                                 var apiZoneId = response.data.data[0][0].msg_zones.split(',');
-                                for(let i=0;i<localZoneId.length;i++){
-                                    for(let j=0;j<apiZoneId.length;j++){
-                                        if(localZoneId[i].id == apiZoneId[j]){
-                                            if (!winLockdownMessage) {
-                                                createLockdownMessage("index.html", "lockdownmessage");                    
-                                            }                                             
-                                        }
-                                    }                    
-                                }            
+                                if(localZoneId.length>0){
+                                    for(let i=0;i<localZoneId.length;i++){
+                                        for(let j=0;j<apiZoneId.length;j++){
+                                            if(localZoneId[i].id == apiZoneId[j]){
+                                                if (!winLockdownMessage) {
+                                                    createLockdownMessage("index.html", "lockdownmessage");                    
+                                                }                                             
+                                            }
+                                        }                    
+                                    }        
+                                }    
                             }
                         });
                     } else{

@@ -267,7 +267,6 @@ label {
     --bs-btn-hover-color: #fff;
     --bs-btn-focus-shadow-rgb: 225,83,97;   
     font-size:large;
-    margin-left:-30px;
     margin-top:20px;
     border-radius: 12px;
 }

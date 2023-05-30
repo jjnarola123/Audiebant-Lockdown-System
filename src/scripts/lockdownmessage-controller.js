@@ -20,6 +20,7 @@ app.controller('LockdownmessageController', function ($scope,Constants) {
             }else{
                 vm.sound=data[0].msg_sound;
             } 
+            vm.alert=__dirname + '/assets/img/alert.png';   
             $scope.$applyAsync();                 
         })
     };     

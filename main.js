@@ -97,7 +97,7 @@ let winGeneralMessage = null
 const createGeneralMessage = (Page, route) => {
     winGeneralMessage = new BrowserWindow({
             width: 800,
-            height: 650,
+            height: 600,
             maximizable:false,
             frame:false,
             alwaysOnTop: true,
@@ -226,10 +226,12 @@ function checkMessage() {
                         var localZoneId=[];
                         //Get zone from local storage
                         winZones.webContents.executeJavaScript('localStorage.getItem("savedZone");', true)
-                        .then(result => {
-                            localZoneId=JSON.parse(result);
+                        .then(result => {                          
+                           if(result !=null && result.length>0){
+                                localZoneId=JSON.parse(result);
+                            }
                         });
-
+                   
                         axios.get('https://www.communicateandprotect.com/api/api.php?',{
                             params: {
                                 request:'message',
@@ -240,18 +242,16 @@ function checkMessage() {
                         .then(function (response) {               
                             if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1) {
                                 messageObj =  JSON.stringify(response.data.data[0]); 
-                                var apiZoneId = response.data.data[0][0].msg_zones.split(',');
-                                if(localZoneId.length>0){
-                                    for(let i=0;i<localZoneId.length;i++){
-                                        for(let j=0;j<apiZoneId.length;j++){
-                                            if(localZoneId[i].id == apiZoneId[j]){
-                                                if (!winGeneralMessage) { 
-                                                    createGeneralMessage("index.html", "message");                                                  
-                                                }                                          
-                                            }
-                                        }                    
-                                    }    
-                                }       
+                                var apiZoneId = response.data.data[0][0].msg_zones.split(',');                              
+                                for(let i=0;i<localZoneId.length;i++){
+                                    for(let j=0;j<apiZoneId.length;j++){
+                                        if(localZoneId[i].id == apiZoneId[j]){
+                                            if (!winGeneralMessage) { 
+                                                createGeneralMessage("index.html", "message");                                                  
+                                            }                                          
+                                        }
+                                    }                    
+                                }                                    
                             }
                         });
                         axios.get('https://www.communicateandprotect.com/api/api.php?',{
@@ -264,18 +264,16 @@ function checkMessage() {
                         .then(function (response) {            
                             if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1 ) {
                                 messageObjLockdown = JSON.stringify(response.data.data[0]);    
-                                var apiZoneId = response.data.data[0][0].msg_zones.split(',');
-                                if(localZoneId.length>0){
-                                    for(let i=0;i<localZoneId.length;i++){
-                                        for(let j=0;j<apiZoneId.length;j++){
-                                            if(localZoneId[i].id == apiZoneId[j]){
-                                                if (!winLockdownMessage) {
-                                                    createLockdownMessage("index.html", "lockdownmessage");                    
-                                                }                                             
-                                            }
-                                        }                    
-                                    }        
-                                }    
+                                var apiZoneId = response.data.data[0][0].msg_zones.split(',');                               
+                                for(let i=0;i<localZoneId.length;i++){
+                                    for(let j=0;j<apiZoneId.length;j++){
+                                        if(localZoneId[i].id == apiZoneId[j]){
+                                            if (!winLockdownMessage) {
+                                                createLockdownMessage("index.html", "lockdownmessage");                    
+                                            }                                             
+                                        }
+                                    }                    
+                                }                                         
                             }
                         });
                     } else{

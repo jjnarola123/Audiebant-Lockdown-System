@@ -4,12 +4,11 @@
         <img ng-src="{{vm.msglogo}}" width="150px" height="150px"  />   
       </div> 
   </div>
-  <div class="row" style="padding-top:10px;" >            
+  <div class="row" style="padding-top:50px;">            
       <div class="col-sm-4">
         <img ng-src="{{vm.alert}}" />   
       </div>
-      <div class="col-sm-8" style="font-size:40px">   
-        <label ng-style="{'color':'#CC0000'}">{{vm.message}}</label>
+      <div class="col-sm-8" style="font-size:40px" ng-style="{'color':'#c1272d'}" ng-bind-html="vm.message">      
       </div>   
   </div>
   <div hidden>  
@@ -17,12 +16,12 @@
       <source ng-if="vm.sound" src="{{vm.sound}}" type="audio/mpeg">      
     </audio>
   </div>
-  <div class="row" >
+  <div class="row" style="padding-top:60px;">
         <div class="col-sm-9">
-          <h6 class="footer" ng-style="{'color':'#CC0000'}"><b>This alert message has been broadcast by {{vm.msgname}} @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</b></h6>
+          <h6 class="footer" ng-style="{'color':'#c1272d'}"><b>This alert message has been broadcast by {{vm.msgname}} @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</b></h6>
         </div>
         <div class="col-sm-3">      
-            <button class="btn btn-custom" ng-style="{'background-color':'#CC0000','font-size':'15pt'}"  ng-click="vm.onSaveMessageDtls();" type="submit">Confirm & Close Message</button>                                 
+            <button class="btn btn-custom" ng-style="{'background-color':'#c1272d','font-size':'15pt'}"  ng-click="vm.onSaveMessageDtls();" type="submit">Confirm & Close Message</button>                                 
         </div>                
   </div>
 </div>   

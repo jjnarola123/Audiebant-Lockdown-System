@@ -1,8 +1,12 @@
 app.controller('MessageController', function ($scope,Constants) {  
     var vm = this;  
-    var data='';
+    var data=''; 
+  
     vm.onCheckMessage = function() {       
         $('body').removeClass('cls-body');
+        $('header').removeClass('header-color');    
+        $('header').css('background-color', '#0072BB')
+        $('header').css('color', 'white')
         vm.frmDate=new Date();    
         ipcRenderer.send('RequestMessage');
         ipcRenderer.on('MessageObject', (event, arg) => {
@@ -13,15 +17,13 @@ app.controller('MessageController', function ($scope,Constants) {
             }else{
                 vm.src=data[0].msg_school_logo;  
             } 
-            if(data[0].msg_sound=='0')      
+            if(data[0].msg_sound=='1')      
             {
                 vm.sound=__dirname + '/assets/Messagetone.mp3'; 
-            }else{
-                vm.sound=data[0].msg_sound;
-            }       
+            }             
             vm.emoji=data[0].msg_custom_logo;
-            vm.msgcolor=data[0].msg_colour;                      
-            vm.message=data[0].msg_text; 
+            vm.msgcolor=data[0].msg_colour;   
+            vm.message=data[0].msg_text;          
             vm.fontsize=data[0].msg_fontsize;
             vm.msgname= data[0].msg_setby
             $scope.$applyAsync();                 

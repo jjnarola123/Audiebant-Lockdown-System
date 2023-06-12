@@ -3,6 +3,8 @@ app.controller('LockdownmessageController', function ($scope,Constants) {
     var data='';
     vm.onCheckMessage = function() {          
         $('body').removeClass('cls-body');
+        $('header').css('background-color', '#c1272d')
+        $('header').css('color', 'white')
         vm.frmDate=new Date();    
         ipcRenderer.send('RequestMessageLockdown');
         ipcRenderer.on('MessageObjectLockdown', (event, arg) => {
@@ -14,12 +16,10 @@ app.controller('LockdownmessageController', function ($scope,Constants) {
             } else{
                 vm.msglogo=__dirname + '/assets/img/icon-win.png';   
             }  
-            if(data[0].msg_sound=='0')      
+            if(data[0].msg_sound=='1')      
             {
                 vm.sound=__dirname + '/assets/Messagetone.mp3'; 
-            }else{
-                vm.sound=data[0].msg_sound;
-            } 
+            }
             vm.alert=__dirname + '/assets/img/alert.png';   
             $scope.$applyAsync();                 
         })

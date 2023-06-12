@@ -247,7 +247,7 @@ label {
 }
 
 .custom-img{
-    margin-top: -22px;
+    margin-top: -50px;
 }
 
 .top-padding{
@@ -270,11 +270,12 @@ label {
     margin-top:20px;
     border-radius: 12px;
 }
-
+.header-color{
+    background-color: #dc9435;
+}
 .header{
     display:block;
-    height:30px;
-    background:#dc9435;
+    height:30px;  
     text-decoration:none;
     padding-left:30px;
     font-size: 10pt;
@@ -285,7 +286,7 @@ label {
 
 .header:before{
     content: '';
-    background:url('../../assets/img/cp-header-icon.png');
+    background:url('../../assets/img/icon-win.png');
     background-size:cover;
         position:absolute;
     width:20px;

@@ -99,7 +99,7 @@ let winGeneralMessage = null
 const createGeneralMessage = (Page, route) => {
     winGeneralMessage = new BrowserWindow({
             width: 800,
-            height: 600,
+            height: 610,
             maximizable:false,
             frame:false,
             alwaysOnTop: true,
@@ -125,7 +125,7 @@ let winLockdownMessage = null
 const createLockdownMessage = (Page, route) => {
     winLockdownMessage = new BrowserWindow({
             width: 800,
-            height: 650,
+            height: 610,
             maximizable:false,
             frame:false,
             alwaysOnTop: true,

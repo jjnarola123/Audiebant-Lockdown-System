@@ -4,25 +4,24 @@
         <img ng-src="{{vm.src}}" ng-if="vm.src" width="150px" height="150px" />  
       </div>   
   </div>
-  <div class="row" style="padding-top:'10px';">            
+  <div class="row" style="padding-top:50px;">            
       <div class="col-sm-3" ng-if="vm.emoji" >
         <img ng-src="{{vm.emoji}}" width="200px" height="200px" />   
       </div>
-      <div class="col-sm-8" ng-style="{'font-size':vm.fontsize}">   
-        <label ng-style="{'color':vm.msgcolor!='' ? vm.msgcolor : '#dc9435'}">{{vm.message}}</label>
-      </div>   
-  </div>
+      <div class="col-sm-8" ng-style="{'font-size':vm.fontsize,'color':vm.msgcolor!='' ? vm.msgcolor : '#0072BB'}" ng-bind-html="vm.message">   
+      </div>
+  </div>  
   <div hidden>  
     <audio controls autoplay>
       <source ng-if="vm.sound" src="{{vm.sound}}" type="audio/mpeg">       
     </audio>
   </div>
-  <div class="row">
+  <div class="row" style="padding-top:60px;">
         <div class="col-sm-9">
-          <h6 class="footer"  ng-style="{'color':vm.msgcolor!='' ? vm.msgcolor : '#dc9435'}" ><b>This alert message has been broadcast by {{vm.msgname}} @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</b></h6>
+          <h6 class="footer"  ng-style="{'color':'#0072BB'}" ><b>This alert message has been broadcast by {{vm.msgname}} @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</b></h6>
         </div>
         <div class="col-sm-3">      
-            <button class="btn btn-custom" ng-style="{'background-color':vm.msgcolor!='' ? vm.msgcolor : '#dc9435','font-size':'15pt'}"  ng-click="vm.onSaveMessageDtls();" type="submit">Confirm & Close Message</button>                                 
+            <button class="btn btn-custom" ng-style="{'background-color':'#0072BB','font-size':'15pt'}"  ng-click="vm.onSaveMessageDtls();" type="submit">Confirm & Close Message</button>                                 
         </div>                
   </div>
 </div>  

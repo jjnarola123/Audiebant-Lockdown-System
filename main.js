@@ -34,8 +34,8 @@ const createWindow = (Page, route) => {
 }
 
 const createTrayAndMenu = () => {
-   // tray = new Tray(__dirname + '/assets/img/icon-mac-tray.png')
-    tray = new Tray(__dirname + '/assets/img/cp-tray-icon.png')
+    tray = new Tray(__dirname + '/assets/img/icon-mac-tray.png')
+   // tray = new Tray(__dirname + '/assets/img/cp-tray-icon.png')
 
     let template = [
         {

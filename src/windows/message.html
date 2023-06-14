@@ -6,9 +6,9 @@
   </div>
   <div class="row" style="padding-top:50px;">            
       <div class="col-sm-3" ng-if="vm.emoji" >
-        <img ng-src="{{vm.emoji}}" width="200px" height="200px" />   
+        <img ng-src="{{vm.emoji}}" width="200px" height="200px" style="margin-left:-15px;margin-top:-15px"/>
       </div>
-      <div class="col-sm-8" ng-style="{'font-size':vm.fontsize,'color':vm.msgcolor!='' ? vm.msgcolor : '#0072BB'}" ng-bind-html="vm.message">   
+      <div class="col-sm-9" ng-style="{'font-size':vm.fontsize,'color':vm.msgcolor!='' ? vm.msgcolor : '#0072BB'}" ng-bind-html="vm.message">   
       </div>
   </div>  
   <div hidden>  

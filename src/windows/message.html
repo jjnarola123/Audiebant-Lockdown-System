@@ -1,24 +1,27 @@
 <div class="custom-message-container" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak><br/>
-    <div class="row">
-        <div class="col-sm-12 text-end custom-img">      
-          <img ng-src="{{vm.src}}" width="200px" height="100px" />  
-        </div> 
-    </div>
-    <br/>
-    <div class="row top-padding msg-scroll msg-scroll-style" >            
-        <div class="col-sm-4" ng-if="vm.emoji">
-          <img ng-src="{{vm.emoji}}" width="200px" height="200px" />   
+  <div class="row">
+      <div class="col-sm-12 text-end custom-img">      
+        <img ng-src="{{vm.msglogo}}" width="150px" height="150px"  />   
+      </div> 
+  </div>
+  <div class="row" style="padding-top:50px;">            
+      <div class="col-sm-4">
+        <img ng-src="{{vm.alert}}" />   
+      </div>
+      <div class="col-sm-8" style="font-size:40px" ng-style="{'color':'#c1272d'}" ng-bind-html="vm.message">      
+      </div>   
+  </div>
+  <div hidden>  
+    <audio controls autoplay>
+      <source ng-if="vm.sound" src="{{vm.sound}}" type="audio/mpeg">      
+    </audio>
+  </div>
+  <div class="row" style="padding-top:60px;">
+        <div class="col-sm-9">
+          <h6 class="footer" ng-style="{'color':'#c1272d'}"><b>This alert message has been broadcast by {{vm.msgname}} @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</b></h6>
         </div>
-        <div class="col-sm-8" ng-style="{'font-size':vm.fontsize}">   
-          <label ng-style="{'color':vm.msgcolor!='' ? vm.msgcolor : '#dc9435'}">{{vm.message}}</label>
-        </div>   
-    </div>
-    <div class="row top-padding" >
-          <div class="col-sm-9">
-            <h6 ng-style="{'color':'#dc9435'}">This alert message has been broadcast by dean high @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</h6>
-          </div>
-          <div class="col-sm-3 text-end">      
-              <button class="btn btn-custom" ng-style="{'background-color':'#dc9435'}" ng-click="vm.onSaveMessageDtls();" type="submit">Close and confirm message &nbsp;</button>                                 
-          </div>                
-    </div>
+        <div class="col-sm-3">      
+            <button class="btn btn-custom" ng-style="{'background-color':'#c1272d','font-size':'15pt'}"  ng-click="vm.onSaveMessageDtls();" type="submit">Confirm & Close Message</button>                                 
+        </div>                
+  </div>
 </div>   

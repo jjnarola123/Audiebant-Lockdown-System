@@ -206,8 +206,8 @@ label {
 
 .msg-scroll
 { 
-    height:260px;
-    max-height: 260px;
+    height:200px;
+    max-height: 200px;
     overflow-y: scroll;   
 }
 
@@ -247,7 +247,7 @@ label {
 }
 
 .custom-img{
-    margin-top: -22px;
+    margin-top: -50px;
 }
 
 .top-padding{
@@ -266,12 +266,16 @@ label {
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --bs-btn-hover-color: #fff;
     --bs-btn-focus-shadow-rgb: 225,83,97;   
+    font-size:large;
+    margin-top:20px;
+    border-radius: 12px;
 }
-
+.header-color{
+    background-color: #dc9435;
+}
 .header{
     display:block;
-    height:30px;
-    background:#dc9435;
+    height:30px;  
     text-decoration:none;
     padding-left:30px;
     font-size: 10pt;
@@ -282,10 +286,16 @@ label {
 
 .header:before{
     content: '';
-    background:url('../../assets/img/cp-header-icon.png');
+    background:url('../../assets/img/icon-win.png');
     background-size:cover;
         position:absolute;
     width:20px;
     height:20px;
     margin-left:-25px;
 } 
+
+.footer{
+    font-size:12pt;
+    display:block;
+    margin-top:40px; 
+}

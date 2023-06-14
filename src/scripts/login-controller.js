@@ -9,13 +9,16 @@ app.controller('LoginController', function ($scope, $location, Constants, myServ
         else if(urlParams.param == "fromsetzones"){
             $location.path('/zones');
         }
+        else if(urlParams.param == "fromuninstall"){
+            $location.path('/uninstall');
+        }
         //ipcRenderer.send('CloseWin');
     }
 
     vm.onLogin = function(f) {
         f.$submitted = true;
         if (f.$valid) {  
-        axios.get('https://www.communicateandprotect.com/api/api.php?', {
+        axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
             params: {
                 request: Constants.Request[1],
                 user_name: vm.username,
@@ -23,8 +26,10 @@ app.controller('LoginController', function ($scope, $location, Constants, myServ
             }
           })          
           .then(function (response) {
-            if(response){
-                if(response.data.status == Constants.ResultStatus[1] && response.data.data.role == Constants.Roles[1]){
+            if(response){                
+                if(response.data.status == Constants.ResultStatus[1] && response.data.data.role == Constants.Roles[2])
+                {  
+                    window.localStorage.setItem("clientname",  response.data.data.client); 
                     myService.disabledDbDtls = false;
                     $location.path('/');
                     $scope.$applyAsync();

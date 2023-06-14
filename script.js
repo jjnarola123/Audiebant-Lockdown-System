@@ -31,7 +31,7 @@ app.config(function($routeProvider) {
 app.constant('Constants', {
     Roles: {
         1: 'Admin',
-        2: 'User',
+        2: '2',
         3: 'Guest'
 	},
 	ResultStatus:{
@@ -47,7 +47,8 @@ app.constant('Constants', {
 		6: 'message_confirm',
 		7: 'install',
 		8: 'groups',
-		9: 'uninstall'
+		9: 'uninstall',
+		10:'acknowledge'
 	}
 }); 
 

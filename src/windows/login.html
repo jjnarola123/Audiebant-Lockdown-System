@@ -1,49 +1,49 @@
 <div class="custom-container" ng-controller="LoginController as vm" ng-cloak>
-        <div class="justify-content-center">
-           <ng-form novalidate name="frm" ng-class="{'was-validated': frm.$submitted }">
-              <div class="card">
-                 <div class="card-header">
-                    <h6>Administrator Login</h6>
-                 </div>
-                 <div class="card-body">
-                    <div class="form-group row mb-2" ng-class="{'invalid-input': frm.username.$invalid && frm.$submitted }">
-                       <label class="col-sm-3 col-form-label" for="username">User Name:</label>
-                       <div class="col-sm-9">
-                          <input id="username" type="text" name="username" 
-                             ng-model="vm.username" required class="form-control inp" />
-                          <div class="invalid-feedback" ng-if="frm.username.$invalid && frm.$submitted">
-                             <i class="zmdi zmdi-alert-polygon"
-                                ng-if="frm.username.$error.required">&nbsp;User name 
-                             is required. </i>
-                          </div>
-                       </div>
-                    </div>
-                    <div class="form-group row" ng-class="{'invalid-input': frm.password.$invalid && frm.$submitted }">
-                       <label class="col-sm-3 col-form-label" for="password">Password:</label>
-                       <div class="col-sm-9">
-                          <input id="password" type="password" name="password" 
-                             ng-model="vm.password" required class="form-control inp" />
-                          <div class="invalid-feedback" ng-if="frm.password.$invalid && frm.$submitted">
-                             <i class="zmdi zmdi-alert-polygon"
-                                ng-if="frm.password.$error.required">&nbsp;Password
-                             is required. </i>
-                          </div>
-                       </div>
-                    </div>
-                    <div class="form-group row mt-2" ng-if="vm.result">
-                       <div class="col-sm-12">
-                          <div class="d-flex justify-content-center invalid-input">{{vm.result}}</div>
-                       </div>
-                    </div>
-                 </div>
-                 <div class="card-footer">
-                    <div class="float-right">
-                       <button class="btn btn-main" type="submit" ng-click="vm.onLogin(frm);">Login</button>
-                       &nbsp;
-                       <button class="btn btn-main" type="button" ng-click="vm.onBack();">Back</button>
-                    </div>
-                 </div>
-              </div>
-           </ng-form>
-        </div>
-     </div>
+   <div class="justify-content-center">
+      <ng-form novalidate name="frm" ng-class="{'was-validated': frm.$submitted }">
+         <div class="card">
+            <div class="card-header">
+               <h6>Administrator Login</h6>
+            </div>
+            <div class="card-body">
+               <div class="form-group row mb-2" ng-class="{'invalid-input': frm.username.$invalid && frm.$submitted }">
+                  <label class="col-sm-3 col-form-label" for="username">User Name:</label>
+                  <div class="col-sm-9">
+                     <input id="username" type="text" name="username" 
+                        ng-model="vm.username" required class="form-control inp" />
+                     <div class="invalid-feedback" ng-if="frm.username.$invalid && frm.$submitted">
+                        <i class="zmdi zmdi-alert-polygon"
+                           ng-if="frm.username.$error.required">&nbsp;User name 
+                        is required. </i>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group row" ng-class="{'invalid-input': frm.password.$invalid && frm.$submitted }">
+                  <label class="col-sm-3 col-form-label" for="password">Password:</label>
+                  <div class="col-sm-9">
+                     <input id="password" type="password" name="password" 
+                        ng-model="vm.password" required class="form-control inp" />
+                     <div class="invalid-feedback" ng-if="frm.password.$invalid && frm.$submitted">
+                        <i class="zmdi zmdi-alert-polygon"
+                           ng-if="frm.password.$error.required">&nbsp;Password
+                        is required. </i>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group row mt-2" ng-if="vm.result">
+                  <div class="col-sm-12">
+                     <div class="d-flex justify-content-center invalid-input">{{vm.result}}</div>
+                  </div>
+               </div>
+            </div>
+            <div class="card-footer">
+               <div class="float-right">
+                  <button class="btn btn-main" type="submit" ng-click="vm.onLogin(frm);">Login</button>
+                  &nbsp;
+                  <button class="btn btn-main" type="button" ng-click="vm.onBack();">Back</button>
+               </div>
+            </div>
+         </div>
+      </ng-form>
+   </div>
+</div>

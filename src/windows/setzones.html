@@ -5,7 +5,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-10">
-                            <h6>Communicate Set Zones for <span class="invalid-input">{{vm.siteName}}</span></h6>
+                            <h6>Audiebant Set Zones for <span class="invalid-input">{{vm.siteName}}</span></h6>
                         </div>
                         <div class="col-sm-2 text-end">    
                             <div ng-if="vm.disabledDbDtls">                    
@@ -39,7 +39,7 @@
                           </div>
                           <div class="col-sm-6">
                               <div class="zone-scroll scroll-style">                          
-                                  <div class="form-group" ng-repeat='zone in zones'><input type='checkbox' id='zone{{zone.zone_id}}' ng-disabled="vm.disabledDbDtls" value='{{ zone.zone_name }}'>&nbsp;<label for='{{zone.zone_name}}'>{{zone.zone_name}}</label></div>                               
+                                  <div class="form-group" ng-repeat='zone in zones'><input type='checkbox' id='zone{{zone.id}}' ng-disabled="vm.disabledDbDtls" value='{{ zone.zone_name }}'>&nbsp;<label for='{{zone.zone_name}}'>{{zone.zone_name}}</label></div>                               
                              </div>  
                           </div>
                           <div class="col-sm-6"  >   

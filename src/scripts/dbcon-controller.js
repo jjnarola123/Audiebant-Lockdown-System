@@ -2,8 +2,35 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     var vm = this;
     vm.onDisabled = function (){
         vm.disabledDbDtls = myService.disabledDbDtls;
-        vm.disabledLicDtls = myService.disabledLicDtls;
-        vm.onLoadLocalInfo();
+        vm.disabledLicDtls = myService.disabledLicDtls;        
+        if(window.localStorage.getItem("sitekey") !=null || window.localStorage.getItem("sitekey") != undefined){
+            axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
+                params: {
+                    request: Constants.Request[3],
+                    sitekey: window.localStorage.getItem("sitekey") 
+                }
+            }).then(function (response) {
+                if(response){
+                    //validating site key
+                   if(response.data.status == Constants.ResultStatus[1] && checkSiteKeyExpiry(response.data.data[0][0].key_expiry)){
+                        vm.onLoadLocalInfo();
+                    }else{
+                        //uninstall
+                         axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
+                            params: {
+                                request: Constants.Request[9],
+                                sitekey: window.localStorage.getItem("sitekey"),
+                                PCName: os.hostname()
+                            }
+                        })  
+                        window.localStorage.clear();
+                    }
+                }            
+            });
+        }   
+        else{
+            vm.onLoadLocalInfo();
+        }   
     }
 
     vm.onLoadLocalInfo = function () {
@@ -12,23 +39,24 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         vm.password = window.localStorage.getItem("password");
         vm.sitekey = window.localStorage.getItem("sitekey");
         vm.sitename = window.localStorage.getItem("sitename");
-        ipcRenderer.send('GetSiteKey', vm.sitekey);
+        ipcRenderer.send('GetSiteKey', vm.sitekey,window.localStorage.getItem("clientname"));
+        $scope.$applyAsync();
     }
 
     vm.onTestConnection = function (f) {
         f.$submitted = true;
         if (f.$valid) {
-            axios.get('https://www.communicateandprotect.com/api/api.php?', {
+            axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                 params: {
                     request: Constants.Request[2],
-                    host: "45.157.41.195",
+                    host: "localhost",
                     database: vm.database,
                     username: vm.username,
                     password: vm.password
                 }
               })          
-              .then(function (response) {
-                if(response){
+              .then(function (response) {                
+                if(response){                    
                     if(response.data.status == Constants.ResultStatus[1]){
                         vm.disabledLicDtls = false;
                         myService.disabledLicDtls = false;
@@ -46,7 +74,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
     vm.onSaveSettings = function (f) {
         f.$submitted = true;
         if (f.$valid) {
-            axios.get('https://www.communicateandprotect.com/api/api.php?', {
+            axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                 params: {
                     request: Constants.Request[3],
                     sitekey: vm.sitekey
@@ -55,8 +83,9 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
               .then(function (response) {
                 if(response){
                     if(response.data.status == Constants.ResultStatus[1]){
-                        vm.sitename = response.data.data[0][0].site_name;
-                        axios.get('https://www.communicateandprotect.com/api/api.php?', {
+                        vm.sitename = response.data.data[0][0].site_name;                    
+                        //Install log.
+                        axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                             params: {
                                 request: Constants.Request[7],
                                 sitekey: vm.sitekey,
@@ -68,6 +97,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
                         vm.sitename = '';
                     }
                     vm.licresult = response.data.message;
+                    window.localStorage.clear();
                     $scope.$applyAsync();
                 }
             });
@@ -95,7 +125,8 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
             window.localStorage.setItem("sitename", vm.sitename);
         else
             window.localStorage.setItem("sitename", '');
-        ipcRenderer.send('GetSiteKey', vm.sitekey);
+   
+        ipcRenderer.send('GetSiteKey', vm.sitekey,window.localStorage.getItem("clientname"));
         ipcRenderer.send('CloseWin');
     }
 
@@ -103,5 +134,12 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         $location.path('/login').search({param: 'fromdbcon'});
         $scope.$applyAsync();
     };  
- 
+    vm.onExit=function(){
+        ipcRenderer.send('CloseWindowUni');
+    }
+    function checkSiteKeyExpiry(newDate){
+        var date=new Date();
+        var currentDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
+        return(Date.parse(newDate) > Date.parse(currentDate));
+    }
 });

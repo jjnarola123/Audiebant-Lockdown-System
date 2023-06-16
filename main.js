@@ -34,8 +34,8 @@ const createWindow = (Page, route) => {
 }
 
 const createTrayAndMenu = () => {
-    tray = new Tray(__dirname + '/assets/img/icon-mac-tray.png')
-   // tray = new Tray(__dirname + '/assets/img/cp-tray-icon.png')
+   // tray = new Tray(__dirname + '/assets/img/icon-mac-tray.png')
+    tray = new Tray(__dirname + '/assets/img/cp-tray-icon.png')
 
     let template = [
         {
@@ -328,8 +328,8 @@ powerMonitor.on('shutdown', (event) => {
 });
 
 function checkSiteKeyExpiry(newDate){
-    var date=new Date();
-    var currentDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
-    return(Date.parse(newDate) > Date.parse(currentDate));
+    var date=new Date(newDate);
+    var currentDate=new Date();
+    return(Date.parse(newDate) >= Date.parse(currentDate));
 }
 

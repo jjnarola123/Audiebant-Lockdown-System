@@ -138,8 +138,8 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         ipcRenderer.send('CloseWindowUni');
     }
     function checkSiteKeyExpiry(newDate){
-        var date=new Date();
-        var currentDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
-        return(Date.parse(newDate) > Date.parse(currentDate));
+        var date=new Date(newDate);
+        var currentDate=new Date();
+        return(Date.parse(newDate) >= Date.parse(currentDate));
     }
 });

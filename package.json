@@ -14,7 +14,7 @@
     "asar": true,   
     "mac": {
       "target": "dmg",
-       "icon":"assets/img/iconmac.icns"
+       "icon":"assets/img/icon-mac.icns"
     },
     "win": {
       "target": [
@@ -30,7 +30,7 @@
     },
     "linux": {
       "target": "deb",
-      "icon":"assets/img/icon-win.png"
+      "icon":"assets/img/icon-mac.icns"
      },
     "directories": {
       "output": "dist"

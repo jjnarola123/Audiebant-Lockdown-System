@@ -1,4 +1,4 @@
-const { spawn,exec } = require('child_process');
+const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs-extra');
 app.controller('UninstallController', function ($scope,$location,Constants,myService) {  
@@ -58,12 +58,10 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                             })
                             .catch((err) => {
                               console.error('Error removing folder:', err);
-                            });  
-                            //const command = `osascript -e 'tell application "Terminal" to do script "sudo rm -rf  ${installationPath}"'`;
+                            });                           
                         }
                         else{                
                             //Uninstall from linux   
-                            //spawn('gnome-terminal', ['-e', 'sudo apt purge communicate-and-protect']);     
                             const command = 'gnome-terminal -e "sudo apt purge audiebant-lockdown-solution"';
                             exec(command, (error, stdout, stderr) => {
                                 if (error) {

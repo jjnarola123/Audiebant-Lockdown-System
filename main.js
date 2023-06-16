@@ -192,7 +192,6 @@ var sitename;
 function checkMessage() {
     setInterval(function () {
       if(site_key != ''){
-
             axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                 params: {
                     request: "sitekey",
@@ -202,8 +201,8 @@ function checkMessage() {
             .then(function (response) {
                 if(response){
                     if(response.data.status == "Success" && checkSiteKeyExpiry(response.data.data[0][0].key_expiry))
-                    {  
-                        var localZoneId=[];
+                    { 
+                         var localZoneId=[];
                         //Get zone from local storage
                         winZones.webContents.executeJavaScript('localStorage.getItem("savedZone");', true)
                         .then(result => {                          
@@ -219,19 +218,11 @@ function checkMessage() {
                                 msgtype:'live'
                             }      
                         })
-                        .then(function (response) {            
-                            if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1 ) {
-                                messageObjLockdown = JSON.stringify(response.data.data[0]);    
-                                var apiZoneId = response.data.data[0][0].msg_zones.split(',');                               
-                                for(let i=0;i<localZoneId.length;i++){
-                                    for(let j=0;j<apiZoneId.length;j++){
-                                        if(localZoneId[i].id == apiZoneId[j]){
-                                            if (!winLockdownMessage) {
-                                                createMessage("index.html", "message");                    
-                                            }                                             
-                                        }
-                                    }                    
-                                }                                         
+                        .then(function (response) {      
+                            if (response.data.status == "Success") {
+                                if (!winLockdownMessage) {
+                                    createMessage("index.html", "message");                    
+                                }                                      
                             }
                         });
                     } else{
@@ -281,8 +272,8 @@ powerMonitor.on('shutdown', (event) => {
 });
 
 function checkSiteKeyExpiry(newDate){
-    var date=new Date();
-    var currentDate=date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
-    return(Date.parse(newDate) > Date.parse(currentDate));
+    var date=new Date(newDate);
+    var currentDate=new Date();
+   return(Date.parse(newDate) >= Date.parse(currentDate));
 }
 

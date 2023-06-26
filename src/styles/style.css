@@ -247,7 +247,7 @@ label {
 }
 
 .custom-img{
-    margin-top: -50px;
+    margin-top: -40px;
 }
 
 .top-padding{
@@ -271,14 +271,15 @@ label {
     border-radius: 12px;
 }
 .header-color{
-    background-color: #dc9435;
+    background-color: #c1272d;
+    color: whitesmoke;
 }
 .header{
     display:block;
     height:30px;  
     text-decoration:none;
     padding-left:30px;
-    font-size: 10pt;
+    font-size: 10.5pt;
     font-weight: 500;
     padding-top: 5px;
     -webkit-app-region: drag;
@@ -286,7 +287,7 @@ label {
 
 .header:before{
     content: '';
-    background:url('../../assets/img/icon-win.png');
+    background:url('../../assets/img/api_logo.png');
     background-size:cover;
         position:absolute;
     width:20px;

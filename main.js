@@ -12,7 +12,7 @@ const createWindow = (Page, route) => {
         show: false,
         frame: false,   
         maximizable:false,
-        icon: __dirname + '/assets/img/icon-win.png',
+        icon: __dirname + '/assets/img/api_logo.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
@@ -35,7 +35,7 @@ const createWindow = (Page, route) => {
 
 const createTrayAndMenu = () => {
     //tray = new Tray(__dirname + '/assets/img/icon-mac-tray.png')
-    tray = new Tray(__dirname + '/assets/img/cp-tray-icon.png')
+    tray = new Tray(__dirname + '/assets/img/cp_tray_icon.png')
 
     let template = [
         {
@@ -74,7 +74,7 @@ const createZonesWindow = (Page, route) => {
         show: false,
         frame: false,        
         maximizable:false,
-        icon: __dirname + '/assets/img/icon-win.png',
+        icon: __dirname + '/assets/img/api_logo.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
@@ -103,7 +103,7 @@ const createMessage = (Page, route) => {
             maximizable:false,
             frame:false,
             alwaysOnTop: true,
-            icon: __dirname + '/assets/img/icon-win.png',
+            icon: __dirname + '/assets/img/api_logo.png',
             webPreferences: {
                 nodeIntegration: true,
                 devTools:false,
@@ -129,7 +129,7 @@ const createUninsatllerWindow = (Page, route) => {
         show: false,
         frame: false, 
         maximizable:false,
-        icon: __dirname + '/assets/img/icon-win.png',
+        icon: __dirname + '/assets/img/api_logo.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
@@ -145,7 +145,6 @@ const createUninsatllerWindow = (Page, route) => {
             winUninstall.hide();
         }
     });
-
     const data = { "route": route }
     winUninstall.loadFile(Page, { query: { "data": JSON.stringify(data) } })
 }
@@ -186,7 +185,6 @@ app.on('window-all-close', () => {
 })
 
 var messageObj;
-var messageObjLockdown;
 var site_key;
 var sitename;
 function checkMessage() {
@@ -210,7 +208,7 @@ function checkMessage() {
                                 localZoneId=JSON.parse(result);
                             }
                         });                   
-                       //Check message.
+                        //Check message.
                         axios.get('https://www.audiebant.co.uk/api/api_desktop.php?',{
                             params: {
                                 request:'message',
@@ -219,8 +217,9 @@ function checkMessage() {
                             }      
                         })
                         .then(function (response) {      
-                            if (response.data.status == "Success") {
-                                if (!winLockdownMessage) {
+                            if (response.data.status == "Success") {       
+                                messageObj =  JSON.stringify(response.data.data[0]);                        
+                                if (!winLockdownMessage) {                                 
                                     createMessage("index.html", "message");                    
                                 }                                      
                             }
@@ -242,9 +241,7 @@ function checkMessage() {
 ipcMain.on('RequestMessage', (event) => {
     event.sender.send('MessageObject', messageObj)
 })
-ipcMain.on('RequestMessageLockdown', (event) => {
-    event.sender.send('MessageObjectLockdown', messageObjLockdown)
-})
+
 
 ipcMain.on('GetSiteKey', (event,siteKey,siteName) => {
     site_key = siteKey;

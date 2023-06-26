@@ -6,13 +6,17 @@ app.controller('MessageController', function ($scope,Constants) {
         $('header').css('background-color', '#c1272d')
         $('header').css('color', 'white')
         vm.frmDate=new Date();    
-        ipcRenderer.send('RequestMessageLockdown');
-        vm.msgname="DeanHigh";
-        vm.message="Audiebant Test Message";
-        vm.sound=__dirname + '/assets/Messagetone.mp3'; 
-        vm.msglogo=__dirname + '/assets/img/icon-win.png';   
-        vm.alert=__dirname + '/assets/img/alert.png';   
-        $scope.$applyAsync();        
+        ipcRenderer.send('RequestMessage');
+        ipcRenderer.on('MessageObject', (event, arg) => {
+            data =JSON.parse(arg);  
+            vm.msgname=data[0].msg_part_of;
+            vm.message=data[0].msg_text;
+            vm.sound=__dirname + '/assets/Messagetone.mp3';  
+            vm.msglogo='https://www.audiebant.co.uk/api/assets/api_logo.png';
+            vm.alert=__dirname + '/assets/img/alert.png';    
+            $scope.$applyAsync();        
+        });
+     
     };     
     vm.onSaveMessageDtls=function(){
         if(data!='')

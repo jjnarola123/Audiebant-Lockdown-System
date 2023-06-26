@@ -1,23 +1,23 @@
 <div class="custom-message-container" ng-controller="MessageController as vm"  ng-init="vm.onCheckMessage()" ng-cloak><br/>
   <div class="row">
-      <div class="col-sm-12 text-end custom-img">      
-        <img ng-src="{{vm.msglogo}}" width="100px" height="100px"  />   
-      </div> 
+      <div class="col-sm-12 text-end custom-img" ng-if="vm.msglogo!==''">      
+        <img ng-src="{{vm.msglogo}}" width="150px" height="150px"  />
+      </div>      
   </div>
-  <div class="row" style="padding-top:50px;">            
+  <div class="row" style="padding-top:30px;">            
       <div class="col-sm-4">
-        <img ng-src="{{vm.alert}}" />   
-      </div>
+        <img ng-src="{{vm.alert}}" width="220px" height="220px" />
+      </div>     
       <div class="col-sm-8" style="font-size:40px" ng-style="{'color':'#c1272d'}">      
         {{vm.message}}
-      </div>   
+      </div>    
   </div>
   <div hidden>  
     <audio controls autoplay>
       <source ng-if="vm.sound" src="{{vm.sound}}" type="audio/mpeg">      
     </audio>
   </div>
-  <div class="row" style="padding-top:60px;">
+  <div class="row" style="padding-top:30px;">
         <div class="col-sm-9">
           <h6 class="footer" ng-style="{'color':'#c1272d'}"><b>This alert message has been broadcast by {{vm.msgname}} @{{ vm.frmDate | date:'yyyy-MM-dd HH:mm:ss'}}</b></h6>
         </div>

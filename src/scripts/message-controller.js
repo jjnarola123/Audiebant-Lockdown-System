@@ -16,11 +16,12 @@ app.controller('MessageController', function ($scope,Constants) {
             vm.alert=__dirname + '/assets/img/alert.png';    
             $scope.$applyAsync();        
         });
-     
-    };     
+    };   
+
     vm.onSaveMessageDtls=function(){
+        debugger
         if(data!='')
-        {     
+        {     debugger
             var siteKey=window.localStorage.getItem("sitekey");    
             var siteName = window.localStorage.getItem("clientname");    
             axios.get('https://www.audiebant.co.uk/api/api_desktop.php?',{
@@ -32,11 +33,11 @@ app.controller('MessageController', function ($scope,Constants) {
                     sitename:siteName,                   
                 }
             }).then(function (response) 
-            {
+            {debugger
                 if(response)
                 {             
                     if(response.data.status == Constants.ResultStatus[1])
-                    {
+                    {debugger
                         axios.get('https://www.audiebant.co.uk/api/api_desktop.php?',{
                             params: {
                                 request:Constants.Request[10],
@@ -60,6 +61,7 @@ app.controller('MessageController', function ($scope,Constants) {
         else
         {
             ipcRenderer.send('CloseMessageLockdownWin');
-        }       
+        } 
+        ipcRenderer.send('CallMessageAPI');      
     } 
 });

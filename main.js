@@ -101,12 +101,12 @@ const createMessage = (Page, route) => {
             width: 800,
             height: 610,
             maximizable:false,
-            frame:false,
+           frame:false,
             alwaysOnTop: true,
             icon: __dirname + '/assets/img/api_logo.png',
             webPreferences: {
                 nodeIntegration: true,
-                devTools:false,
+               devTools:false,
                 enableRemoteModule: true,
                 contextIsolation: false
             }
@@ -186,9 +186,9 @@ app.on('window-all-close', () => {
 
 var messageObj;
 var site_key;
-var sitename;
+var site_name;
 function checkMessage() {
-    setInterval(function () {
+  const interval= setInterval(function () {         
       if(site_key != ''){
             axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                 params: {
@@ -212,16 +212,17 @@ function checkMessage() {
                         axios.get('https://www.audiebant.co.uk/api/api_desktop.php?',{
                             params: {
                                 request:'message',
-                                sitename: sitename,
+                                _area: site_name,
                                 msgtype:'live'
                             }      
                         })
-                        .then(function (response) {      
+                        .then(function (response) { 
                             if (response.data.status == "Success") {       
                                 messageObj =  JSON.stringify(response.data.data[0]);                        
-                                if (!winLockdownMessage) {                                 
-                                    createMessage("index.html", "message");                    
-                                }                                      
+                                if (!winLockdownMessage) {                                
+                                    createMessage("index.html", "message");  
+                                    clearInterval(interval);         
+                                }            
                             }
                         });
                     } else{
@@ -242,6 +243,7 @@ ipcMain.on('RequestMessage', (event) => {
     event.sender.send('MessageObject', messageObj)
 })
 
+ipcMain.on('CallMessageAPI', () => checkMessage())
 
 ipcMain.on('GetSiteKey', (event,siteKey,siteName) => {
     site_key = siteKey;

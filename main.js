@@ -200,30 +200,37 @@ function checkMessage() {
                 if(response){
                     if(response.data.status == "Success" && checkSiteKeyExpiry(response.data.data[0][0].key_expiry))
                     { 
-                         var localZoneId=[];
+                        var localZoneId=[];
                         //Get zone from local storage
                         winZones.webContents.executeJavaScript('localStorage.getItem("savedZone");', true)
-                        .then(result => {                          
+                        .then(result => {                       
                            if(result !=null && result.length>0){
-                                localZoneId=JSON.parse(result);
+                                localZoneId=JSON.parse(result);                               
                             }
-                        });                   
+                        });                                           
                         //Check message.
                         axios.get('https://www.audiebant.co.uk/api/api_desktop.php?',{
                             params: {
                                 request:'message',
-                                _area: site_name,
+                                sitename: site_name,
                                 msgtype:'live'
                             }      
                         })
-                        .then(function (response) { 
-                            if (response.data.status == "Success") {       
-                                messageObj =  JSON.stringify(response.data.data[0]);                        
-                                if (!winLockdownMessage) {                                
-                                    createMessage("index.html", "message");  
-                                    clearInterval(interval);         
-                                }            
-                            }
+                        .then(function (response) {    
+                            if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1 ) {                                
+                                messageObj = JSON.stringify(response.data.data[0]);    
+                                var apiZoneId = response.data.data[0][0].msg_zones.split(',');      
+                                for(let i=0;i<localZoneId.length;i++){
+                                    for(let j=0;j<apiZoneId.length;j++){
+                                        if(localZoneId[i].id == apiZoneId[j]){
+                                            if (!winLockdownMessage) {                                
+                                                createMessage("index.html", "message");  
+                                                clearInterval(interval);         
+                                            }                                           
+                                        }
+                                    }                    
+                                }                                         
+                            }  
                         });
                     } else{
                         axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {

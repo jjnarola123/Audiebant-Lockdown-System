@@ -11,10 +11,10 @@
   "build": {
     "productName": "Audiebant Lockdown Solution",
     "appId": "com.audiebant-lockdown-solution.myapp",
-    "asar": true,   
+    "asar": true,
     "mac": {
       "target": "dmg",
-       "icon":"assets/img/mac-logo.icns"
+      "icon": "assets/img/mac-logo.icns"
     },
     "win": {
       "target": [
@@ -23,15 +23,15 @@
           "arch": [
             "x64",
             "ia32"
-          ]         
+          ]
         }
       ],
-      "icon":"assets/img/api_logo.png"
+      "icon": "assets/img/api_logo.png"
     },
     "linux": {
       "target": "deb",
-      "icon":"assets/img/mac-logo.icns"
-     },
+      "icon": "assets/img/mac-logo.icns"
+    },
     "directories": {
       "output": "dist"
     }

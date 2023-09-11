@@ -16,16 +16,18 @@
                     </div>
                 </div>
                 <div class="card-body">
-                  <div class="row">            
-                      <h6>Choose zone(s) :</h6>
+                    <div class="row">                      
+                        <h6>Choose zone(s) :</h6>                     
+                    </div>     
+                    <div class="row msg-scroll msg-scroll-style" >  
                       <div class="col-sm-4">
                         <input type="checkbox" ng-disabled="vm.disabledDbDtls" id="allZones" ng-click="vm.updateAll()"  ng-disabled=''><label>All zone(s)</label>
-                      </div>
-                      <div class="col-sm-4" ng-repeat='zonegroup in groupzones'>
+                      </div>  
+                      <div class="col-sm-4" ng-repeat='zonegroup in groupzones'>                    
                         <input type="checkbox" id="{{zonegroup.id}}" ng-model="zonegroup.zone_name" ng-disabled="vm.disabledDbDtls" ng-click="vm.updateSelection(zonegroup.id)"  />            
                         <label for='{{zonegroup.group_name}}'>{{zonegroup.group_name}}</label>
-                      </div>      
-                  </div>
+                      </div>         
+                    </div> 
                   <hr/>
                   <div class="row">            
                           <div class="col-sm-6"></div>

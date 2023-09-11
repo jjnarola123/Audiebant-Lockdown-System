@@ -21,6 +21,9 @@ html {
     background: linear-gradient(170deg, #2a5379, #7ae4ff);
 }
 
+body {
+    -webkit-app-region: no-drag;
+}
 
 .result {
     padding: 10px;
@@ -172,7 +175,7 @@ label {
   
 .zone-scroll
 { 
-    height: 300px;
+    height: 210px;
     max-height: 300px;
     overflow-y: scroll;   
 }
@@ -206,13 +209,14 @@ label {
 
 .msg-scroll
 { 
-    height:200px;
-    max-height: 200px;
+    height:100px;
+    max-height: 100px;
     overflow-y: scroll;   
 }
 
 .msg-scroll-style::-webkit-scrollbar-track
-{    border-radius: 100px;
+{
+    border-radius: 100px;
 }
 .msg-scroll-style::-webkit-scrollbar
 {
@@ -226,10 +230,10 @@ label {
     border-radius: 50px;
 	background-color: #FFF;
 	background-image: -webkit-linear-gradient(90deg,
-	                                          rgb(170, 185, 231) 0%,
-											  rgba(170, 185, 231) 25%,
-											  transparent 100%,
-											  rgba(170, 185, 231) 75%,
+                                            rgba(5, 22, 73) 0%,
+                                            rgba(5, 22, 73) 25%,
+                                             transparent 100%,
+                                            rgba(5, 22, 73) 75%,
 											  transparent)
 } 
 
@@ -282,7 +286,7 @@ label {
     font-size: 10.5pt;
     font-weight: 500;
     padding-top: 5px;
-    -webkit-app-region: drag;
+    -webkit-app-region: no-drag;
 }
 
 .header:before{

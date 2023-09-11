@@ -7,11 +7,12 @@ let win = null
 var force_quit = false;
 const createWindow = (Page, route) => {
     win = new BrowserWindow({
-        width: 800,
+        width: 820,
         height: 675,
         show: false,
         frame: false,   
-        maximizable:false,
+        maximizable:false,   
+        center: true,       
         icon: __dirname + '/assets/img/api_logo.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
@@ -74,6 +75,8 @@ const createZonesWindow = (Page, route) => {
         show: false,
         frame: false,        
         maximizable:false,
+        alwaysOnTop: true,  
+        center: true,         
         icon: __dirname + '/assets/img/api_logo.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
@@ -83,7 +86,7 @@ const createZonesWindow = (Page, route) => {
             contextIsolation: false
         }
     })
-
+  
     winZones.on('close', function (e) {
         if (!force_quit) {
             e.preventDefault();
@@ -101,12 +104,13 @@ const createMessage = (Page, route) => {
             width: 800,
             height: 610,
             maximizable:false,
-           frame:false,
+            frame:false,
             alwaysOnTop: true,
+            center: true,    
             icon: __dirname + '/assets/img/api_logo.png',
             webPreferences: {
                 nodeIntegration: true,
-               devTools:false,
+                devTools:false,
                 enableRemoteModule: true,
                 contextIsolation: false
             }
@@ -129,6 +133,7 @@ const createUninsatllerWindow = (Page, route) => {
         show: false,
         frame: false, 
         maximizable:false,
+        center: true,    
         icon: __dirname + '/assets/img/api_logo.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {

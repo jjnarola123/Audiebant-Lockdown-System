@@ -167,8 +167,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                         $scope.$apply(function () {
                             vm.disabledDbDtls = myService.disabledDbDtls;
                             $scope.vm.result ="Site key is expired"; 
-                        });                                         
-                        window.localStorage.clear();                   
+                        });                                  
                     }
                 }
            });

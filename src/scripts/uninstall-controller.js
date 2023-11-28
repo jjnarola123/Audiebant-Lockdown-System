@@ -28,17 +28,16 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
             })          
             .then(function (response) {
                 if(response){       
-                    if(response.data.status == Constants.ResultStatus[1]){ 
+                    if(response.data.status == Constants.ResultStatus[1]){                       
                         //Uninstall from Windows
-                        window.localStorage.clear();
                         if(process.platform.startsWith("win")){                              
-                            var uninstallCommand = `start "" "${path.join(appPath[0], 'Uninstall Audiebant Lockdown Solution.exe')}"`;                           
+                            var uninstallCommand = `powershell.exe -Command "$app = Get-WmiObject -Class Win32_Product -Filter 'Name = ''Audiebant Lockdown Solution'''; $app.Uninstall()"`;                      
                             exec(uninstallCommand, (error, stdout, stderr) => {
                                 if (error) {          
                                     return;
                                 }
-                                ipcRenderer.send('CloseWindowUni');
                             });
+                            ipcRenderer.send('CloseWindowUni');
                         }
                         else if(process.platform == 'darwin')
                         {
@@ -73,7 +72,7 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                         }                  
                     }else{
                         vm.result=response.data.status+ ": Invalid site key !";                       
-                    }
+                    }                  
                     $scope.$applyAsync();   
                 }
             }); 
@@ -82,7 +81,7 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
     vm.onLogin = function(){
         $location.path('/login').search({param: 'fromuninstall'});
         $scope.$applyAsync();
-    };  
+    };
     vm.onCancel = function(){       
         ipcRenderer.send('CloseWindow');
     }

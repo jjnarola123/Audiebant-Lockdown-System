@@ -1,6 +1,6 @@
 {
   "name": "audiebant-lockdown-solution",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "Audiebant Lockdown Solution",
   "main": "main.js",
   "scripts": {
@@ -19,9 +19,8 @@
     "win": {
       "target": [
         {
-          "target": "nsis",
+          "target": "msi",
           "arch": [
-            "x64",
             "ia32"
           ]
         }

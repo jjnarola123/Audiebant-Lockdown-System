@@ -36,9 +36,9 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                             exec(uninstallCommand, (error, stdout, stderr) => {
                                 if (error) {          
                                     return;
-                                }
-                                ipcRenderer.send('CloseWindowUni');
-                            });                           
+                                }                              
+                            });     
+                            ipcRenderer.send('CloseWindowUni');                      
                         }
                         else if(process.platform == 'darwin')
                         {

@@ -1,23 +1,22 @@
 app.controller('DbConController', function ($scope, $location, myService, Constants) {
     var vm = this;
-    const configPath=path.join(os.userInfo().homedir,"Downloads/config.JSON");
+    const configPath=path.join(os.userInfo().homedir,"Downloads/AudiebantConfig.JSON");
     $scope.cred;
-    vm.onDisabled = function (){
+    vm.onDisabled = function (){  
         vm.disabledDbDtls = myService.disabledDbDtls;
-        vm.disabledLicDtls = myService.disabledLicDtls;   
-        
-        if(window.localStorage.getItem("sitekey") !=null && window.localStorage.getItem("sitekey") != undefined && window.localStorage.getItem("sitekey") !=''){
+        vm.disabledLicDtls = myService.disabledLicDtls; 
+        if(window.localStorage.getItem("sitekey")){
             axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                 params: {
                     request: Constants.Request[3],
                     sitekey: window.localStorage.getItem("sitekey") 
                 }
             }).then(function (response) {
-                if(response){
+                if(response){                    
                     //validating site key
                    if(response.data.status == Constants.ResultStatus[1] && checkSiteKeyExpiry(response.data.data[0][0].key_expiry)){
                         vm.onLoadLocalInfo();
-                    }else{
+                    }else{                        
                         //uninstall
                          axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                             params: {
@@ -26,41 +25,43 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
                                 PCName: os.hostname()
                             }
                         })         
-                        vm.licresult = "Site key is expired";               
+                        window.localStorage.setItem("sitekey",'');
+                        vm.licresult = "Site key is expired";          
+                        $scope.$applyAsync();     
                     }
                 }            
             });
-        }   
-        else{            
-            vm.onLoadLocalInfo();
-        }   
+        }    
+        else{
+           vm.onLoadLocalInfo();
+        }
     }
 
-    vm.onLoadLocalInfo = function () { 
-        fs.readFile(configPath, 'utf8', function (err, data) {
-            if (err){
-                vm.result = "File not found "+configPath;
+    vm.onLoadLocalInfo =async function () {         
+        fs.readFile(configPath, 'utf8',async function (err, data) {
+            if (err){    
                 vm.username = window.localStorage.getItem("username");
                 vm.password = window.localStorage.getItem("password");
                 vm.sitekey = window.localStorage.getItem("sitekey");
                 vm.database = window.localStorage.getItem("database");
-                vm.sitename = window.localStorage.getItem("sitename");
-                validateDB(true);    
-                validateSiteKey();
-                $scope.$applyAsync();
+                vm.sitename = window.localStorage.getItem("sitename");  
+                $scope.$applyAsync();  
+                await setInput(); 
+                ipcRenderer.send('GetSiteKey', vm.sitekey,window.localStorage.getItem("clientname"));  
             }
-            else{   
+            else{                   
               $scope.cred=JSON.parse(data);
               vm.database = $scope.cred.database!=undefined?$scope.cred.database:'';
               vm.username = $scope.cred.username!=undefined?$scope.cred.username:'';
               vm.password =$scope.cred.password!=undefined?$scope.cred.password:'';
               vm.sitekey = $scope.cred.siteKey!=undefined?$scope.cred.siteKey:'';
-              validateDB(true);    
-              validateSiteKey();
-              $scope.$applyAsync();    
+              $scope.$applyAsync(); 
+              await setInput();
+              ipcRenderer.send('GetSiteKey', vm.sitekey,window.localStorage.getItem("clientname"));  
             }
-        });
-        ipcRenderer.send('GetSiteKey', vm.sitekey,window.localStorage.getItem("clientname"));  
+     
+        });   
+        
     }
 
     vm.onTestConnection = function (f) {
@@ -81,7 +82,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         if(vm.database)
             window.localStorage.setItem("database", vm.database); 
         else
-            window.localStorage.setItem("sitename",  '');   
+            window.localStorage.setItem("database",  '');   
         if(vm.username)
             window.localStorage.setItem("username", vm.username);
         else
@@ -99,7 +100,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
             window.localStorage.setItem("sitename",'');   
         }    
     
-         ipcRenderer.send('GetSiteKey', vm.sitekey,window.localStorage.getItem("clientname"));
+       //  ipcRenderer.send('GetSiteKey', vm.sitekey,window.localStorage.getItem("clientname"));
          ipcRenderer.send('CloseWin');
     }
 
@@ -112,12 +113,11 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         ipcRenderer.send('CloseWindowUni');
     }
     function checkSiteKeyExpiry(newDate){
-        var date=new Date(newDate);
         var currentDate=new Date();
         return(Date.parse(newDate) >= Date.parse(currentDate));
     }
 
-    function validateSiteKey(){   
+    async function  validateSiteKey(){   
         axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                 params: {
                     request: Constants.Request[3],
@@ -146,7 +146,7 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
         });       
     }
 
-    function validateDB(flag){ 
+    async function validateDB(flag){ 
         axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
             params: {
                 request: Constants.Request[2],
@@ -165,5 +165,20 @@ app.controller('DbConController', function ($scope, $location, myService, Consta
                 $scope.$applyAsync();
             }
         });
+    }
+
+    async function setInput(){
+        if(vm.username && vm.password  && vm.database){
+            await validateDB(true);   
+        }
+        else{
+            vm.result = "File not found "+configPath;
+        }
+        if(vm.sitekey){
+            await validateSiteKey();  
+        }  
+        else{
+            vm.result = "File not found "+configPath;
+        }
     }
 });

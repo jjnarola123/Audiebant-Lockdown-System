@@ -73,7 +73,7 @@ const createZonesWindow = (Page, route) => {
         width: 800,
         height: 675,
         show: false,
-        frame: false,        
+       frame: false,        
         maximizable:false,
         alwaysOnTop: true,  
         center: true,         
@@ -81,7 +81,7 @@ const createZonesWindow = (Page, route) => {
         //autoHideMenuBar:"hedden",
         webPreferences: {
             nodeIntegration: true,
-            devTools:false,
+           devTools:false,
             enableRemoteModule: true,
             contextIsolation: false
         }
@@ -155,34 +155,38 @@ const createUninsatllerWindow = (Page, route) => {
 }
 
 app.whenReady().then(() => { 
-    if(process.platform.startsWith('win') || process.platform=='darwin'){
-        const myAppAutoLauncher = new AutoLaunch({
-            name: 'Audiebant Lockdown Solution',
-            path: app.getPath('exe'),
-        });
-        
-        myAppAutoLauncher.isEnabled().then((isEnabled) => {
-            if (!isEnabled) {
-                myAppAutoLauncher.enable();
-            }
-        });
+    if(app.requestSingleInstanceLock()){
+        if(process.platform.startsWith('win') || process.platform=='darwin'){
+            const myAppAutoLauncher = new AutoLaunch({
+                name: 'Audiebant Lockdown Solution',
+                path: app.getPath('exe'),
+            });
+            
+            myAppAutoLauncher.isEnabled().then((isEnabled) => {
+                if (!isEnabled) {
+                    myAppAutoLauncher.enable();
+                }
+            });
+        }else{
+            const myAppAutoLauncher = new AutoLaunch({
+                name:'Audiebant Lockdown Solution',
+                path: process.execPath,
+            });
+            
+            myAppAutoLauncher.isEnabled().then((isEnabled) => {
+                if (!isEnabled) {
+                    myAppAutoLauncher.enable();
+                }
+            });
+        }
+        createTrayAndMenu();
+        createWindow("index.html", "dbcon");
+        createZonesWindow("index.html", "zones");
+        createUninsatllerWindow("index.html", "uninstall");
+        checkMessage();
     }else{
-        const myAppAutoLauncher = new AutoLaunch({
-            name:'Audiebant Lockdown Solution',
-            path: process.execPath,
-        });
-        
-        myAppAutoLauncher.isEnabled().then((isEnabled) => {
-            if (!isEnabled) {
-                myAppAutoLauncher.enable();
-            }
-        });
+        app.quit();
     }
-    createTrayAndMenu();
-    createWindow("index.html", "dbcon");
-    createZonesWindow("index.html", "zones");
-    createUninsatllerWindow("index.html", "uninstall");
-    checkMessage();
 })
 
 app.on('window-all-close', () => {
@@ -193,8 +197,8 @@ var messageObj;
 var site_key;
 var site_name;
 function checkMessage() {
-  const interval= setInterval(function () {         
-      if(site_key != ''){
+  const interval= setInterval(function () {       
+      if(site_key &&  site_name){
             axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                 params: {
                     request: "sitekey",
@@ -221,7 +225,7 @@ function checkMessage() {
                                 msgtype:'live'
                             }      
                         })
-                        .then(function (response) {    
+                        .then(function (response) {  
                             if (response.data.status == "Success" && response.data.data[0][0].msg_scheduled==1 ) {                                
                                 messageObj = JSON.stringify(response.data.data[0]);    
                                 var apiZoneId = response.data.data[0][0].msg_zones.split(',');      
@@ -237,14 +241,16 @@ function checkMessage() {
                                 }                                         
                             }  
                         });
-                    } else{
+                    } else{                        
                         axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                             params: {
                                 request: "uninstall",
                                 sitekey: site_key,
                                 PCName: os.hostname()
                             }
-                        })  
+                        });   
+                        force_quit = true;
+                        app.quit();
                     }
                 }   
             }); 
@@ -283,7 +289,6 @@ powerMonitor.on('shutdown', (event) => {
 });
 
 function checkSiteKeyExpiry(newDate){
-    var date=new Date(newDate);
     var currentDate=new Date();
    return(Date.parse(newDate) >= Date.parse(currentDate));
 }

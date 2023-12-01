@@ -74,8 +74,9 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                 });
                 if(count==0){
                 ipcRenderer.send('CloseZoneWin');
-                }else{
+                }else{                 
                     window.localStorage.setItem("savedZone", JSON.stringify(selectedZones));
+                    ipcRenderer.send('GetSiteKey', window.localStorage.getItem("sitekey"),window.localStorage.getItem("clientname"));  
                     ipcRenderer.send('CloseZoneWin');
                 }
             }else{
@@ -85,7 +86,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
     }; 
 
     vm.onGetZones = function() {         
-        if(window.localStorage.getItem("sitekey") !=null || window.localStorage.getItem("sitekey") != undefined){
+        if(window.localStorage.getItem("sitekey")){
             axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
                 params: {
                     request: Constants.Request[3],
@@ -121,6 +122,7 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                                     $scope.$applyAsync();
                                 }
                                 else{
+                                    window.localStorage.setItem("clientname",'')
                                     vm.result=response.data.status+" :"+ response.data.message;
                                     $scope.$applyAsync();
                                 }
@@ -182,7 +184,6 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
         $scope.$applyAsync();
     };  
     function checkSiteKeyExpiry(newDate){
-        var date=new Date(newDate);
         var currentDate=new Date();
         return(Date.parse(newDate) >= Date.parse(currentDate));
     }

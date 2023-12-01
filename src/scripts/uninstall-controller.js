@@ -30,14 +30,15 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                 if(response){       
                     if(response.data.status == Constants.ResultStatus[1]){                       
                         //Uninstall from Windows
+                        window.localStorage.clear();   
                         if(process.platform.startsWith("win")){                              
                             var uninstallCommand = `powershell.exe -Command "$app = Get-WmiObject -Class Win32_Product -Filter 'Name = ''Audiebant Lockdown Solution'''; $app.Uninstall()"`;                      
                             exec(uninstallCommand, (error, stdout, stderr) => {
                                 if (error) {          
                                     return;
                                 }
-                            });
-                            ipcRenderer.send('CloseWindowUni');
+                                ipcRenderer.send('CloseWindowUni');
+                            });                           
                         }
                         else if(process.platform == 'darwin')
                         {
@@ -52,8 +53,8 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                                 }
                             }
                             fs.remove(installationPath)
-                            .then(() => {                               
-                              ipcRenderer.send('CloseWindowUni'); 
+                            .then(() => {     
+                              ipcRenderer.send('CloseWindowUni');
                             })
                             .catch((err) => {
                               console.error('Error removing folder:', err);
@@ -66,7 +67,7 @@ app.controller('UninstallController', function ($scope,$location,Constants,mySer
                                 if (error) {
                                     console.error(`Error executing command: ${error}`);
                                     return;
-                                } 
+                                }                              
                                 ipcRenderer.send('CloseWindowUni'); 
                             });                        
                         }                  

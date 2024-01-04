@@ -35,7 +35,7 @@
       "output": "dist"
     }
   },
-  "author": "Narola Infotech <inquiry@narolainfotech.com>",
+  "author": "Audiebant <info@audiebant.co.uk>",
   "license": "ISC",
   "devDependencies": {
     "electron": "^23.2.0",

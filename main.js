@@ -8,11 +8,12 @@ var force_quit = false;
 const createWindow = (Page, route) => {
     win = new BrowserWindow({
         width: 820,
-        height: 675,
+        height: 720,
         show: false,
         frame: false,   
         maximizable:false,   
-        center: true,       
+        center: true,   
+        resizable: false,
         icon: __dirname + '/assets/img/api_logo.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
@@ -73,10 +74,11 @@ const createZonesWindow = (Page, route) => {
         width: 800,
         height: 675,
         show: false,
-       frame: false,        
+        frame: false,        
         maximizable:false,
         alwaysOnTop: true,  
-        center: true,         
+        center: true,        
+        resizable: false, 
         icon: __dirname + '/assets/img/api_logo.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {
@@ -134,6 +136,7 @@ const createUninsatllerWindow = (Page, route) => {
         frame: false, 
         maximizable:false,
         center: true,    
+        resizable: false,
         icon: __dirname + '/assets/img/api_logo.png',
         //autoHideMenuBar:"hedden",
         webPreferences: {

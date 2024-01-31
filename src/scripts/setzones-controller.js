@@ -173,11 +173,41 @@ app.controller('SetZonesController', function ($scope,$location,Constants,myServ
                     }
                 }
            });
+           getZonesBySystem();
         }else{
             $scope.vm.result ="No site key found"; 
             vm.disabledDbDtls = myService.disabledDbDtls;
         }
    };
+
+   function getZonesBySystem(){
+        if(window.localStorage.getItem("sitekey")){
+            axios.get('https://www.audiebant.co.uk/api/api_desktop.php?', {
+                params: {
+                    request: Constants.Request[11],
+                    _area: 'DeanHigh',
+                    PCName: os.hostname(), //'ERIC-PC',
+                    sitekey: window.localStorage.getItem("sitekey") 
+                }
+            })
+            .then(function (response) {
+                if(response){
+                    vm.zoneList = [];
+                    if(response.data.status == Constants.ResultStatus[1]){
+                        var zones = response.data.data[0];
+                        zones.forEach(function(zone) {
+                            vm.zoneList.push({"id":zone.Siteid,"zone_name":zone.TheSiteLocation});
+                        })
+                        window.localStorage.setItem("savedZone", JSON.stringify(vm.zoneList));
+                    }
+                }
+            })
+        }
+        else{
+            $scope.vm.result ="No site key found"; 
+            vm.disabledDbDtls = myService.disabledDbDtls;
+        }
+    }
 
     vm.onLogin = function(){       
         $location.path('/login').search({param: 'fromsetzones'});;

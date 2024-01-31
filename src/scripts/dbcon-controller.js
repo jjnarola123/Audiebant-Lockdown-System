@@ -1,6 +1,11 @@
 app.controller('DbConController', function ($scope, $location, myService, Constants) {
     var vm = this;
-    const configPath=path.join(os.userInfo().homedir,"Downloads/AudiebantConfig.json");
+    // const fs = require('fs');
+    // const configPath=('\\\\192.168.100.68\\AudibantJSON file\\AudiebantConfig.json');
+    //const configPath=path.join(os.userInfo().homedir,"Downloads/AudiebantConfig.json");
+    const configPath=path.join(process.execPath,'AudiebantConfig.json'); 
+    //const configPath=path.join(process.env.LOCALAPPDATA,'Programs','audiebant-lockdown-solution','AudiebantConfig.json'); 
+    
     $scope.cred;
     vm.onDisabled = function (){  
         vm.disabledDbDtls = myService.disabledDbDtls;

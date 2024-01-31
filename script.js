@@ -48,7 +48,8 @@ app.constant('Constants', {
 		7: 'install',
 		8: 'groups',
 		9: 'uninstall',
-		10:'acknowledge'
+		10:'acknowledge',
+		11: 'GetZones'
 	}
 }); 
 
